@@ -81,8 +81,8 @@
                 "props": {
                     "init_function": "initialize_kg",
                     "initial_query": {
-                        "start": "Transcription Factor",
-                        "start_term": "LYL1",
+                        "start": "Author",
+                        "start_term": "Avi Ma'ayan",
                         "start_field": "label"
                     },
                     "subheader": {
