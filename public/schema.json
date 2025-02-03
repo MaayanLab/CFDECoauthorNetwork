@@ -3,6 +3,7 @@
         {
             "node": "author",
             "example": [
+		"Ethan W Morgan",
                 "Avi Ma'ayan"
             ],
             "display": [
