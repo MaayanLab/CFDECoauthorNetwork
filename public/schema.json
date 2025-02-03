@@ -59,13 +59,13 @@
         "header": "CFDE Coauthorship",
         "title": "CFDE Coauthorship",
         "background": {
-            "backgroundColor": "#000",
+            "backgroundColor": "#d4ebf2",
             "contrastText": "#FFF"
         },
         "icon": {
             "src": "/hgrnchear_logo.png",
             "favicon": "/hgrnchear_logo.png",
-            "faviconTitle": "ChEA-KG",
+            "faviconTitle": "CFDE Coauthorship",
             "alt": "ChEA-KG",
             "key": "hGRN_ChEAR_icon",
             "width": 200,
@@ -167,7 +167,7 @@
                     "props": {
                         "src": "/hgrnchear_white.png",
                         "alt": "hGRN_ChEAR_logo",
-                        "title": "ChEA-KG",
+                        "title": "CFDE Coauthorship",
                         "color": "inherit",
                         "size": "medium"
                     }
