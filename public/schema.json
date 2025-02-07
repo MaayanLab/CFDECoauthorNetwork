@@ -8,12 +8,12 @@
             ],
             "display": [
                 {
-                    "label": "authors ID",
+                    "label": "ID",
                     "text": "${id}",
                     "type": "text"
                 },
                 {
-                    "label": "label",
+                    "label": "Author",
                     "text": "${label}",
                     "type": "text"
                 },
@@ -23,7 +23,7 @@
                     "type": "text"
                 },
                 {
-                    "label": "affiliation",
+                    "label": "Affiliation",
                     "text": "${affiliation}",
                     "type": "text"
                 }
@@ -42,14 +42,14 @@
             ],
             "display": [
                 {
-                    "label": "pmids ID",
+                    "label": "ID",
                     "text": "${id}",
                     "type": "text"
                 },
                 {
-                    "label": "label",
+                    "label": "PMID",
                     "text": "${label}",
-                    "type": "number"
+                    "type": "text"
                 },
                 {
                     "label": "url",
@@ -63,12 +63,82 @@
                 "id",
                 "label"
             ]
+        },
+        {
+            "node": "mesh",
+            "example": [
+                "Uridine Diphosphate",
+                "NF-E2-Related Factor 2"
+            ],
+            "display": [
+                {
+                    "label": "ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "MeSH Term",
+                    "text": "${label}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label"
+            ]
         }
     ],
     "edges": [
         {
             "match": [
+                "MeSH Term"
+            ],
+            "selected": true,
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
                 "published"
+            ],
+            "selected": true,
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "coauthors"
             ],
             "selected": true,
             "display": [
