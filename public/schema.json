@@ -8,13 +8,8 @@
             ],
             "display": [
                 {
-                    "label": "ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
                     "label": "Name",
-                    "text": "${label}",
+                    "text": "${Name}",
                     "type": "text"
                 },
                 {
@@ -30,7 +25,6 @@
             ],
             "relation": [],
             "search": [
-                "ID",
                 "Name"
             ]
         },
@@ -95,7 +89,8 @@
             ],
             "relation": [],
             "search": [
-                "Title"
+                "Title",
+		"PMID"
             ]
         },
         {
