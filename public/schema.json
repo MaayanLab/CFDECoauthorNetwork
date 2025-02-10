@@ -13,12 +13,12 @@
                     "type": "text"
                 },
                 {
-                    "label": "Author",
+                    "label": "Name",
                     "text": "${label}",
                     "type": "text"
                 },
                 {
-                    "label": "PMIDS",
+                    "label": "PMIDs",
                     "text": "${PMIDS}",
                     "type": "text"
                 },
@@ -30,15 +30,15 @@
             ],
             "relation": [],
             "search": [
-                "id",
-                "label"
+                "ID",
+                "Name"
             ]
         },
         {
             "node": "pmids",
             "example": [
-                "38191932",
-                "37452018"
+                "A fast, scalable and versatile tool for ...",
+                "Lactate-dependent transcriptional regula..."
             ],
             "display": [
                 {
@@ -47,7 +47,7 @@
                     "type": "text"
                 },
                 {
-                    "label": "PMID",
+                    "label": "label",
                     "text": "${label}",
                     "type": "text"
                 },
@@ -56,12 +56,46 @@
                     "text": "${url}",
                     "href": "${url}",
                     "type": "link"
+                },
+                {
+                    "label": "Title",
+                    "text": "${Title}",
+                    "type": "text"
+                },
+                {
+                    "label": "Journal",
+                    "text": "${Journal}",
+                    "type": "text"
+                },
+                {
+                    "label": "Volume",
+                    "text": "${Volume}",
+                    "type": "text"
+                },
+                {
+                    "label": "Issue",
+                    "text": "${Issue}",
+                    "type": "text"
+                },
+                {
+                    "label": "Pages",
+                    "text": "${Pages}",
+                    "type": "text"
+                },
+                {
+                    "label": "Year",
+                    "text": "${Year}",
+                    "type": "text"
+                },
+                {
+                    "label": "PMID",
+                    "text": "${PMID}",
+                    "type": "text"
                 }
             ],
             "relation": [],
             "search": [
-                "id",
-                "label"
+                "Title"
             ]
         },
         {
@@ -77,15 +111,14 @@
                     "type": "text"
                 },
                 {
-                    "label": "MeSH Term",
+                    "label": "Term",
                     "text": "${label}",
                     "type": "text"
                 }
             ],
             "relation": [],
             "search": [
-                "id",
-                "label"
+                "Term"
             ]
         }
     ],
@@ -187,7 +220,7 @@
                     "initial_query": {
                         "start": "authors",
                         "start_term": "Avi Ma'ayan",
-                        "start_field": "label"
+                        "start_field": "Name"
                     },
                     "subheader": {
                         "url_field": "filter",
