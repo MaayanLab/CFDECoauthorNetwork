@@ -245,9 +245,6 @@
 					"type": "authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
 					"default_term": "Avi Ma'ayan",
-					"searchParams": {
-						"field":"label"
-					}
 					"fields": [
 						"label"
 					]
