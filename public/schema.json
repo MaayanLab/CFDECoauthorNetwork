@@ -13,7 +13,7 @@
                     "type": "text"
                 },
                 {
-                    "label": "label",
+                    "label": "Name",
                     "text": "${label}",
                     "type": "text"
                 },
@@ -93,7 +93,7 @@
                 {
                     "label": "PMID",
                     "text": "${PMID}",
-                    "type": "text"
+                    "type": "number"
                 }
             ],
             "relation": [],
@@ -224,7 +224,7 @@
                     "initial_query": {
                         "start": "authors",
                         "start_term": "Ma'ayan, Avi",
-                        "start_field": "Name"
+                        "start_field": "label"
                     },
                     "subheader": {
                         "url_field": "filter",
