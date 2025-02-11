@@ -242,7 +242,7 @@ const AsyncForm = ({
 			setElementMapper({nodes, edges})
 		}
     }, [elements])
-
+    console.log(options)
     const user_input = querySelected || hovered
     return (
         <Stack direction={"column"} spacing={1}>
@@ -267,7 +267,7 @@ const AsyncForm = ({
                     }
                     else {
                         setTerm(value)
-                        router_push(router, pathname, {...query, term: value, type: options[value].type})
+                        router_push(router, pathname, {...query, term: value, type})
                     }
                 }}
                 renderInput={(params) => (
@@ -309,7 +309,7 @@ const AsyncForm = ({
                     />
                 )}
             />
-            <Typography><b>Select Field:</b></Typography>
+            {fields.length > 1 && <Typography><b>Select Field:</b></Typography>}
             <Selector entries={fields} 
                 value={field ||"label"} 
                 prefix={"Field"} onChange={(e)=>{
