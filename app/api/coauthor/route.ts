@@ -18,7 +18,7 @@ async function process_query({
 	console.log(field)
 	console.log(term)
     const query = `MATCH p=(a:\`authors\` {${field}: $term})-[pu:published]->(b:pmids)-[pu2:published]->(c:authors)
-    RETURN p, nodes(p) as n, relationships(p) as r LIMIT TOINTEGER($limit)
+    RETURN p, nodes(p) as n, relationships(p) as r 
     `
     const query_params = { term, limit }
     return resolve_results({query, query_params, terms: [term],  aggr_scores, colors, fields: [field]})
