@@ -234,7 +234,7 @@
                 }
             },
 			{
-				"endpoint": "/Coauthor",
+				"endpoint": "/",
 				"label": "CoauthorSearch",
 				"type": "page",
 				"component": "UseCase",
