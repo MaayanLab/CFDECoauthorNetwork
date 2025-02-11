@@ -217,7 +217,7 @@
         "tabs": [
             {
                 "endpoint": "/",
-                "label": "Term & Gene Search",
+                "label": "Coauthorship KG Search",
                 "type": "page",
                 "component": "KnowledgeGraph",
                 "props": {
@@ -241,12 +241,11 @@
 				"props": {
 					"init_function": "initialize_kg",
 					"title": "Coauthor Search",
+					"Description": "Find related coauthors to the author in question."
 					"endpoint": "/api/coauthor",
 					"type": "authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
 					"fields": [
-						"id",
-						"label",
 						"Name"
 					]
 				}
