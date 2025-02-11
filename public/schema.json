@@ -35,6 +35,7 @@
             ],
             "relation": [],
             "search": [
+				"label",
                 "Name"
             ]
         },
@@ -243,8 +244,8 @@
 					"endpoint": "/api/coauthor",
 					"type": "authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
+					"default_term": "Ma'ayan, Avi",
 					"fields": [
-						"label",
 						"Name"
 					]
 				}
