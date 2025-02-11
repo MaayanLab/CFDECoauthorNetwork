@@ -83,7 +83,12 @@
                     "label": "Year",
                     "text": "${Year}",
                     "type": "text"
-                }
+                },
+				{
+					"label": "PMID",
+					"text": "${PMID}",
+					"type": "text"
+				}
             ],
             "relation": [],
             "search": [
