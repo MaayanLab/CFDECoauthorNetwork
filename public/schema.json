@@ -4,7 +4,7 @@
             "node": "authors",
             "example": [
                 "Avi Ma'ayan",
-                "Daniel J B, Clarke"
+                "Daniel J B Clarke"
             ],
             "display": [
                 {
@@ -30,7 +30,7 @@
             ],
             "relation": [],
             "search": [
-                "Label"
+                "label"
             ]
         },
         {
