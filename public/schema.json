@@ -234,7 +234,7 @@
                 }
             },
 			{
-				"endpoint": "/",
+				"endpoint": "/Coauthor",
 				"label": "CoauthorSearch",
 				"type": "page",
 				"component": "UseCase",
@@ -245,6 +245,8 @@
 					"type": "authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
 					"fields": [
+						"id",
+						"label",
 						"Name"
 					]
 				}
