@@ -41,8 +41,6 @@
         {
             "node": "pmids",
             "example": [
-                "A fast, scalable and versatile tool for ...",
-                "Lactate-dependent transcriptional regula..."
             ],
             "display": [
                 {
@@ -100,7 +98,7 @@
             "relation": [],
             "search": [
                 "Title",
-		"PMID"
+				"PMID"
             ]
         },
         {
@@ -116,7 +114,7 @@
                     "type": "text"
                 },
                 {
-                    "label": "Term",
+                    "label": "label",
                     "text": "${label}",
                     "type": "text"
                 }
@@ -246,6 +244,7 @@
 					"type": "authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
 					"fields": [
+						"label",
 						"Name"
 					]
 				}
