@@ -3,13 +3,18 @@
         {
             "node": "authors",
             "example": [
-                "A M Maga",
-                "Aaron Goldman"
+                "Ma'ayan Avi",
+                "Clarke, Daniel J B"
             ],
             "display": [
                 {
                     "label": "ID",
                     "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
                     "type": "text"
                 },
                 {
@@ -210,6 +215,24 @@
             "height": 60
         },
         "tabs": [
+            {
+                "endpoint": "/",
+                "label": "Term & Gene Search",
+                "type": "page",
+                "component": "KnowledgeGraph",
+                "props": {
+                    "init_function": "initialize_kg",
+                    "initial_query": {
+                        "start": "authors",
+                        "start_term": "Ma'ayan, Avi",
+                        "start_field": "Name"
+                    },
+                    "subheader": {
+                        "url_field": "filter",
+                        "query_field": "relation"
+                    }
+                }
+            },
             {
                 "endpoint": "/",
                 "label": "Term & Gene Search",
