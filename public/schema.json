@@ -3,8 +3,8 @@
         {
             "node": "authors",
             "example": [
-                "Ma'ayan Avi",
-                "Clarke, Daniel J B"
+                "Avi Ma'ayan",
+                "Daniel J B, Clarke"
             ],
             "display": [
                 {
@@ -13,13 +13,8 @@
                     "type": "text"
                 },
                 {
-                    "label": "Name",
+                    "label": "Label",
                     "text": "${label}",
-                    "type": "text"
-                },
-                {
-                    "label": "Name",
-                    "text": "${Name}",
                     "type": "text"
                 },
                 {
@@ -35,8 +30,7 @@
             ],
             "relation": [],
             "search": [
-				"label",
-                "Name"
+                "Label"
             ]
         },
         {
@@ -50,9 +44,9 @@
                     "type": "text"
                 },
                 {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
+                    "label": "Label",
+                    "text": "$label",
+                    "type": "number"
                 },
                 {
                     "label": "url",
@@ -98,8 +92,7 @@
             ],
             "relation": [],
             "search": [
-                "Title",
-				"PMID"
+                "Title"
             ]
         },
         {
@@ -223,7 +216,7 @@
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "authors",
-                        "start_term": "Ma'ayan, Avi",
+                        "start_term": "Avi Ma'ayan",
                         "start_field": "label"
                     },
                     "subheader": {

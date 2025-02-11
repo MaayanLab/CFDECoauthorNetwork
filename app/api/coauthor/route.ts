@@ -15,11 +15,16 @@ async function process_query({
         colors?: {[key: string]: {color?: string, field?: string, aggr_type?: string}},
         field: string
     }) {
-	console.log(field)
-	console.log(term)
-    const query = `MATCH p=(a:\`authors\` {${field}: $term})-[pu:published]->(b:pmids)-[pu2:published]->(c:authors)
-    RETURN p, nodes(p) as n, relationships(p) as r 
-    `
+    const query = `MATCH p1 = (a:authors {label: $term})-[r1]->(n:pmids)-[r2]->(b:authors)
+	WHERE NOT a.label= b.label
+	UNWIND b as coauthors
+	WITH DISTINCT(coauthors) as g, a, n
+	MATCH q=(a)-->(n)-->(g)
+	WITH a, g, COUNT(q) as score
+	WHERE score >= TOINTEGER($limit)
+	MATCH p = (a)-[r1]->(n:pmids)-[r2]->(g)
+	RETURN p, nodes(p) as n, relationships(p) as r 
+   	`
     const query_params = { term, limit }
     return resolve_results({query, query_params, terms: [term],  aggr_scores, colors, fields: [field]})
 }
