@@ -240,15 +240,10 @@
 				"component": "UseCase",
 				"props": {
 					"init_function": "initialize_kg",
-					"initial_query": {
-						"start": "authors",
-						"start_term": "Ma'ayan, Avi",
-						"start_field": "Name"
-					},
-					"subheader": {
-                        "url_field": "filter",
-                        "query_field": "relation"
-					}
+					"title": "CoauthorSearch",
+					"endpoint": "/api/coauthor/",
+					"type": "authors",
+					"options_endpoint": "/api/knowledge_graph/node_search"
 				}
 			}
         ]
