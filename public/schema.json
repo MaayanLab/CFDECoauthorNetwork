@@ -233,24 +233,12 @@
                     }
                 }
             },
-            {
-                "endpoint": "/",
-                "label": "Term & Gene Search",
-                "type": "page",
-                "component": "KnowledgeGraph",
-                "props": {
-                    "init_function": "initialize_kg",
-                    "initial_query": {
-                        "start": "authors",
-                        "start_term": "Avi Ma'ayan",
-                        "start_field": "Name"
-                    },
-                    "subheader": {
-                        "url_field": "filter",
-                        "query_field": "relation"
-                    }
-                }
-            }
+			{
+				"endpoint": "/",
+				"label": "Coauthor Search",
+				"type": "page",
+				"component": "UseCase"
+			}
         ]
     },
     "footer": {
