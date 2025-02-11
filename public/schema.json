@@ -237,7 +237,19 @@
 				"endpoint": "/Coauthor",
 				"label": "Coauthor Search",
 				"type": "page",
-				"component": "UseCase"
+				"component": "UseCase",
+				"props": {
+					"init_function": "initialize_kg",
+					"initial_query": {
+						"start": "authors",
+						"start_term": "Ma'ayan, Avi",
+						"start_field": "Name"
+					},
+					"subheader": {
+                        "url_field": "filter",
+                        "query_field": "relation"
+					}
+				}
 			}
         ]
     },
