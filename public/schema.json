@@ -3,7 +3,7 @@
         {
             "node": "authors",
             "example": [
-                "Ma'ayan Avi",
+                "Ma'ayan, Avi",
                 "Clarke, Daniel J B"
             ],
             "display": [
@@ -100,7 +100,7 @@
             "relation": [],
             "search": [
                 "Title",
-		"PMID"
+				"PMID"
             ]
         },
         {
@@ -225,7 +225,6 @@
                     "initial_query": {
                         "start": "authors",
                         "start_term": "Ma'ayan, Avi",
-                        "start_field": "Name"
                     },
                     "subheader": {
                         "url_field": "filter",
@@ -245,7 +244,12 @@
 					"endpoint": "/api/coauthor",
 					"type": "authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
+					"search_params": {
+						"type": "authors",
+						"field": "Name"
+					},
 					"fields": [
+						"label",
 						"Name"
 					]
 				}
