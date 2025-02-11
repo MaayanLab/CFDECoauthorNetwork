@@ -15,6 +15,8 @@ async function process_query({
         colors?: {[key: string]: {color?: string, field?: string, aggr_type?: string}},
         field: string
     }) {
+	console.log(field)
+	console.log(term)
     const query = `MATCH p1=(a:authors {${field}: $term})-[pu:published]->(b:pmids)-[pu2:published]->(c:authors)
     RETURN p1
     `
