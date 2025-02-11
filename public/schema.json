@@ -243,7 +243,10 @@
 					"title": "CoauthorSearch",
 					"endpoint": "/api/coauthor/",
 					"type": "authors",
-					"options_endpoint": "/api/knowledge_graph/node_search"
+					"options_endpoint": "/api/knowledge_graph/node_search",
+					"fields": [
+						"Name"
+					]
 				}
 			}
         ]
