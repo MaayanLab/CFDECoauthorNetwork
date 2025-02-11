@@ -8,12 +8,12 @@
             ],
             "display": [
                 {
-                    "label": "ID",
+                    "label": "id",
                     "text": "${id}",
                     "type": "text"
                 },
                 {
-                    "label": "Label",
+                    "label": "label",
                     "text": "${label}",
                     "type": "text"
                 },
@@ -39,14 +39,14 @@
             ],
             "display": [
                 {
-                    "label": "ID",
+                    "label": "id",
                     "text": "${id}",
                     "type": "text"
                 },
                 {
-                    "label": "Label",
-                    "text": "$label",
-                    "type": "number"
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
                 },
                 {
                     "label": "url",
@@ -83,15 +83,11 @@
                     "label": "Year",
                     "text": "${Year}",
                     "type": "text"
-                },
-                {
-                    "label": "PMID",
-                    "text": "${PMID}",
-                    "type": "number"
                 }
             ],
             "relation": [],
             "search": [
+				"label",
                 "Title"
             ]
         },
@@ -103,7 +99,7 @@
             ],
             "display": [
                 {
-                    "label": "ID",
+                    "label": "id",
                     "text": "${id}",
                     "type": "text"
                 },
