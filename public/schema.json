@@ -234,13 +234,13 @@
                 }
             },
 			{
-				"endpoint": "/Coauthor",
-				"label": "Coauthor Search",
+				"endpoint": "/Coauthor/",
+				"label": "CoauthorSearch",
 				"type": "page",
 				"component": "UseCase",
 				"props": {
 					"init_function": "initialize_kg",
-					"title": "CoauthorSearch",
+					"title": "Coauthor Search",
 					"endpoint": "/api/coauthor/",
 					"type": "authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
