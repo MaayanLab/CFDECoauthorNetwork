@@ -1,7 +1,7 @@
 {
     "nodes": [
         {
-            "node": "authors",
+            "node": "Authors",
             "example": [
                 "Avi Ma'ayan",
                 "Daniel J B Clarke"
@@ -34,7 +34,7 @@
             ]
         },
         {
-            "node": "pmids",
+            "node": "Publication",
             "example": [
             ],
             "display": [
@@ -97,7 +97,7 @@
             ]
         },
         {
-            "node": "mesh",
+            "node": "MeSH",
             "example": [
                 "Uridine Diphosphate",
                 "NF-E2-Related Factor 2"

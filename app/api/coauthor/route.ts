@@ -15,14 +15,14 @@ async function process_query({
         colors?: {[key: string]: {color?: string, field?: string, aggr_type?: string}},
         field: string
     }) {
-    const query = `MATCH p1 = (a:authors {label: $term})-[r1]->(n:pmids)-[r2]->(b:authors)
+    const query = `MATCH p1 = (a:Authors {label: $term})-[r1]->(n:Publication)-[r2]->(b:Authors)
 	WHERE NOT a.label= b.label
 	UNWIND b as coauthors
 	WITH DISTINCT(coauthors) as g, a, n
 	MATCH q=(a)-->(n)-->(g)
 	WITH a, g, COUNT(q) as score
 	WHERE score >= TOINTEGER($limit)
-	MATCH p = (a)-[r1]->(n:pmids)-[r2]->(g)
+	MATCH p = (a)-[r1]->(n:Publication)-[r2]->(g)
 	RETURN p, nodes(p) as n, relationships(p) as r 
    	`
     const query_params = { term, limit }
