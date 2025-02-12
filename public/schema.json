@@ -193,10 +193,10 @@
         }
     ],
     "header": {
-        "header": "Demo-KG",
-        "title": "Demo-KG",
+        "header": "CFDE Coauthorship Network",
+        "title": "CFDE Coauthorship Network",
         "background": {
-            "backgroundColor": "#000",
+            "backgroundColor": "#7691e8",
             "contrastText": "#FFF"
         },
         "icon": {
@@ -211,7 +211,7 @@
         "tabs": [
             {
                 "endpoint": "/",
-                "label": "Coauthorship KG Search",
+                "label": "Coauthorship KG Explorer",
                 "type": "page",
                 "component": "KnowledgeGraph",
                 "props": {
@@ -228,7 +228,7 @@
             },
 			{
 				"endpoint": "/Coauthor",
-				"label": "Coauthor Search",
+				"label": "Coauthor Minimum Connections Search",
 				"type": "page",
 				"component": "UseCase",
 				"props": {
