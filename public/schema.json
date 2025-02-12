@@ -190,8 +190,8 @@
         "header": "CFDE Coauthorship Network",
         "title": "CFDE Coauthorship Network",
         "background": {
-            "backgroundColor": "#000",
-            "contrastText": "#7691e8"
+            "backgroundColor": "#7691e8",
+            "contrastText": "#FFF"
         },
         "icon": {
             "src": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
@@ -242,8 +242,8 @@
     },
     "footer": {
         "style": {
-            "background": "#000",
-            "color": "#7691e8"
+            "background": "#7691e8",
+            "color": "#FFF"
         },
         "layout": [
             [
