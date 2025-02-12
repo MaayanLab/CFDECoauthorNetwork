@@ -56,7 +56,7 @@
 				},
                 {
                     "label": "url",
-                    "text": "${url}",
+                    "text": "${PMID}",
                     "href": "${url}",
                     "type": "link"
                 },
@@ -218,8 +218,7 @@
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Authors",
-                        "start_term": "Avi Ma'ayan",
-                        "start_field": "label"
+                        "start_term": "Avi Ma'ayan"
                     },
                     "subheader": {
                         "url_field": "filter",
