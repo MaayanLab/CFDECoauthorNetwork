@@ -36,6 +36,7 @@
         {
             "node": "Publication",
             "example": [
+				"3D virtual reality vs. 2D desktop regist..."
             ],
             "display": [
                 {
@@ -48,6 +49,11 @@
                     "text": "${label}",
                     "type": "text"
                 },
+				{
+					"label": "PMID",
+					"text": "${PMID}",
+					"type": "text"
+				},
                 {
                     "label": "url",
                     "text": "${url}",
@@ -83,24 +89,19 @@
                     "label": "Year",
                     "text": "${Year}",
                     "type": "text"
-                },
-				{
-					"label": "PMID",
-					"text": "${PMID}",
-					"type": "text"
-				}
+                }
             ],
             "relation": [],
             "search": [
-				"label",
-                "Title"
+                "Title",
+				"PMID"
             ]
         },
         {
             "node": "MeSH",
             "example": [
-                "Uridine Diphosphate",
-                "NF-E2-Related Factor 2"
+                "Acetates",
+                "Data Mining"
             ],
             "display": [
                 {
