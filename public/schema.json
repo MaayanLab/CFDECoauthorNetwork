@@ -180,13 +180,13 @@
             "contrastText": "#FFF"
         },
         "icon": {
-            "src": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
-            "favicon": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
-            "faviconTitle": "Demo-KG",
-            "alt": "Demo-KG",
-            "key": "Demo-KG_logo",
+            "src": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/CFDE.png",
+            "favicon": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/favicon.png",
+            "faviconTitle": "CFDE-GSE",
+            "alt": "CFDE logo",
+            "key": "CFDE_logo",
             "width": 100,
-            "height": 60
+            "height": 100
         },
         "tabs": [
             {
@@ -238,17 +238,17 @@
     },
     "footer": {
         "style": {
-            "background": "#000",
+            "background": "#336699",
             "color": "#FFF"
         },
-        "layout": [
+		layout": [
             [
                 {
                     "component": "logo",
                     "props": {
-                        "src": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
-                        "alt": "enrichr-kg",
-                        "title": "Enrichr-KG",
+                        "src": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/CFDE.png",
+                        "alt": "CFDE Coauthorship Network",
+                        "title": "CFDE Coauthorship Network",
                         "color": "inherit",
                         "size": "small"
                     }
@@ -256,8 +256,8 @@
                 {
                     "component": "github",
                     "props": {
-                        "code": "https://github.com/MaayanLab/enrichr-kg",
-                        "issues": "https://github.com/MaayanLab/enrichr-kg-issues/issues/new"
+                        "code": "https://github.com/MaayanLab/CFDECoauthorNetwork",
+                        "issues": "https://github.com/MaayanLab/CFDECoauthorNetwork/issues/new"
                     }
                 }
             ],
