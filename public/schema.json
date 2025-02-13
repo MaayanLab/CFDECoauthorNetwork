@@ -241,7 +241,7 @@
             "background": "#336699",
             "color": "#FFF"
         },
-		layout": [
+		"layout": [
             [
                 {
                     "component": "logo",
