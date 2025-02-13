@@ -182,7 +182,7 @@
         "icon": {
             "src": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/CFDE.png",
             "favicon": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/favicon.png",
-            "faviconTitle": "CFDE-GSE",
+            "faviconTitle": "CFDE Coauthor Network",
             "alt": "CFDE logo",
             "key": "CFDE_logo",
             "width": 100,
