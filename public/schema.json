@@ -25,7 +25,7 @@
             ],
             "relation": [
 				"Publications",
-				"Co-authors"
+				"MeSH Term"
 			],
             "search": [
                 "label"
@@ -91,7 +91,6 @@
             ],
             "relation": [
 				"Publications",
-				"Co-authors",
 				"MeSH Term"	
 			],
             "search": [
@@ -129,29 +128,6 @@
         {
             "match": [
                 "Publications"
-            ],
-            "selected": true,
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "Co-authors"
             ],
             "selected": true,
             "display": [
