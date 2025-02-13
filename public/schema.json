@@ -222,7 +222,17 @@
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Authors",
-                        "start_term": "Avi Ma'ayan"
+                        "start_term": "Avi Ma'ayan",
+						"relation": [
+							{
+								"name":"Publications",
+								"limit": 25
+							},
+							{
+								"name":"Coauthors",
+								"limit": 25
+							}
+						]
                     },
                     "subheader": {
                         "url_field": "filter",
