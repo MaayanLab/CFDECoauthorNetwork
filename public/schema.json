@@ -246,7 +246,6 @@
                 {
                     "component": "logo",
                     "props": {
-                        "alt": "CFDE Coauthorship Network",
                         "title": "CFDE Coauthorship Network",
                         "color": "#FFF",
                         "size": "small"
