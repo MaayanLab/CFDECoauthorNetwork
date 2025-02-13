@@ -119,6 +119,52 @@
     "edges": [
         {
             "match": [
+                "Publications"
+            ],
+            "selected": true,
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "Co-authors"
+            ],
+            "selected": true,
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
                 "MeSH Term"
             ],
             "selected": true,
@@ -140,58 +186,12 @@
                 }
             ]
         },
-        {
-            "match": [
-                "published"
-            ],
-            "selected": true,
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "coauthors"
-            ],
-            "selected": true,
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        }
     ],
     "header": {
         "header": "CFDE Coauthorship Network",
         "title": "CFDE Coauthorship Network",
         "background": {
-            "backgroundColor": "#7691e8",
+            "backgroundColor": "#000",
             "contrastText": "#FFF"
         },
         "icon": {
@@ -243,7 +243,7 @@
     },
     "footer": {
         "style": {
-            "background": "#7691e8",
+            "background": "#000",
             "color": "#FFF"
         },
         "layout": [

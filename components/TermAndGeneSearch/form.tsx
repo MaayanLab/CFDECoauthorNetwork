@@ -157,6 +157,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                                 id="multiple-limit-tags"
                                 options={edges}
                                 // getOptionLabel={(option)=>option.name}
+								value={edges.map(({ name }) => name)} // Set all options as selected by default
                                 value={relation.map(({name}:{name:string})=>name)}
                                 renderInput={(params) => (
                                     <TextField {...params} label="Select Relation" placeholder="Select Relation" />
