@@ -246,7 +246,6 @@
                 {
                     "component": "logo",
                     "props": {
-                        "src": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/CFDE.png",
                         "alt": "CFDE Coauthorship Network",
                         "title": "CFDE Coauthorship Network",
                         "color": "#FFF",
