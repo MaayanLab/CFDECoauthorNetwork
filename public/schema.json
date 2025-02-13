@@ -23,7 +23,10 @@
                     "type": "text"
                 }
             ],
-            "relation": [],
+            "relation": [
+				"Publications",
+				"Co-authors",
+			],
             "search": [
                 "label"
             ]
@@ -86,7 +89,11 @@
                     "type": "text"
                 }
             ],
-            "relation": [],
+            "relation": [
+				"Publications",
+				"Co-authors",
+				"MeSH Term"	
+			],
             "search": [
 				"label",
                 "Title"
@@ -110,7 +117,9 @@
                     "type": "text"
                 }
             ],
-            "relation": [],
+            "relation": [
+				"MeSH Term"
+			],
             "search": [
                 "label"
             ]
