@@ -205,7 +205,7 @@
 								"limit": 25
 							},
 							{
-								"name":"Publications",
+								"name":"MeSH Term",
 								"limit": 25	
 							}
 						]
