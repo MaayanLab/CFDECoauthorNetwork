@@ -249,7 +249,7 @@
                         "src": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/CFDE.png",
                         "alt": "CFDE Coauthorship Network",
                         "title": "CFDE Coauthorship Network",
-                        "color": "inherit",
+                        "color": "#FFF",
                         "size": "small"
                     }
                 },
