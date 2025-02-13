@@ -205,8 +205,8 @@
 								"limit": 25
 							},
 							{
-								"name":"Coauthors",
-								"limit": 25
+								"name":"Publications",
+								"limit": 25	
 							}
 						]
                     },
