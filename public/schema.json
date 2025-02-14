@@ -246,6 +246,7 @@
                 {
                     "component": "logo",
                     "props": {
+            			"src": "https://raw.githubusercontent.com/MaayanLab/CFDECoauthorNetwork/refs/heads/next14/public/img/CFDE_Circle.png",
                         "title": "CFDE Co-authorship Network",
                         "color": "#FFF",
                         "size": "small"
