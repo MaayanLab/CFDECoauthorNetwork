@@ -111,7 +111,7 @@ export const cfde_theme = createTheme({
             fontStyle: "normal",
             fontWeight: 500,
             color: "#9E9E9E"
-        },
+        }
     },
     palette: {
         primary: {
@@ -180,6 +180,15 @@ export const cfde_theme = createTheme({
                     },
                     '& .MuiSvgIcon-root': { 
                         fontSize: 20,
+                    }
+                }
+            }
+        },
+        MuiTab: {
+            styleOverrides: {
+                root: {
+                    '&.Mui-selected': {
+                        color: "#336699",
                     }
                 }
             }

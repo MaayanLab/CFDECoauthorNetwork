@@ -7,6 +7,14 @@ import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import { UISchema } from "@/app/api/schema/route";
 import { NetworkSchema } from "@/app/api/knowledge_graph/route";
 import { CustomToolbar } from "../Enrichment/NetworkTable";
+
+import { alpha, styled } from '@mui/material/styles';
+const CustomTab = styled(Tab)({
+  '& .MuiTab-root.Mui-selected': {
+      color: '#336699',
+  	}
+});
+
 const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) => {
 	const [processedData, setProcessedData] = useState<{
 		[key:string]: {
@@ -61,7 +69,7 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 										text: prop.text,
 										href: prop.href,
 										renderCell: ({row, field})=>{
-											return <Button href={row[field].href}>{row[field].text}</Button>
+											return <Button href={row[field].href} color='secondary'>{row[field].text}</Button>
 										},
 										count: 0
 									})

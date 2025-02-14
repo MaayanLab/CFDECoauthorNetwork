@@ -59,9 +59,26 @@ import { layouts } from '../Cytoscape';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
+import { alpha, styled } from '@mui/material/styles';
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
+const CustomTextField = styled(TextField)({
+  '& label.Mui-focused': {
+      color: 'black',
+  	},
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#E0E3E7',
+    },
+    '&:hover fieldset': {
+      borderColor: '#B2BAC2',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#6F7E8C',
+    },
+  },
+});
   
   function Form({
     edges=[],
@@ -155,12 +172,12 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                                 multiple
                                 limitTags={2}
                                 id="multiple-limit-tags"
-                                options={edges}
-                                // getOptionLabel={(option)=>option.name}
-								value={edges.map(({ name }) => name)} // Set all options as selected by default
+                                 
+								options={edges}
+                                getOptionLabel={(option)=>option.name}
                                 value={relation.map(({name}:{name:string})=>name)}
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Select Relation" placeholder="Select Relation" />
+                                    <CustomTextField {...params} label="Select Relation" placeholder="Select Relation"/>
                                 )}
                                 renderOption={(props, option, { selected }) => (
                                     <li {...props}>
