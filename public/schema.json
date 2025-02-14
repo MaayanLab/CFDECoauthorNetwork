@@ -202,11 +202,11 @@
 						"relation": [
 							{
 								"name":"Publications",
-								"limit": 25
+								"limit": 10
 							},
 							{
 								"name":"MeSH Term",
-								"limit": 25	
+								"limit": 5	
 							}
 						]
                     },
