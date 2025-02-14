@@ -173,8 +173,8 @@
         }
     ],
     "header": {
-        "header": "CFDE Coauthorship Network",
-        "title": "CFDE Coauthorship Network",
+        "header": "CFDE Co-authorship Network",
+        "title": "CFDE Co-authorship Network",
         "background": {
             "backgroundColor": "#000",
             "contrastText": "#FFF"
@@ -182,7 +182,7 @@
         "icon": {
             "src": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/CFDE.png",
             "favicon": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/favicon.png",
-            "faviconTitle": "CFDE Coauthor Network",
+            "faviconTitle": "CFDE Co-author Network",
             "alt": "CFDE logo",
             "key": "CFDE_logo",
             "width": 100,
@@ -191,7 +191,7 @@
         "tabs": [
             {
                 "endpoint": "/",
-                "label": "Coauthorship KG Explorer",
+                "label": "Co-authorship KG Explorer",
                 "type": "page",
                 "component": "KnowledgeGraph",
                 "props": {
@@ -223,8 +223,8 @@
 				"component": "UseCase",
 				"props": {
 					"init_function": "initialize_kg",
-					"title": "Coauthor Search",
-					"Description": "Find related coauthors to the author in question.",
+					"title": "Co-author Search",
+					"Description": "Find related co-authors to the author in question.",
 					"endpoint": "/api/coauthor",
 					"type": "Authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
@@ -246,7 +246,7 @@
                 {
                     "component": "logo",
                     "props": {
-                        "title": "CFDE Coauthorship Network",
+                        "title": "CFDE Co-authorship Network",
                         "color": "#FFF",
                         "size": "small"
                     }
