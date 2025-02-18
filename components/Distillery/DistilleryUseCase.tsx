@@ -4,7 +4,7 @@ import { initialize_kg } from "../TermAndGeneSearch";
 
 import { Grid, Typography, CircularProgress, Stack, Card, CardContent } from '@mui/material'
 import AsyncForm from "./AsyncForm";
-import Form from "./Form";
+import Form from "./Form_alt";
 import NetworkTable from "../TermAndGeneSearch/network_table";
 const Cytoscape = dynamic(()=>import('../Cytoscape'),
     {

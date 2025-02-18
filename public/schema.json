@@ -49,11 +49,11 @@
                 },
 				{
 					"label": "PMID",
-					"text": "${PMID}",
+					"text": "{$PMID}",
 					"type": "text"
 				},
                 {
-                    "label": "url",
+                    "label": "URL",
                     "text": "${PMID}",
                     "href": "${url}",
                     "type": "link"

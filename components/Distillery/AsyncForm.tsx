@@ -246,7 +246,7 @@ const AsyncForm = ({
     const user_input = querySelected || hovered
     return (
         <Stack direction={"column"} spacing={1}>
-            <Typography><b>Select {type}:</b></Typography>
+            <Typography variant="body1" color="secondary"><b> Select {type}:</b></Typography>
             <Autocomplete
                 sx={{ width: '100%' }}
                 value={selected}
@@ -285,7 +285,7 @@ const AsyncForm = ({
                         InputProps={{
                             ...params.InputProps,
                             sx: {
-                                fontSize: 12,
+                                fontSize: 16,
                                 height: 45,
                                 width: "100%",
                                 paddingLeft: 5,

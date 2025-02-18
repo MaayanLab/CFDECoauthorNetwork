@@ -84,9 +84,9 @@ import { layouts } from '../Cytoscape';
         <Grid container spacing={1}>            
 			<Grid item>
 				<Stack direction={"row"} alignItems={"center"} spacing={2}>
-					<Typography variant="subtitle2">Size:</Typography>
+					<Typography variant="subtitle2">Min. #:</Typography>
 					<Icon path={mdiMinusCircleOutline} size={0.8} />
-					<Tooltip title={'Set number per relationship:'}>
+					<Tooltip title={'Minimum number of shared publications:'}>
 						<Slider 
 							value={parseInt(limit) || 5}
 							color="secondary"
