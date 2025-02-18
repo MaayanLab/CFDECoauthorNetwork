@@ -225,7 +225,7 @@
 				"props": {
 					"init_function": "initialize_kg",
 					"title": "Co-author Search",
-					"description": "Find related co-authors to the author in question.",
+					"description": "Find related co-authors to the author in question. The slider controls the minimum number of shared publications for the co-authors to appear in the Knowledge Graph",
 					"endpoint": "/api/coauthor",
 					"type": "Authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
@@ -259,7 +259,17 @@
                         "code": "https://github.com/MaayanLab/CFDECoauthorNetwork",
                         "issues": "https://github.com/MaayanLab/CFDECoauthorNetwork/issues/new"
                     }
-                }
+                },
+				{
+					"component": "logo",
+                    "props": {
+                        "src": "https://raw.githubusercontent.com/MaayanLab/CFDECoauthorNetwork/refs/heads/next14/public/img/CFDE_Circle.png",
+                        "href": "https://info.cfde.cloud/",
+						"title": "CFDE Workbench",
+						"color": "#FFF",
+						"size": "small"
+					}
+				}
             ],
             [
                 {
@@ -289,8 +299,7 @@
                     }
                 }
             ]
-        ],
-        "footer_text": "<span style='color:white'>Please acknowledge Enrichr-KG in your publications by citing the following reference:<br><a style='color: cyan' href='https://doi.org/10.1093/nar/gkad393'>Evangelista JE, Xie Z, Marino GB, Nguyen N, Clarke DJB, Ma'ayan A. Enrichr-KG: bridging enrichment analysis across multiple libraries. Nucleic Acids Res. 2023 May 11:gkad393. doi: 10.1093/nar/gkad393. PMID: 37166973.</a></span>"
+        ]
     },
     "ui_theme": "cfde_theme"
 }
