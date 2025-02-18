@@ -29,7 +29,8 @@
 			],
             "search": [
                 "label"
-            ]
+            ],
+			"color": "#80D8FF"
         },
         {
             "node": "Publication",
@@ -97,6 +98,7 @@
 				"label",
                 "Title"
             ]
+			"color": "#615ced"
         },
         {
             "node": "MeSH",
@@ -122,6 +124,7 @@
             "search": [
                 "label"
             ]
+			"color": "#b1f774"
         }
     ],
     "edges": [
