@@ -49,7 +49,7 @@
                 },
 				{
 					"label": "PMID",
-					"text": "{$PMID}",
+					"text": "${PMID}",
 					"type": "text"
 				},
                 {
