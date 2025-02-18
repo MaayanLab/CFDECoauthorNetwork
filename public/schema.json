@@ -259,15 +259,27 @@
                         "code": "https://github.com/MaayanLab/CFDECoauthorNetwork",
                         "issues": "https://github.com/MaayanLab/CFDECoauthorNetwork/issues/new"
                     }
-                },
+                }
+            ],
+            [
 				{
-					"component": "logo",
+					"component": "text",
                     "props": {
-                        "src": "https://raw.githubusercontent.com/MaayanLab/CFDECoauthorNetwork/refs/heads/next14/public/img/CFDE_Circle.png",
-                        "href": "https://info.cfde.cloud/",
-						"title": "CFDE Workbench",
-						"color": "#FFF",
-						"size": "small"
+                        "text": "Consortium",
+					}
+				},
+				{
+					"component": "link",
+                    "props": {
+                        "text": "Information Portal",
+                        "href": "https://info.cfde.cloud/"
+					}
+				},
+				{
+					"component": "link",
+                    "props": {
+                        "text": "Data Portal",
+                        "href": "https://data.cfde.cloud/"
 					}
 				}
             ],
