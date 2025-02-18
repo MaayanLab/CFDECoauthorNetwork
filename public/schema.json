@@ -48,11 +48,6 @@
                     "text": "${label}",
                     "type": "text"
                 },
-				{
-					"label": "PMID",
-					"text": "${PMID}",
-					"type": "text"
-				},
                 {
                     "label": "URL",
                     "text": "${PMID}",
