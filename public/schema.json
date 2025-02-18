@@ -195,6 +195,7 @@
                 "type": "page",
                 "component": "KnowledgeGraph",
                 "props": {
+					"description": "Explore the connections between the authors their publications and related MeSH terms.",
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Authors",
@@ -218,13 +219,13 @@
             },
 			{
 				"endpoint": "/Coauthor",
-				"label": "Coauthor Minimum Connections Search",
+				"label": "Co-authorship Minimum Connections Search",
 				"type": "page",
 				"component": "UseCase",
 				"props": {
 					"init_function": "initialize_kg",
 					"title": "Co-author Search",
-					"Description": "Find related co-authors to the author in question.",
+					"description": "Find related co-authors to the author in question.",
 					"endpoint": "/api/coauthor",
 					"type": "Authors",
 					"options_endpoint": "/api/knowledge_graph/node_search",
