@@ -242,7 +242,6 @@ const AsyncForm = ({
 			setElementMapper({nodes, edges})
 		}
     }, [elements])
-    console.log(options)
     const user_input = querySelected || hovered
     return (
         <Stack direction={"column"} spacing={1}>

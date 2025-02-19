@@ -220,7 +220,8 @@ const CustomTextField = styled(TextField)({
                                             sx={{padding: 0, borderRadius: "8px"}}
                                             onDelete={()=>{
                                                 const {filter: f, ...rest} = searchParams
-                                                const filter = JSON.parse(f || '{}')
+                                                let filter = JSON.parse(f || '{}')
+                                                if (Object.keys(filter).length === 0) filter = initial_query
                                                 const rels = []
                                                 for (const i of filter.relation || []) {
                                                     if (i.name !== value.name) {
