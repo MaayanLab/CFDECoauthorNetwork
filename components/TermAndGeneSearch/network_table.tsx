@@ -69,7 +69,7 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 										text: prop.text,
 										href: prop.href,
 										renderCell: ({row, field})=>{
-											return <Button href={row[field].href} color='secondary'>{row[field].text}</Button>
+											return <Button href={row[field].href} color='secondary' target="_blank">{row[field].text}</Button>
 										},
 										count: 0
 									})
