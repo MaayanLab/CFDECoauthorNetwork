@@ -455,20 +455,6 @@
                         "query_field": "relation"
                     }
                 }
-            },
-            {
-                "endpoint:": "/",
-                "label": "Coauthor Search",
-                "type": "page",
-                "component": "UseCase",
-                "props": {
-                    "init_function": "initialize_kg",
-                    "title": "Coauthor Search",
-                    "description": "Find all coauthors of a given author and the shared publications that they have.!",
-                    "endpoint": "api/coauthor/",
-                    "type": "author",
-                    "options_endpoint": "/api/knowledge_graph/node_search"
-                }
             }
         ]
     },
