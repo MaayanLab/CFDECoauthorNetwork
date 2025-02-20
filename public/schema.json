@@ -8,11 +8,6 @@
             ],
             "display": [
                 {
-                    "label": "id",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
                     "label": "label",
                     "text": "${label}",
                     "type": "text"
