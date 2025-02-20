@@ -28,6 +28,33 @@
 	    "color": "#80D8FF"
         },
         {
+            "node": "Grants",
+            "example": [
+                "1U54OD036472-01",
+                "1R03OD038391-01"
+            ],
+            "display": [
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "Contact",
+                    "text": "${Contact}",
+                    "type": "text"
+                }
+            ],
+            "relation": [
+				"Grant",
+				"Contact"
+			],
+            "search": [
+                "label"
+            ],
+	    "color": "#f59f5d"
+        },
+        {
             "node": "Publication",
             "example": [
 				"3D virtual reality vs. 2D desktop regist..."
@@ -134,6 +161,52 @@
         {
             "match": [
                 "MeSH Term"
+            ],
+            "selected": true,
+            "display": [
+                {
+                    "label": "source label",
+                    "text": "${source_label}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target label",
+                    "text": "${target_label}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "Grant"
+            ],
+            "selected": true,
+            "display": [
+                {
+                    "label": "source label",
+                    "text": "${source_label}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target label",
+                    "text": "${target_label}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "Contact"
             ],
             "selected": true,
             "display": [
