@@ -115,8 +115,8 @@
             "selected": true,
             "display": [
                 {
-                    "label": "source",
-                    "text": "${source label}",
+                    "label": "source label",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -125,8 +125,8 @@
                     "type": "text"
                 },
                 {
-                    "label": "target",
-                    "text": "${target label}",
+                    "label": "target label",
+                    "text": "${target_label}",
                     "type": "text"
                 }
             ]
@@ -138,8 +138,8 @@
             "selected": true,
             "display": [
                 {
-                    "label": "source",
-                    "text": "${source label}",
+                    "label": "source label",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -148,8 +148,8 @@
                     "type": "text"
                 },
                 {
-                    "label": "target",
-                    "text": "${target label}",
+                    "label": "target label",
+                    "text": "${target_label}",
                     "type": "text"
                 }
             ]
