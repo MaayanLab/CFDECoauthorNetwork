@@ -19,13 +19,13 @@
                 }
             ],
             "relation": [
-				"Publications",
-				"MeSH Term"
+		"Publications",
+		"MeSH Term"
 			],
             "search": [
                 "label"
             ],
-			"color": "#80D8FF"
+	    "color": "#80D8FF"
         },
         {
             "node": "Publication",
@@ -76,14 +76,14 @@
                 }
             ],
             "relation": [
-				"Publications",
-				"MeSH Term"	
-			],
+		"Publications",
+		"MeSH Term"	
+	    ],
             "search": [
-				"label",
+		"label",
                 "Title"
             ],
-			"color": "#97BDB8"
+	    "color": "#97BDB8"
         },
         {
             "node": "MeSH",
@@ -116,7 +116,7 @@
             "display": [
                 {
                     "label": "source",
-                    "text": "${source}",
+                    "text": "${source label}",
                     "type": "text"
                 },
                 {
@@ -126,7 +126,7 @@
                 },
                 {
                     "label": "target",
-                    "text": "${target}",
+                    "text": "${target label}",
                     "type": "text"
                 }
             ]
@@ -139,7 +139,7 @@
             "display": [
                 {
                     "label": "source",
-                    "text": "${source}",
+                    "text": "${source label}",
                     "type": "text"
                 },
                 {
@@ -149,7 +149,7 @@
                 },
                 {
                     "label": "target",
-                    "text": "${target}",
+                    "text": "${target label}",
                     "type": "text"
                 }
             ]
