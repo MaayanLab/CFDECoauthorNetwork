@@ -103,6 +103,29 @@
             ]
         },
         {
+            "node": "Grants",
+            "example": [
+                "a",
+                "b"
+            ],
+            "display": [
+                {
+                    "label": "Grant ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "label"
+            ]
+        },
+        {
             "node": "MeSH",
             "example": [
                 "Uridine Diphosphate",
