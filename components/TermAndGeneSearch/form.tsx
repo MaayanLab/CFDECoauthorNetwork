@@ -19,7 +19,8 @@ import {
     Checkbox,
     FormControlLabel,
     TextField,
-    Divider
+    Divider,
+	Switch
  } from '@mui/material';
 
 import FlipCameraAndroidIcon from '@mui/icons-material/FlipCameraAndroid';
@@ -118,6 +119,7 @@ const CustomTextField = styled(TextField)({
     },
 }) {
     const pathname = usePathname()
+	const coauthPath = "/coauthor"
     const router = useRouter()
     const {
         filter:f,
@@ -284,7 +286,7 @@ const CustomTextField = styled(TextField)({
                                         const {fullscreen, ...rest} = searchParams
                                         const query = {...rest}
                                         if (!fullscreen) query['fullscreen'] = 'true'
-                                        router_push(router, pathname, query)
+                                        router_push(router, coauthPath, query)
                                     }}
                                 >
                                     {fullscreen ? <FullscreenExitIcon/>: <FullscreenIcon/>}
@@ -305,7 +307,6 @@ const CustomTextField = styled(TextField)({
                             <Tooltip title={"Table view"}>
                                 <IconButton color="secondary" 
                                     onClick={()=>{
-
                                         const {view, ...query} = searchParams
                                         query['view'] = 'table'
                                         router_push(router, pathname, query)
@@ -314,6 +315,17 @@ const CustomTextField = styled(TextField)({
                                 >
                                     <Icon path={mdiTable} size={0.8} />
                                 </IconButton>
+                            </Tooltip>
+                            <Tooltip title={"Switch Network"}>
+                                <Switch color="secondary" 
+                                    onClick={()=>{
+                                        console.log("Clicked")
+                                        const {view, ...query} = searchParams
+                                        router_push(router, pathname, query)
+                                    }}
+                                    sx={{marginLeft: 5, borderRadius: 5, background: (!view) ? "#e0e0e0": "none"}}
+                                >
+                                </Switch>
                             </Tooltip>
                             <Divider sx={{backgroundColor: "secondary.main", height: 20, borderRightWidth: 1}} orientation="vertical"/>
                             <Tooltip title={"Save subnetwork"}>

@@ -294,6 +294,7 @@ const AsyncFormComponent = ({direction,
                                 start: type,
                                 start_field: "label",
                                 start_term: e,
+				limit: parseInt(5),
                             }
                             if (end_filter.end) {
                                 query = {
@@ -307,6 +308,7 @@ const AsyncFormComponent = ({direction,
                                 end: type,
                                 end_field: "label",
                                 end_term: e,
+				limit: parseInt(5),
                             }
                         }
                         return (

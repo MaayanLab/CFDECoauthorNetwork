@@ -26,29 +26,29 @@ export function withCookie<P>(Component: React.ComponentType<{[key:string]: any}
 
 export const ConsentCookie = ({consentCookie, setConsentCookie}) => {
     if (consentCookie !== undefined || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID === '' || process.env.NEXT_PUBLIC_COOKIE_NAME === '') return null
-    else {
-        console.log(consentCookie)
-        return(
-            <Alert severity="info" id="cookieConsent">
-                <AlertTitle>Cookie Policy</AlertTitle>
-                <Grid container alignItems={"center"} spacing={2}>
-                    <Grid item>
-                        <Typography>Is it ok to have Google Analytics turned on while you are visiting this website?</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Button onClick={() => {
-                            setConsentCookie('allow')
-                        }} variant='outlined' color="secondary">I agree</Button>
-                    </Grid>
-                    <Grid item>
-                        <Button onClick={() => {
-                            setConsentCookie('deny')
-                        }} variant='outlined' color="secondary">Decline</Button>
-                    </Grid>
-                </Grid>
-            </Alert>
-        )
-    }
+    //else {
+    //    console.log(consentCookie)
+    //    return(
+    //        <Alert severity="info" id="cookieConsent">
+    //            <AlertTitle>Cookie Policy</AlertTitle>
+    //            <Grid container alignItems={"center"} spacing={2}>
+    //                <Grid item>
+    //                    <Typography>Is it ok to have Google Analytics turned on while you are visiting this website?</Typography>
+    //                </Grid>
+    //                <Grid item>
+    //                    <Button onClick={() => {
+    //                        setConsentCookie('allow')
+    //                    }} variant='outlined' color="secondary">I agree</Button>
+    //                </Grid>
+    //                <Grid item>
+    //                    <Button onClick={() => {
+    //                        setConsentCookie('deny')
+    //                    }} variant='outlined' color="secondary">Decline</Button>
+    //                </Grid>
+    //            </Grid>
+    //        </Alert>
+    //    )
+    //}
 }
 
 
