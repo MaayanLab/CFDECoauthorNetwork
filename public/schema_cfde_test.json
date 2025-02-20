@@ -1,35 +1,6 @@
 {
     "nodes": [
         {
-            "node": "Grants",
-            "example": [
-                "a",
-                "b"
-            ],
-            "display": [
-                {
-                    "label": "Grants ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                },
-                {
-                    "label": "Contact",
-                    "text": "${Contact}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label"
-            ]
-        },
-        {
             "node": "Publication",
             "example": [
                 38191932,
