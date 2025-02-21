@@ -1,15 +1,62 @@
 {
     "nodes": [
         {
-            "node": "Publication",
+            "node": "Authors",
             "example": [
+                "Avi Ma'ayan",
+                "Daniel J B Clarke"
             ],
             "display": [
                 {
-                    "label": "Publication ID",
-                    "text": "${id}",
+                    "label": "label",
+                    "text": "${label}",
                     "type": "text"
                 },
+                {
+                    "label": "Affiliation",
+                    "text": "${affiliation}",
+                    "type": "text"
+                }
+            ],
+            "relation": [
+		"Publications",
+		"MeSH Term"
+			],
+            "search": [
+                "label"
+            ],
+	    "color": "#80D8FF"
+        },
+        {
+            "node": "Grants",
+            "example": [
+                "1U54OD036472-01",
+                "1R03OD038391-01"
+            ],
+            "display": [
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "Contact",
+                    "text": "${Contact}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "label"
+            ],
+	    "color": "#f59f5d"
+        },
+        {
+            "node": "Publication",
+            "example": [
+				"3D virtual reality vs. 2D desktop regist..."
+            ],
+            "display": [
                 {
                     "label": "label",
                     "text": "${label}",
@@ -17,7 +64,7 @@
                 },
                 {
                     "label": "URL",
-                    "text": "${url}",
+                    "text": "${PMID}",
                     "href": "${url}",
                     "type": "link"
                 },
@@ -50,117 +97,50 @@
                     "label": "Year",
                     "text": "${Year}",
                     "type": "text"
-                },
-                {
-                    "label": "PMID",
-                    "text": "${PMID}",
-                    "type": "text"
                 }
             ],
-            "relation": [],
+            "relation": [
+		"Publications",
+		"MeSH Term"	
+	    ],
             "search": [
-                "id",
-                "label"
-            ]
-        },
-        {
-            "node": "Authors",
-            "example": [
-                "A M Maga",
-                "Aaron Goldman"
+		"label",
+                "Title"
             ],
-            "display": [
-                {
-                    "label": "Authors ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                },
-                {
-                    "label": "PMIDS",
-                    "text": "${PMIDS}",
-                    "type": "text"
-                },
-                {
-                    "label": "affiliation",
-                    "text": "${affiliation}",
-                    "type": "text"
-                },
-                {
-                    "label": "Name",
-                    "text": "${Name}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label"
-            ]
-        },
-        {
-            "node": "Grants",
-            "example": [
-                "a",
-                "b"
-            ],
-            "display": [
-                {
-                    "label": "Grant ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-		"Grant ID",
-                "label"
-            ]
+	    "color": "#97BDB8"
         },
         {
             "node": "MeSH",
             "example": [
-                "Uridine Diphosphate",
-                "NF-E2-Related Factor 2"
+                "Acetates",
+                "Data Mining"
             ],
             "display": [
-                {
-                    "label": "MeSH ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
                 {
                     "label": "label",
                     "text": "${label}",
                     "type": "text"
                 }
             ],
-            "relation": [],
+            "relation": [
+				"MeSH Term"
+			],
             "search": [
-                "id",
                 "label"
-            ]
+            ],
+			"color": "#b1f774"
         }
     ],
     "edges": [
         {
             "match": [
-                "Grant"
+                "Publications"
             ],
             "selected": true,
             "display": [
                 {
-                    "label": "source",
-                    "text": "${source}",
+                    "label": "source label",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -169,31 +149,8 @@
                     "type": "text"
                 },
                 {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "Contact"
-            ],
-            "selected": true,
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
+                    "label": "target label",
+                    "text": "${target_label}",
                     "type": "text"
                 }
             ]
@@ -205,23 +162,13 @@
             "selected": true,
             "display": [
                 {
-                    "label": "source",
-                    "text": "${source}",
+                    "label": "source label",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
                     "label": "relation",
                     "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                },
-                {
-                    "label": "source label",
-                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -233,13 +180,13 @@
         },
         {
             "match": [
-                "Publications"
+                "Grant"
             ],
             "selected": true,
             "display": [
                 {
-                    "label": "source",
-                    "text": "${source}",
+                    "label": "source label",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -248,13 +195,26 @@
                     "type": "text"
                 },
                 {
-                    "label": "target",
-                    "text": "${target}",
+                    "label": "target label",
+                    "text": "${target_label}",
                     "type": "text"
-                },
+                }
+            ]
+        },
+        {
+            "match": [
+                "Contact"
+            ],
+            "selected": true,
+            "display": [
                 {
                     "label": "source label",
                     "text": "${source_label}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
                     "type": "text"
                 },
                 {
@@ -266,66 +226,119 @@
         }
     ],
     "header": {
-        "header": "Demo-KG",
-        "title": "Demo-KG",
+        "header": "CFDE Co-authorship Network",
+        "title": "CFDE Co-authorship Network",
         "background": {
             "backgroundColor": "#000",
             "contrastText": "#FFF"
         },
         "icon": {
-            "src": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
-            "favicon": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
-            "faviconTitle": "Demo-KG",
-            "alt": "Demo-KG",
-            "key": "Demo-KG_logo",
+            "src": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/CFDE.png",
+            "favicon": "https://s3.amazonaws.com/maayan-kg/cfde-kg/assets/favicon.png",
+            "faviconTitle": "CFDE Co-author Network",
+            "alt": "CFDE logo",
+            "key": "CFDE_logo",
             "width": 100,
-            "height": 60
+            "height": 100
         },
         "tabs": [
             {
                 "endpoint": "/",
-                "label": "Term & Gene Search",
+                "label": "Co-authorship KG Explorer",
                 "type": "page",
                 "component": "KnowledgeGraph",
                 "props": {
+					"description": "Explore the connections between the authors their publications and related MeSH terms.",
                     "init_function": "initialize_kg",
                     "initial_query": {
-                        "start": "authors",
+                        "start": "Authors",
                         "start_term": "Avi Ma'ayan",
-                        "start_field": "label"
+						"relation": [
+							{
+								"name":"Publications",
+								"limit": 10
+							},
+							{
+								"name":"MeSH Term",
+								"limit": 5	
+							}
+			]
                     },
                     "subheader": {
                         "url_field": "filter",
                         "query_field": "relation"
                     }
                 }
-            }
+            },
+			{
+				"endpoint": "/Coauthor",
+				"label": "Co-authorship Minimum Connections Search",
+				"type": "page",
+				"component": "UseCase",
+				"props": {
+					"init_function": "initialize_kg",
+					"title": "Co-author Search",
+					"description": "Find related co-authors to the author in question. The slider controls the minimum number of shared publications for the co-authors to appear in the Knowledge Graph",
+					"endpoint": "/api/coauthor",
+					"type": "Authors",
+					"options_endpoint": "/api/knowledge_graph/node_search",
+					"default_term": "Avi Ma'ayan",
+					"fields": [
+						"label"
+					],
+					"extra": [
+						"Grants",
+						"MeSH"
+					]
+				}
+			}
         ]
     },
     "footer": {
         "style": {
-            "background": "#000",
+            "background": "#336699",
             "color": "#FFF"
         },
-        "layout": [
+		"layout": [
             [
                 {
                     "component": "logo",
                     "props": {
-                        "src": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
-                        "alt": "enrichr-kg",
-                        "title": "Enrichr-KG",
-                        "color": "inherit",
+            			"src": "https://raw.githubusercontent.com/MaayanLab/CFDECoauthorNetwork/refs/heads/next14/public/img/CFDE_Circle.png",
+                        "title": "CFDE Co-authorship Network",
+                        "color": "#FFF",
                         "size": "small"
                     }
                 },
                 {
                     "component": "github",
                     "props": {
-                        "code": "https://github.com/MaayanLab/enrichr-kg",
-                        "issues": "https://github.com/MaayanLab/enrichr-kg-issues/issues/new"
+                        "code": "https://github.com/MaayanLab/CFDECoauthorNetwork",
+                        "issues": "https://github.com/MaayanLab/CFDECoauthorNetwork/issues/new"
                     }
                 }
+            ],
+            [
+				{
+					"component": "text",
+                    "props": {
+                        "text": "Consortium"
+					}
+				},
+				{
+					"component": "link",
+                    "props": {
+                        "text": "Information Portal",
+                        "href": "https://info.cfde.cloud/"
+					}
+				},
+				{
+					"component": "link",
+                    "props": {
+                        "text": "Data Portal",
+                        "href": "https://data.cfde.cloud/"
+					}
+				}
             ],
             [
                 {
@@ -355,8 +368,7 @@
                     }
                 }
             ]
-        ],
-        "footer_text": "<span style='color:white'>Please acknowledge Enrichr-KG in your publications by citing the following reference:<br><a style='color: cyan' href='https://doi.org/10.1093/nar/gkad393'>Evangelista JE, Xie Z, Marino GB, Nguyen N, Clarke DJB, Ma'ayan A. Enrichr-KG: bridging enrichment analysis across multiple libraries. Nucleic Acids Res. 2023 May 11:gkad393. doi: 10.1093/nar/gkad393. PMID: 37166973.</a></span>"
+        ]
     },
-    "ui_theme": "enrichr_kg_theme"
+    "ui_theme": "cfde_theme"
 }
