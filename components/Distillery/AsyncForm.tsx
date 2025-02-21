@@ -102,6 +102,7 @@ const AsyncForm = ({
     filter_text,
     type,
     fields,
+    extra,
     options_endpoint,
     searchParams,
     elements,
@@ -114,11 +115,13 @@ const AsyncForm = ({
     filter_text?: string,
     type: string,
     fields: Array<string>,
+    extra: Array<string>,
     options_endpoint: string,
     searchParams: {
         term?: string,
         field?: string,
         limit?: string,
+	limit_extra?: string,
         fullscreen?:'true',
         view?:string
     },
@@ -128,6 +131,7 @@ const AsyncForm = ({
     schema: UISchema
 
 }) => {
+
     const router = useRouter()
     const pathname = usePathname()
     const [options, setOptions] = useState<{[key:string]: {[key:string]:any}}>({})
@@ -140,12 +144,14 @@ const AsyncForm = ({
     const [querySelected, setQuerySelected] = useQueryState('selected',  parseAsJson<{id: string, type: 'nodes' | 'edges'}>().withDefault(null))
 	const [hovered, setHovered] = useQueryState('hovered',  parseAsJson<{id: string, type: 'nodes' | 'edges'}>().withDefault(null))
 	const [elementMapper, setElementMapper] = useState({nodes: {}, edges: {}})
-	
+    const extras = schema.header.tabs[1].props.extra;
+    console.log(extras)
     const {
         field='label',
         limit,
         fullscreen,
         view,
+	limit_extra
     } = searchParams
 
     useEffect(()=>{
@@ -179,9 +185,14 @@ const AsyncForm = ({
                 field,
             }
             if (options_endpoint === '/api/knowledge_graph/node_search') query["type"] = type
+            console.log("TYPE") 
+            console.log(type)
+	    console.log(options_endpoint)
             if (filter) query["filter"]=JSON.stringify(filter)
             if (term) query["term"] = term
             if (limit) query["limit"] = limit
+            if (extras) query["extras"] = extras
+            setTerm(term)
             setTerm(term)
             const query_str = Object.entries(query).map(([k,v])=>(`${k}=${v}`)).join("&")
             

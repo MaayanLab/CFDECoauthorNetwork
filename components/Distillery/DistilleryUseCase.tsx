@@ -23,7 +23,8 @@ async function DistilleryUseCase({
         default_term,
         checkbox_filter,
         filter_text,
-        options_endpoint
+        options_endpoint,
+	extra
     } : {
         relations?: Array<{name: string, end?:string}>,
         title?: string,
@@ -35,10 +36,12 @@ async function DistilleryUseCase({
         checkbox_filter?:{[key:string]: any},
         filter_text?: string,
         options_endpoint?: string,
+	extra?: Array<string>,
         searchParams: {
             term?: string,
             field?: string,
             limit?: string,
+	    limit_extra?:string,
             fullscreen?:'true',
             view?:string,
             type?: string,
@@ -54,6 +57,7 @@ async function DistilleryUseCase({
             const field = searchParams.field || "label"
             const term = searchParams.term || default_term
             const limit = searchParams.limit || 5
+	    const limit_extra = searchParams.limit_extra || 0
             const node_type = searchParams.type || type
             if (!fields) {
                 const current_node = schema.nodes.filter(i=>i.node == node_type)
@@ -70,12 +74,16 @@ async function DistilleryUseCase({
                 }
             })
             let elements = null
-            if (term) {
+            const extras = extra
+	    const lextra = limit_extra
+	    if (term) {
                 const body = {
                     start: node_type,
                     start_term: term,
                     start_field: field,
-                    limit
+		    start_extras: extras,
+                    limit,
+		    limit_extra: lextra
                 }
                 if (relation.length) body["relation"] = relation
                 console.log(`${process.env.NODE_ENV==="development" ? process.env.NEXT_PUBLIC_HOST_DEV : process.env.NEXT_PUBLIC_HOST}${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX: ''}${endpoint}?filter=${JSON.stringify(body)}`)
@@ -111,6 +119,7 @@ async function DistilleryUseCase({
                                     searchParams={searchParams}
                                     elements={elements}
                                     schema={schema}
+				    extra={extras}
                                     tooltip_templates_edges={tooltip_templates_edges}
                                     tooltip_templates_nodes={tooltip_templates_nodes}
                                 />

@@ -53,16 +53,18 @@ import { layouts } from '../Cytoscape';
         field?: string,
         limit?: string,
         fullscreen?:'true',
-        view?:string
+        view?:string,
+	limit_extra?: string
     },
 }) {
     const pathname = usePathname()
     const router = useRouter()
-
+    console.log(elements)
     const {
         limit,
         view,
-        fullscreen
+        fullscreen,
+	limit_extra
     } = searchParams
     const [edge_labels, setEdgeLabels] = useQueryState('edge_labels')
     const [tooltip, setTooltip] = useQueryState('tooltip')
@@ -84,11 +86,37 @@ import { layouts } from '../Cytoscape';
         <Grid container spacing={1}>            
 			<Grid item>
 				<Stack direction={"row"} alignItems={"center"} spacing={2}>
+					<Typography variant="subtitle2"># of Extra Nodes per Author and Publication</Typography>
+					<Icon path={mdiMinusCircleOutline} size={0.8} />
+					<Tooltip title={'Maximum number of Extra nodes per Author and Publication:'}>
+						<Slider 
+							value={parseInt(limit_extra) || 1}
+							color="secondary"
+							valueLabelDisplay='auto'
+							onChange={(e2, nv2)=>{
+								const query = {
+									...searchParams,
+									limit_extra: `${nv2}`
+								}
+								router_push(router, pathname, query)
+							}}
+							min={0}
+							max={25}
+							sx={{width: 150}}
+							aria-labelledby="continuous-slider"
+						/>
+					</Tooltip>
+					<Icon path={mdiPlusCircleOutline} size={0.8} />
+					{/* <Typography variant="subtitle2">{limit_extra ? limit_extra: !end ? relation.length === 1? ((elements || {}).edges || []).length: 5: 25}</Typography> */}
+				</Stack>
+			</Grid>
+			<Grid item>
+				<Stack direction={"row"} alignItems={"center"} spacing={2}>
 					<Typography variant="subtitle2">Min. #:</Typography>
 					<Icon path={mdiMinusCircleOutline} size={0.8} />
 					<Tooltip title={'Minimum number of shared publications:'}>
 						<Slider 
-							value={parseInt(limit) || 5}
+							value={parseInt(limit) || 1}
 							color="secondary"
 							valueLabelDisplay='auto'
 							onChange={(e, nv)=>{
