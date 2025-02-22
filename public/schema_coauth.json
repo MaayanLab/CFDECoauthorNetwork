@@ -246,22 +246,22 @@
                 "endpoint": "/",
                 "label": "Co-authorship KG Explorer",
                 "type": "page",
-                "component": "KnowledgeGraph",
+                "component": "CoauthorSearch",
                 "props": {
 					"description": "Explore the connections between the authors their publications and related MeSH terms.",
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Authors",
                         "start_term": "Avi Ma'ayan",
-						"relation": [
-							{
-								"name":"Publications",
-								"limit": 10
-							},
-							{
-								"name":"MeSH Term",
-								"limit": 5	
-							}
+			"relation": [
+				{
+					"name":"Publications",
+					"limit": 10
+				},
+				{
+					"name":"MeSH Term",
+					"limit": 5	
+				}
 			]
                     },
                     "subheader": {
