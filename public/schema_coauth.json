@@ -268,7 +268,11 @@
                     "subheader": {
                         "url_field": "filter",
                         "query_field": "relation"
-                    }
+                    },
+		    "extras": [
+			"Grants",
+			"MeSH"
+		    ]
                 }
             },
 			{
