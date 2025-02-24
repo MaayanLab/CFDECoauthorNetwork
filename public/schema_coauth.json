@@ -262,13 +262,13 @@
 					"name":"MeSH Term",
 					"limit": 5	
 				}
-			]
+			],
+			"search_type": "explore"
                     },
                     "subheader": {
                         "url_field": "filter",
                         "query_field": "relation"
-                    },
-		    "search_type": "explore"
+                    }
                 }
             },
 			{
