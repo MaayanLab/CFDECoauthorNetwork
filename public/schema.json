@@ -251,6 +251,9 @@
 				{
 					"name":"MeSH Term",
 					"limit": 5	
+				},
+				{
+					"name":"Grants"
 				}
 			],
 			"search_type": "explore"
