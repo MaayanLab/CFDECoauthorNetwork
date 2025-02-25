@@ -20,7 +20,8 @@
             ],
             "relation": [
 		"Publications",
-		"MeSH Term"
+		"MeSH",
+		"Awards"
 			],
             "search": [
                 "label"
@@ -28,7 +29,7 @@
 	    "color": "#80D8FF"
         },
         {
-            "node": "Grants",
+            "node": "Awards",
             "example": [
                 "1U54OD036472-01",
                 "1R03OD038391-01"
@@ -43,18 +44,31 @@
                     "label": "Contact",
                     "text": "${Contact}",
                     "type": "text"
-                }
+                },
+		{
+		    "label": "Title",
+		    "text": "${project_title}",
+		    "type": "text"
+		},
+		{
+		    "label": "URL",
+		    "text": "${project_detail_url}",
+		    "href": "${project_detail_url}",
+		    "type": "link"
+		}
             ],
             "relation": [],
             "search": [
-                "label"
+                "label",
+		"Title"
             ],
 	    "color": "#f59f5d"
         },
         {
-            "node": "Publication",
+            "node": "Publications",
             "example": [
-				"3D virtual reality vs. 2D desktop regist..."
+		    "35188328",
+		    "36456625"
             ],
             "display": [
                 {
@@ -101,7 +115,8 @@
             ],
             "relation": [
 		"Publications",
-		"MeSH Term"	
+		"MeSH",
+		"Awards"
 	    ],
             "search": [
 		"label",
@@ -123,7 +138,7 @@
                 }
             ],
             "relation": [
-				"MeSH Term"
+				"MeSH"
 			],
             "search": [
                 "label"
@@ -157,7 +172,7 @@
         },
         {
             "match": [
-                "MeSH Term"
+                "MeSH"
             ],
             "selected": true,
             "display": [
@@ -232,12 +247,13 @@
                         "start_term": "Avi Ma'ayan",
 			"relation": [
 				{
-					"name":"Publications",
-					"limit": 10
+					"name":"Publications"
 				},
 				{
-					"name":"MeSH Term",
-					"limit": 5	
+					"name":"MeSH"
+				},
+				{
+					"name":"Awards"
 				}
 			],
 			"search_type": "explore"
@@ -251,30 +267,8 @@
 			"MeSH"
 		    ]
                 }
-            },
-			{
-				"endpoint": "/Coauthor",
-				"label": "Co-authorship Minimum Connections Search",
-				"type": "page",
-				"component": "UseCase",
-				"props": {
-					"init_function": "initialize_kg",
-					"title": "Co-author Search",
-					"description": "Find related co-authors to the author in question. The slider controls the minimum number of shared publications for the co-authors to appear in the Knowledge Graph",
-					"endpoint": "/api/coauthor",
-					"type": "Authors",
-					"options_endpoint": "/api/knowledge_graph/node_search",
-					"default_term": "Avi Ma'ayan",
-					"fields": [
-						"label"
-					],
-					"extra": [
-						"Grants",
-						"MeSH"
-					]
-				}
-			}
-        ]
+            }
+	]
     },
     "footer": {
         "style": {
