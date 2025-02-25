@@ -180,30 +180,7 @@
         },
         {
             "match": [
-                "Grant"
-            ],
-            "selected": true,
-            "display": [
-                {
-                    "label": "source label",
-                    "text": "${source_label}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target label",
-                    "text": "${target_label}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "Contact"
+                "Awards"
             ],
             "selected": true,
             "display": [
