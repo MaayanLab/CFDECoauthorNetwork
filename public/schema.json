@@ -45,7 +45,7 @@
                     "type": "text"
                 },
 		{
-		    "label": "Award Title",
+		    "label": "Title",
 		    "text": "${project_title}",
 		    "type": "text"
 		},
@@ -59,7 +59,7 @@
             "relation": [],
             "search": [
                 "label",
-		"Award Title"
+		"Title"
             ],
 	    "color": "#f59f5d"
         },
