@@ -28,7 +28,7 @@
 	    "color": "#80D8FF"
         },
         {
-            "node": "Grants",
+            "node": "Awards",
             "example": [
                 "1U54OD036472-01",
                 "1R03OD038391-01"
@@ -43,21 +43,31 @@
                     "label": "Contact",
                     "text": "${Contact}",
                     "type": "text"
-                }
+                },
+		{
+		    "label": "Award Title",
+		    "text": "${project_title}",
+		    "type": "text"
+		},
+		{
+		    "label": "URL",
+		    "text": "${project_detail_url}",
+		    "href": "${project_detail_url}",
+		    "type": "link"
+		}
             ],
-            "relation": [
-				"Grant",
-				"Contact"
-			],
+            "relation": [],
             "search": [
-                "label"
+                "label",
+		"Award Title"
             ],
 	    "color": "#f59f5d"
         },
         {
             "node": "Publication",
             "example": [
-				"3D virtual reality vs. 2D desktop regist..."
+		    "35188328",
+		    "36456625"
             ],
             "display": [
                 {
@@ -183,30 +193,7 @@
         },
         {
             "match": [
-                "Grant"
-            ],
-            "selected": true,
-            "display": [
-                {
-                    "label": "source label",
-                    "text": "${source_label}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target label",
-                    "text": "${target_label}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "Contact"
+                "Grants"
             ],
             "selected": true,
             "display": [
@@ -249,49 +236,36 @@
                 "endpoint": "/",
                 "label": "Co-authorship KG Explorer",
                 "type": "page",
-                "component": "KnowledgeGraph",
+                "component": "CoauthorSearch",
                 "props": {
 					"description": "Explore the connections between the authors their publications and related MeSH terms.",
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Authors",
                         "start_term": "Avi Ma'ayan",
-						"relation": [
-							{
-								"name":"Publications",
-								"limit": 10
-							},
-							{
-								"name":"MeSH Term",
-								"limit": 5	
-							}
-						]
+			"relation": [
+				{
+					"name":"Publications",
+					"limit": 10
+				},
+				{
+					"name":"MeSH Term",
+					"limit": 5	
+				}
+			],
+			"search_type": "explore"
                     },
                     "subheader": {
                         "url_field": "filter",
                         "query_field": "relation"
-                    }
+                    },
+		    "extras": [
+			"Grants",
+			"MeSH"
+		    ]
                 }
-            },
-			{
-				"endpoint": "/Coauthor",
-				"label": "Co-authorship Minimum Connections Search",
-				"type": "page",
-				"component": "UseCase",
-				"props": {
-					"init_function": "initialize_kg",
-					"title": "Co-author Search",
-					"description": "Find related co-authors to the author in question. The slider controls the minimum number of shared publications for the co-authors to appear in the Knowledge Graph",
-					"endpoint": "/api/coauthor",
-					"type": "Authors",
-					"options_endpoint": "/api/knowledge_graph/node_search",
-					"default_term": "Avi Ma'ayan",
-					"fields": [
-						"label"
-					]
-				}
-			}
-        ]
+            }
+	]
     },
     "footer": {
         "style": {
