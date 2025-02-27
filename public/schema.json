@@ -20,7 +20,8 @@
             ],
             "relation": [
 		"Publications",
-		"MeSH Term"
+		"MeSH",
+		"Awards"
 			],
             "search": [
                 "label"
@@ -64,7 +65,7 @@
 	    "color": "#f59f5d"
         },
         {
-            "node": "Publication",
+            "node": "Publications",
             "example": [
 		    "35188328",
 		    "36456625"
@@ -114,7 +115,8 @@
             ],
             "relation": [
 		"Publications",
-		"MeSH Term"	
+		"MeSH",
+		"Awards"
 	    ],
             "search": [
 		"label",
@@ -136,7 +138,7 @@
                 }
             ],
             "relation": [
-				"MeSH Term"
+				"MeSH"
 			],
             "search": [
                 "label"
@@ -170,7 +172,7 @@
         },
         {
             "match": [
-                "MeSH Term"
+                "MeSH"
             ],
             "selected": true,
             "display": [
@@ -193,7 +195,7 @@
         },
         {
             "match": [
-                "Grants"
+                "Awards"
             ],
             "selected": true,
             "display": [
@@ -248,10 +250,10 @@
 					"name":"Publications"
 				},
 				{
-					"name":"MeSH Term"
+					"name":"MeSH"
 				},
 				{
-					"name":"Grants"
+					"name":"Awards"
 				}
 			],
 			"search_type": "explore"
@@ -261,7 +263,8 @@
                         "query_field": "relation"
                     },
 		    "extras": [
-			"Grants",
+			"Publications",
+			"Awards",
 			"MeSH"
 		    ]
                 }
