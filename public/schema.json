@@ -47,7 +47,7 @@
                 },
 		{
 		    "label": "Title",
-		    "text": "${project_title}",
+		    "text": "${Title}",
 		    "type": "text"
 		},
 		{
