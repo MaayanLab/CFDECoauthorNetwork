@@ -1,0 +1,20 @@
+{
+    "network":[
+        {
+            "name":"CFDE Co-authorship Network",
+            "nodes": 1546,
+            "edges": 53003,
+            "zip": "https://minio.dev.maayanlab.cloud/hgrn-chear/edge_weighted_assertions.zip",
+            "size":"854.6 KiB"
+        }
+    ],
+    "notebook":[
+        {
+            "title":"add_coauthor_links.ipynb",
+            "description":"Add coauthor links",
+            "size":"599 KB",
+            "updated":"2-10-2025",
+            "url":"https://github.com/MaayanLab/CFDECoauthorNetwork/blob/notebooks/notebooks/add_coauthor_links.ipynb"
+        }
+    ]
+}
