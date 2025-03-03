@@ -47,7 +47,7 @@
                 },
 		{
 		    "label": "Title",
-		    "text": "${project_title}",
+		    "text": "${Title}",
 		    "type": "text"
 		},
 		{
@@ -240,7 +240,7 @@
                 "type": "page",
                 "component": "CoauthorSearch",
                 "props": {
-					"description": "Explore the connections between the authors their publications and related MeSH terms.",
+					"description": "The Common Fund Data Ecosystem (CFDE) is an NIH initiative that enhances the accessibility and usability of diverse datasets from various Common Fund programs. By integrating these datasets, the CFDE ensures they are FAIR (Findable, Accessible, Interoperable, and Reusable), accelerating scientific discovery and enabling researchers to tackle complex biomedical questions. \n\n This application integrates information on CFDE grant authors, publications, MeSH terms, and awarded grants into a structured knowledge graph, allowing researchers to explore relationships between awards, research outputs, and biomedical topics more effectively.", 
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Authors",
@@ -263,11 +263,29 @@
                         "query_field": "relation"
                     },
 		    "extras": [
-			"Grants",
+			"Publications",
+			"Awards",
 			"MeSH"
 		    ]
                 }
-            }
+            },
+	    {
+		"endpoint": "/downloadfiles",
+		"label": "Download",
+		"type": "page",
+		"component": "DownloadFiles",
+		"props" : {
+			"src":"https://raw.githubusercontent.com/MaayanLab/CFDECoauthorNetwork/refs/heads/next14/public/downloads.json" 
+		}
+	    },
+	    {
+	    	"endpoint": "/networkstats",
+		"label": "Network Statistics",
+		"type": "page",
+		"component": "NetworkStatistics",
+		"props" : {
+		}
+	    }
 	]
     },
     "footer": {
