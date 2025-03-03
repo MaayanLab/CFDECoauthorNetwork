@@ -275,7 +275,7 @@
 		"type": "page",
 		"component": "DownloadFiles",
 		"props" : {
-			"src":"https://github.com/MaayanLab/CFDECoauthorNetwork/tree/next14/public/downloads.json"
+			"src":"https://raw.githubusercontent.com/MaayanLab/CFDECoauthorNetwork/tree/next14/public/downloads.json"
 		}
 	    }
 	]
