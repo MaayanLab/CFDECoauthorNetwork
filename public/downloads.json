@@ -2,10 +2,10 @@
     "network":[
         {
             "name":"CFDE Co-authorship Network",
-            "nodes": 1546,
-            "edges": 53003,
-            "zip": "https://minio.dev.maayanlab.cloud/hgrn-chear/edge_weighted_assertions.zip",
-            "size":"854.6 KiB"
+            "nodes": 2703,
+            "edges": 9040,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/CFDE.zip",
+            "size":"239.1 KB"
         }
     ],
     "notebook":[
