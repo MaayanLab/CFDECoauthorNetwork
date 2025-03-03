@@ -23,6 +23,7 @@
             "updated":"2-10-2025",
             "url":"https://github.com/MaayanLab/CFDECoauthorNetwork/blob/notebooks/notebooks/add_pmid_terms.ipynb"
         },
+	{
             "title":"create_schema.ipynb",
             "description":"Create public/schema template for CFDE Co-authorship Network.",
             "size":"11.3 KB",
