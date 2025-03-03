@@ -240,7 +240,7 @@
                 "type": "page",
                 "component": "CoauthorSearch",
                 "props": {
-					"description": "The Common Fund Data Ecosystem (CFDE) is an NIH initiative that enhances the accessibility and usability of diverse datasets from various Common Fund programs. By integrating these datasets, the CFDE ensures they are FAIR (Findable, Accessible, Interoperable, and Reusable), accelerating scientific discovery and enabling researchers to tackle complex biomedical questions. \n\n The CFDE Co-authorship Network improves the accessibility, connectivity, and discovery of authorship-related data within the CFDE. This application integrates information on CFDE grant authors, publications, MeSH terms, and awarded grants into a structured knowledge graph, allowing researchers to explore relationships between funding, research outputs, and biomedical topics more effectively.", 
+					"description": "The Common Fund Data Ecosystem (CFDE) is an NIH initiative that enhances the accessibility and usability of diverse datasets from various Common Fund programs. By integrating these datasets, the CFDE ensures they are FAIR (Findable, Accessible, Interoperable, and Reusable), accelerating scientific discovery and enabling researchers to tackle complex biomedical questions. \n\n This application integrates information on CFDE grant authors, publications, MeSH terms, and awarded grants into a structured knowledge graph, allowing researchers to explore relationships between awards, research outputs, and biomedical topics more effectively.", 
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Authors",
