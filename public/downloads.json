@@ -11,10 +11,23 @@
     "notebook":[
         {
             "title":"add_coauthor_links.ipynb",
-            "description":"Add coauthor links",
+            "description":"Add coauthor links.",
             "size":"599 KB",
             "updated":"2-10-2025",
             "url":"https://github.com/MaayanLab/CFDECoauthorNetwork/blob/notebooks/notebooks/add_coauthor_links.ipynb"
+        },
+        {
+            "title":"add_pmid_terms.ipynb",
+            "description":"Add pmid nodes and links.",
+            "size":"35.4 KB",
+            "updated":"2-10-2025",
+            "url":"https://github.com/MaayanLab/CFDECoauthorNetwork/blob/notebooks/notebooks/add_pmid_terms.ipynb"
+        },
+            "title":"create_schema.ipynb",
+            "description":"Create public/schema template for CFDE Co-authorship Network.",
+            "size":"11.3 KB",
+            "updated":"2-10-2025",
+            "url":"https://github.com/MaayanLab/CFDECoauthorNetwork/blob/notebooks/notebooks/create_schema.ipynb"
         }
     ]
 }
