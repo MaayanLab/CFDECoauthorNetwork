@@ -215,7 +215,31 @@
                     "type": "text"
                 }
             ]
-        }
+        },
+	{
+		"match": [
+			"Coauthors"
+		],
+		"selected": false,
+		"display": [
+		    {
+			"label": "source",
+			"text": "${source}",
+			"type":"text"
+		    },
+		    {
+			"label": "relation",
+			"text": "${relation}",
+			"type":"text"
+		    },
+		    {
+			"label": "target",
+			"text": "${target}",
+			"type":"text"
+		    }
+		],
+		"hidden": true
+	}
     ],
     "header": {
         "header": "CFDE Co-authorship Network",
@@ -276,6 +300,14 @@
 		"component": "DownloadFiles",
 		"props" : {
 			"src":"https://raw.githubusercontent.com/MaayanLab/CFDECoauthorNetwork/refs/heads/next14/public/downloads.json" 
+		}
+	    },
+	    {
+	    	"endpoint": "/networkstats",
+		"label": "Network Statistics",
+		"type": "page",
+		"component": "NetworkStatistics",
+		"props" : {
 		}
 	    }
 	]
