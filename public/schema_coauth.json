@@ -215,7 +215,16 @@
                     "type": "text"
                 }
             ]
-        }
+        },
+	{
+		"match": [
+			"Coauthors"
+		],
+		"selected": false,
+		"display": [
+		],
+		"hidden": true
+	}
     ],
     "header": {
         "header": "CFDE Co-authorship Network",
