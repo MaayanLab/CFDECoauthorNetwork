@@ -1,4 +1,5 @@
 'use client'
+
 import React, { ReactNode, useEffect, useState } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Selector } from "../misc"
@@ -25,6 +26,7 @@ const AsyncFormComponent = ({direction,
             legend?: 'true',
             legend_size?: string,
             layout?: string,
+	    search_type?: string
         },
 	}) => {
 	const router = useRouter()
@@ -143,6 +145,9 @@ const AsyncFormComponent = ({direction,
     }, [field])
     return (
         <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
+	    <Grid item xs={12}>
+	    	
+	    </Grid>
             <Grid item xs={12}>
                 <Typography variant="body1" color="secondary"><b>{direction} with</b></Typography>
             </Grid>
@@ -309,7 +314,7 @@ const AsyncFormComponent = ({direction,
                                 start: type,
                                 start_field: "label",
                                 start_term: e,
-								limit: parseInt("5"),
+				limit: parseInt("5"),
                             }
                             if (end_filter.end) {
                                 query = {
@@ -323,7 +328,7 @@ const AsyncFormComponent = ({direction,
                                 end: type,
                                 end_field: "label",
                                 end_term: e,
-								limit: parseInt("5"),
+				limit: parseInt("5"),
                             }
                         }
                         return (
@@ -344,11 +349,11 @@ const AsyncFormComponent = ({direction,
                     })}
                 </Stack>
             </Grid>
-            
+        	 
             {direction === "Start" && 
                 <Grid item xs={12}>
                     <Stack direction={'row'} alignItems={"center"} justifyContent={'space-between'}>
-                        <Typography variant="caption">End Node</Typography>
+                        <Typography variant="caption">Find Connections between Authors</Typography>
                         <Switch 
                             color="secondary" 
                             checked={filter.end !== undefined}
@@ -356,12 +361,13 @@ const AsyncFormComponent = ({direction,
                                 if (filter.end) {
                                     // const {filter, ...rest} = searchParams
                                     // c
-                                    const {relation, end, end_term, end_field, augment, augment_limit, additional_link_tags, ...filt} = filter
+                                    const {relation, end, end_term, end_field, augment, augment_limit, additional_link_tags, extra, ...filt} = filter
                             
                                     const query = process_filter({
                                         ...rest,
                                         filter: filt
                                     })
+				    console.log(filter)
                                     router_push(router, pathname, query)
                                 } else {
                                     // const {filter, ...rest} = searchParams
@@ -397,4 +403,13 @@ const AsyncFormComponent = ({direction,
     )
 }
 
-export default AsyncFormComponent
+
+
+
+
+
+
+
+
+export default AsyncFormComponent;
+

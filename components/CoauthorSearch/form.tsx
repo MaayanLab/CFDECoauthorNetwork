@@ -20,7 +20,8 @@ import {
     FormControlLabel,
     TextField,
     Divider,
-    Switch
+    Switch,
+    Alert
  } from '@mui/material';
 
 import FlipCameraAndroidIcon from '@mui/icons-material/FlipCameraAndroid';
@@ -51,7 +52,7 @@ import {mdiDna,
 import Icon from '@mdi/react';
 
 import { router_push } from '@/utils/client_side';
-import { NetworkSchema } from '@/app/api/knowledge_graph/route';
+import { NetworkSchema } from '@/app/api/coauthorsearch/route';
 import { FilterSchema, process_relation } from '@/utils/helper';
 import { process_tables } from '@/utils/helper';
 import { layouts } from '../Cytoscape';  
@@ -93,7 +94,7 @@ const CustomTextField = styled(TextField)({
     searchParams,
     initial_query
 }: {
-    edges: Array<string>,
+    edges: Array<any>,
     hiddenLinksRelations: Array<string>,
     coexpression_prediction: boolean,
     additional_link_button: boolean,
@@ -110,6 +111,7 @@ const CustomTextField = styled(TextField)({
         edge_labels?: 'true',
         legend_size?: string,
         layout?: string,
+	extras?: Array<string>
     },
     initial_query?: {
         start: string,
@@ -119,7 +121,6 @@ const CustomTextField = styled(TextField)({
     },
 }) {
     const pathname = usePathname()
-	const coauthPath = "/Coauthor"
     const router = useRouter()
     const {
         filter:f,
@@ -135,15 +136,18 @@ const CustomTextField = styled(TextField)({
         gene_links,
         augment,
         additional_link_tags,
+	search_type,
+	limit_extra
     } = filter
     const [edge_labels, setEdgeLabels] = useQueryState('edge_labels')
     const [tooltip, setTooltip] = useQueryState('tooltip')
 	const [layout, setLayout] = useQueryState('layout')
 	const [legend, setLegend] = useQueryState('legend')
 	const [legend_size, setLegendSize] = useQueryState('legend_size')
-    const [download_image, setDownloadImage] = useQueryState('download_image')
-
     const relation = process_relation(r || [])
+    console.log("RELATION")
+    console.log(filter.relation)
+    const [download_image, setDownloadImage] = useQueryState('download_image')
     const [error, setError] = useState<{error: string} | null>(null)
     const [anchorEl, setAnchorEl] = useState<HTMLElement>(null)
     const [anchorElLayout, setAnchorElLayout] = useState<HTMLElement>(null)
@@ -152,34 +156,62 @@ const CustomTextField = styled(TextField)({
     const [geneLinksOpen, setGeneLinksOpen] = useState<boolean>(false)
     const [geneLinks, setGeneLinks] = useState<Array<string>>([])
     const [additionalLinkTags, setAdditionalLinkTags] = useState<Array<string>>([])
-
+    useEffect(()=> {
+            if (tooltip === null) {
+        	    setTooltip('true')
+            }
+    }, [tooltip])
     useEffect(()=>{
         if (gene_links) setGeneLinks(gene_links)
         if (additional_link_tags) setAdditionalLinkTags(additional_link_tags)
         else setAdditionalLinkTags([])
     }, [searchParams.filter])
+    useEffect(() => {
+    	if (error) {
+    	    const timer = setTimeout(() => {
+    	        setError(null);
+    	    }, 1500);
+
+    	    return () => clearTimeout(timer);
+    	}
+    }, [error])
     const handleClickMenu = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>, setter:Function) => {
 		setter(e.currentTarget);
 	  };
 	const handleCloseMenu = (setter:Function) => {
 		setter(null);
 	};
+    console.log("EDGES")
+    console.log(edges)
+    const filteredEdges = edges.filter(edge => edge !== "Coauthors")
+    console.log(filteredEdges)
     return(
+
         <Grid container justifyContent="space-around" spacing={1}>
             <Grid item xs={12}>
                 <Grid container spacing={1} alignItems="flex-start" justifyContent="flex-start">
-                    {edges.length && 
+			{(error) && <Alert 
+                        onClose={()=>{
+                            setError(null)
+                        }}
+                        severity="error"
+                        sx={{ width: '70%', transition: 'opacity 0.5s ease-in-out'}} 
+                        variant="filled"
+                        elevation={6}
+                    >
+                        <Typography>{( error || {}).error || ""}</Typography>
+                    </Alert>}
+                    {edges.length && filter.search_type != "min_connect" &&  
                         <Grid item xs={12} md={4} lg={5}>
                             <Autocomplete
                                 multiple
                                 limitTags={2}
-                                id="multiple-limit-tags"
-                                 
-								options={edges}
+                                id="multiple-limit-tags"            
+				                options={filteredEdges}
                                 getOptionLabel={(option)=>option.name}
                                 value={relation.map(({name}:{name:string})=>name)}
                                 renderInput={(params) => (
-                                    <CustomTextField {...params} label="Select Relation" placeholder="Select Relation"/>
+                                    <CustomTextField {...params} label="Select Relation Type" placeholder="Select Relation Type"/>
                                 )}
                                 renderOption={(props, option, { selected }) => (
                                     <li {...props}>
@@ -194,7 +226,7 @@ const CustomTextField = styled(TextField)({
                                   )}
                                 sx={{ width: '100%' }}
                                 onChange={(e, r)=>{
-                                    if (end || (!end && r.length <= 5)) {
+                                    if ((end && r.length <= 5 && r.length > 0) || (!end && r.length <= 5 && r.length > 0)) {
                                         const {filter: f, ...rest} = searchParams
                                         let filter = JSON.parse(f || '{}')
                                         if (Object.keys(filter).length === 0) filter = initial_query
@@ -206,7 +238,10 @@ const CustomTextField = styled(TextField)({
                                         router_push(router, pathname, query)
                                     } else if (!end && relation.length > 5) {
                                         setError({error: "Please include only 5 relationships for single search"})
-                                    }
+                                    } else {
+					console.log(">1 relation")
+					setError({error: "Please include at least 1 relationship!"})
+				    }
                                 }}
                                 renderTags={()=>null}
                             />
@@ -214,7 +249,7 @@ const CustomTextField = styled(TextField)({
                         }
                     <Grid item xs={12} md={8} lg={7}>
                         <Grid container spacing={1} alignItems="center">
-                            {relation.map((value) => (
+                            {filter.search_type !== "min_connect" && relation.map((value) => (
                                 <Grid item key={value.name}>
                                     <Tooltip title={`${value.name}`} key={value.name} placement="top">
                                         <Chip label={value.name}
@@ -224,9 +259,11 @@ const CustomTextField = styled(TextField)({
                                                 const {filter: f, ...rest} = searchParams
                                                 let filter = JSON.parse(f || '{}')
                                                 if (Object.keys(filter).length === 0) filter = initial_query
+						if (filter.relation.length == 1) setError({error: "Please include at least 1 relationship!"})
                                                 const rels = []
+							
                                                 for (const i of filter.relation || []) {
-                                                    if (i.name !== value.name) {
+                                                    if (i.name !== value.name || filter.relation.length == 1) {
                                                         rels.push(i)
                                                     }
                                                 }
@@ -235,6 +272,7 @@ const CustomTextField = styled(TextField)({
                                                     ...rest,
                                                     filter: JSON.stringify(filter)
                                                 }
+
                                                 router_push(router, pathname, query)                                                    
                                         }}/>
                                     </Tooltip>
@@ -243,12 +281,13 @@ const CustomTextField = styled(TextField)({
                         </Grid>
                     </Grid>
                     <Grid item>
-                        <Stack direction={"row"} alignItems={"center"} spacing={2}>
-                            <Typography variant="subtitle2">Size:</Typography>
-                            <Icon path={mdiMinusCircleOutline} size={0.8} />
-                            <Tooltip title={!end ? 'Set limit per relationship:': 'Limit number of paths:'}>
+			{(filter.search_type == "min_connect") && <div>
+			    <Stack direction={"row"} alignItems={"center"} spacing={2}>
+			    <Typography variant="subtitle2"> Minimum Pubs</Typography>
+			    <Icon path={mdiMinusCircleOutline} size={0.8} />
+                            <Tooltip title={"Minimum Number of Shared Publications"}>
                                 <Slider 
-                                    value={limit ? limit: !end ? relation.length === 1? ((elements || {}).edges || []).length: 5: 25}
+                                    value={limit ? limit: 1}
                                     color="secondary"
                                     valueLabelDisplay='auto'
                                     onChange={(e, nv)=>{
@@ -260,22 +299,196 @@ const CustomTextField = styled(TextField)({
                                             ...JSON.parse(f || '{}'),
                                             limit: nv
                                         }
-                                        if (filter.relation) filter.relation = relation.map(({name, limit})=>({name, limit: nv}))
-                                        const query = {
-                                            ...rest,
-                                            filter: JSON.stringify(filter)
-                                        }
+
+				        const query = {
+						...rest,
+						filter: JSON.stringify(filter)
+					}
                                         router_push(router, pathname, query)
                                     }}
                                     min={1}
-                                    max={!end ? start === "Gene" ? 50: neighborCount : 150}
+                                    max={30}
                                     sx={{width: 150}}
                                     aria-labelledby="continuous-slider"
                                 />
                             </Tooltip>
                             <Icon path={mdiPlusCircleOutline} size={0.8} />
-                            {/* <Typography variant="subtitle2">{limit ? limit: !end ? relation.length === 1? ((elements || {}).edges || []).length: 5: 25}</Typography> */}
+
+			    </Stack>
+			    <Stack direction={"row"} alignItems={"center"} spacing={2}>
+                            <Typography variant="subtitle2">Limit Co-authors</Typography>
+                            <Icon path={mdiMinusCircleOutline} size={0.8} />
+                            <Tooltip title={'Limit number of co-authors'}>
+                                <Slider 
+                                    value={limit_extra ? limit_extra: 10}
+                                    color="secondary"
+                                    valueLabelDisplay='auto'
+                                    onChange={(e, nv)=>{
+                                        const {filter: f, ...rest} = searchParams
+                                        const filter = {
+                                            start: initial_query.start,
+                                            start_field: initial_query.start_field,
+                                            start_term: initial_query.start_term,
+                                            ...JSON.parse(f || '{}'),
+                                            limit_extra: nv
+                                        }
+
+				        const query = {
+						...rest,
+						filter: JSON.stringify(filter)
+					}
+                                        router_push(router, pathname, query)
+                                    }}
+                                    min={1}
+                                    max={100}
+                                    sx={{width: 150}}
+                                    aria-labelledby="continuous-slider"
+                                />
+                            </Tooltip>
+                            <Icon path={mdiPlusCircleOutline} size={0.8} />
                         </Stack>
+			</div>}
+			{(filter.search_type == "explore") && 
+			    <div>
+			    <Stack direction={"row"} alignItems={"center"} spacing={2}>
+                            <Typography variant="subtitle2">Network Size</Typography>
+                            <Icon path={mdiMinusCircleOutline} size={0.8} />
+                            <Tooltip title={'Limit network by number of paths per relation that end in an author '}>
+                                <Slider 
+                                    value={limit? limit: 5}
+                                    color="secondary"
+                                    valueLabelDisplay='auto'
+                                    onChange={(e, nv)=>{
+                                        const {filter: f, ...rest} = searchParams
+                                        const filter = {
+                                            start: initial_query.start,
+                                            start_field: initial_query.start_field,
+                                            start_term: initial_query.start_term,
+                                            ...JSON.parse(f || '{}'),
+                                            limit: nv
+                                        }
+					if (!filter.search_type) filter.search_type = "explore"
+					if (!filter.relation) filter.relation = relation
+					filter.relation = filter.relation.map((rel: { name: string }) => ({
+					  ...rel, // Spread existing properties
+					  limit: nv ?? 5, // Add or update the 'limit' field
+					}))
+
+				        const query = {
+						...rest,
+						filter: JSON.stringify(filter)
+					}
+                                        router_push(router, pathname, query)
+                                    }}
+                                    min={1}
+                                    max={30}
+                                    sx={{width: 150}}
+                                    aria-labelledby="continuous-slider"
+                                />
+                            </Tooltip>
+                            <Icon path={mdiPlusCircleOutline} size={0.8} />
+                        </Stack>
+			    <Stack direction={"row"} alignItems={"center"} spacing={2}>
+                            <Typography variant="subtitle2">Authors per Node</Typography>
+                            <Icon path={mdiMinusCircleOutline} size={0.8} />
+                            <Tooltip title={'Number of authors per node to display'}>
+                                <Slider 
+                                    value={limit_extra ? limit_extra: 0}
+                                    color="secondary"
+                                    valueLabelDisplay='auto'
+                                    onChange={(e, nv)=>{
+                                        const {filter: f, ...rest} = searchParams
+                                        const filter = {
+                                            start: initial_query.start,
+                                            start_field: initial_query.start_field,
+                                            start_term: initial_query.start_term,
+                                            ...JSON.parse(f || '{}'),
+                                            limit_extra: nv
+                                        }
+					if (!filter.search_type) filter.search_type = "explore"
+					if (!filter.relation) filter.relation = relation 
+				        const query = {
+						...rest,
+						filter: JSON.stringify(filter)
+					}
+                                        router_push(router, pathname, query)
+                                    }}
+                                    min={0}
+                                    max={5}
+                                    sx={{width: 150}}
+                                    aria-labelledby="continuous-slider"
+                                />
+                            </Tooltip>
+                            <Icon path={mdiPlusCircleOutline} size={0.8} />
+                        </Stack>
+
+			</div>}
+
+			{(filter.search_type == "direct_connect") && 
+			    <div>
+			    <Stack direction={"row"} alignItems={"center"} spacing={2}>
+                            <Typography variant="subtitle2">Limit Network</Typography>
+                            <Icon path={mdiMinusCircleOutline} size={0.8} />
+                            <Tooltip title={'Limit network to this many paths'}>
+                                <Slider 
+                                    value={limit ? limit: 1}
+                                    color="secondary"
+                                    valueLabelDisplay='auto'
+                                    onChange={(e, nv)=>{
+                                        const {filter: f, ...rest} = searchParams
+                                        const filter = {
+                                            start: initial_query.start,
+                                            start_field: initial_query.start_field,
+                                            start_term: initial_query.start_term,
+                                            ...JSON.parse(f || '{}'),
+                                            limit: nv
+                                        }
+				        const query = {
+						...rest,
+						filter: JSON.stringify(filter)
+					}
+                                        router_push(router, pathname, query)
+                                    }}
+                                    min={1}
+                                    max={30}
+                                    sx={{width: 150}}
+                                    aria-labelledby="continuous-slider"
+                                />
+                            </Tooltip>
+                            <Icon path={mdiPlusCircleOutline} size={0.8} />
+                        </Stack>
+			    <Stack direction={"row"} alignItems={"center"} spacing={2}>
+                            <Typography variant="subtitle2">Path Length: </Typography>
+                            <Icon path={mdiMinusCircleOutline} size={0.8} />
+                            <Tooltip title={'Number of degrees away from the start node:'}>
+                                <Slider 
+                                    value={limit_extra ? limit_extra: 2}
+                                    color="secondary"
+                                    valueLabelDisplay='auto'
+                                    onChange={(e, nv)=>{
+                                        const {filter: f, ...rest} = searchParams
+                                        const filter = {
+                                            start: initial_query.start,
+                                            start_field: initial_query.start_field,
+                                            start_term: initial_query.start_term,
+                                            ...JSON.parse(f || '{}'),
+                                            limit_extra: nv
+                                        }
+				        const query = {
+						...rest,
+						filter: JSON.stringify(filter)
+					}
+                                        router_push(router, pathname, query)
+                                    }}
+                                    min={2}
+                                    max={5}
+                                    sx={{width: 150}}
+                                    aria-labelledby="continuous-slider"
+                                />
+                            </Tooltip>
+                            <Icon path={mdiPlusCircleOutline} size={0.8} />
+                        </Stack>
+			</div>}
                     </Grid>
                     <Grid item>
                         <Stack direction={"row"} alignItems={"center"} spacing={1}>
@@ -286,7 +499,7 @@ const CustomTextField = styled(TextField)({
                                         const {fullscreen, ...rest} = searchParams
                                         const query = {...rest}
                                         if (!fullscreen) query['fullscreen'] = 'true'
-                                        router_push(router, coauthPath, query)
+                                        router_push(router, pathname, query)
                                     }}
                                 >
                                     {fullscreen ? <FullscreenExitIcon/>: <FullscreenIcon/>}
@@ -315,15 +528,6 @@ const CustomTextField = styled(TextField)({
                                 >
                                     <Icon path={mdiTable} size={0.8} />
                                 </IconButton>
-                            </Tooltip>
-                            <Tooltip title={"Switch Network"}>
-                                <Switch color="secondary" 
-                                    onClick={()=>{
-                                        const {view, ...query} = searchParams
-                                        router_push(router, pathname, query)
-                                    }}
-                                    sx={{marginLeft: 5, borderRadius: 5, background: (!view) ? "#e0e0e0": "none"}}
-                                />
                             </Tooltip>
                             <Divider sx={{backgroundColor: "secondary.main", height: 20, borderRightWidth: 1}} orientation="vertical"/>
                             <Tooltip title={"Save subnetwork"}>
@@ -392,12 +596,12 @@ const CustomTextField = styled(TextField)({
                                 <IconButton color="secondary"
                                     disabled={view && view !== "network"}
                                     onClick={()=>{
-                                        if (tooltip) setTooltip(null)
+                                        if (tooltip == 'true') setTooltip('false')
                                         else setTooltip('true')
                                         
                                     }}
                                 >
-                                    {tooltip ? <Icon path={mdiTooltipRemove} size={0.8} />: <Icon path={mdiTooltip} size={0.8} />}
+                                    {tooltip == 'true' ? <Icon path={mdiTooltipRemove} size={0.8} />: <Icon path={mdiTooltip} size={0.8} />}
                                 </IconButton>
                             </Tooltip>
                         </Grid>

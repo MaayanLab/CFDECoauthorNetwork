@@ -15,6 +15,7 @@ export function makeTemplate(
     const templateFunction = new Function(...keys, `return \`${templateString}\`;`)
     return templateFunction(...values)
   } catch (error) {
+	console.log(error)
     return 'undefined'
   }
 }
@@ -261,8 +262,11 @@ export interface FilterSchema {
     end_term?: string,
     relation?: string| Array<string | {name?: string, limit?: string}>,
     limit?: number,
+    limit_extra?: number,
     page?: number,
     gene_links?: Array<string>,
+    extras?: Array<string>,
+    search_type?: string,
     augment?: boolean,
     augment_limit?: number,
     remove?: Array<string>,
@@ -296,6 +300,8 @@ export const process_filter = (query: {
     relation?: string| Array<string | {name?: string, limit?: string}>,
     limit?: number,
     page?: number,
+    search_type?: string,
+    extras?: Array<string>,
     filter?: FilterSchema,
     [key: string]: any
 }) => {
@@ -308,7 +314,10 @@ export const process_filter = (query: {
         end_term,
         relation,
         limit,
+	limit_extra,
+	extras,
         page,
+	search_type,
         filter={},
         ...rest
     } = query
@@ -322,6 +331,8 @@ export const process_filter = (query: {
             end_term,
             relation: process_relation(relation),
             limit,
+	    search_type,
+	    limit_extra,
             ...filter
         }),
         ...rest

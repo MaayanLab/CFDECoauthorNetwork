@@ -118,10 +118,16 @@ export default function Cytoscape ({
 				//     open={elements === null}
 				// >
 				//     <CircularProgress/>
-				// </Backdrop> 
-				null
+				// </Backdrop>
+				<div style={{fontWeight: "bold", display: "flex", justifyContent: "center", alignItems: "center", fontSize:"24px"}}>
+				No Results
+				</div>
+				//null
+				//<div style={{font-weight: "bold", display: "flex" ,justify-content: "center", align-items:"center"}}>No results</div>
 			) : elements.nodes.length === 0 ? (
-				<div>No results</div>
+				<div style={{ height: 700, fontWeight: "bold", display: "flex", justifyContent: "center", alignItems: "center", fontSize:"24px" }}>
+				No Results
+				</div>
 			) : 
 				<CytoscapeComponent
 					key={id}

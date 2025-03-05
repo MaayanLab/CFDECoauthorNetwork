@@ -81,7 +81,7 @@ import { layouts } from '../Cytoscape';
 		setter(null);
 	};
     return(
-        <Grid container spacing={1}>            
+        <Grid container spacing={1}>
 			<Grid item>
 				<Stack direction={"row"} alignItems={"center"} spacing={2}>
 					<Typography variant="subtitle2">Size:</Typography>

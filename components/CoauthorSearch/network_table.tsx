@@ -5,7 +5,7 @@ import { precise } from "@/utils/math";
 import { Grid, Button, Tabs, Tab, Card, CardContent } from "@mui/material";
 import { DataGrid, GridToolbar, GridColDef } from "@mui/x-data-grid";
 import { UISchema } from "@/app/api/schema/route";
-import { NetworkSchema } from "@/app/api/knowledge_graph/route";
+import { NetworkSchema } from "@/app/api/coauthorsearch/route";
 import { CustomToolbar } from "../Enrichment/NetworkTable";
 
 import { alpha, styled } from '@mui/material/styles';
@@ -14,6 +14,8 @@ const CustomTab = styled(Tab)({
       color: '#336699',
   	}
 });
+
+
 
 const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) => {
 	const [processedData, setProcessedData] = useState<{
@@ -29,14 +31,13 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 	const [tabs, setTabs] = useState<Array<string>>(null)
 	const display = {}
 	for (const i of schema.nodes) {
-		display[i.node] = i.display
+		display[i.node + "_node"] = i.display
 	}
 	for (const i of schema.edges) {
 		for (const m of i.match) {
-			display[m] = i.display
+			display[m + "_edge"] = i.display
 		}
 	}
-
 	useEffect(()=>{
 		if (data) {
 			const processed = {}
@@ -44,10 +45,14 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 			const node_tabs = []
 			const edge_tabs = []
 			for (const d of [...data.nodes, ...data.edges]) {
+				console.log(d)
 				const properties = d.data
 				const {kind, relation, source, target, label, "Unnamed: 0": _, ...rest} = d.data
 				if (properties.id === undefined) properties.id = `${source}_${target}`
-				const key = relation || kind
+				let key = ''
+				if (kind == "Relation") key = relation + "_edge"
+				else key = kind + "_node"
+				console.log(key)
 				if (key && typeof key === 'string') { 
 					if ( processed[key] === undefined) {
 						if (relation) edge_tabs.push(key)
@@ -149,8 +154,6 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 			// setMapper(id_mapper)
 			setTabs([...node_tabs, ...edge_tabs])
 			setTab(node_tabs[0])
-			console.log("PROCESSED")
-			console.log(processed)
 			setProcessedData(processed)	
 		}
 	}, [data])
@@ -158,6 +161,9 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 	else {
 		const {data={}, header=[], columnVisibilityModel} = processedData[tab] || {}
 		const columns: GridColDef[] = header.filter(i=>i.count === undefined || i.count > 0)
+		console.log("DATAGRID")
+		console.log(columns)
+		console.log(Object.values(data))
 		return (
 			<Card sx={{marginBottom: 10}} ref={tableRef}>
 				<CardContent>

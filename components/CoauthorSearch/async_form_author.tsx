@@ -3,15 +3,53 @@ import React, { ReactNode, useEffect, useState } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Selector } from "../misc"
 import Link from 'next/link'
-import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, FormControlLabel } from "@mui/material";
+import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, FormControlLabel, Radio, RadioGroup, FormControl, FormLabel, Tooltip } from "@mui/material";
+import { styled } from "@mui/system";
 import { router_push } from "@/utils/client_side"
 import { process_filter } from "@/utils/helper"
 import { FilterSchema } from "@/utils/helper"
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+const StyledRadioGroup = styled(RadioGroup)(({ theme }) => ({
+  gap: theme.spacing(1),
+  transition: "all 0.3s ease",
+  color: "secondary",
+  "& .MuiFormControlLabel-root": {
+    margin: 0,
+    padding: theme.spacing(1),
+    borderRadius: theme.spacing(1),
+    transition: "background-color 0.3s ease, transform 0.2s ease",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.04)",
+      transform: "scale(1.02)"
+    },
+    "&.Mui-checked": {
+      backgroundColor: "rgba(0, 0, 0, 0.02)"
+    }
+  },
+  "& .Mui-focused": {
+    outline: `2px solid ${theme.palette.secondary.dark}`,
+    outlineOffset: "1px",
+    borderRadius: theme.spacing(0.25)
+  },
+  "& .MuiRadio-root": {
+    padding: theme.spacing(1),
+    "&.Mui-checked": {
+      color: theme.palette.secondary.dark,
+      backgroundColor: "rgba(0, 0, 0, 0.02)"
+    },
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.04)"
+    }
+  }
+}));
 
-const AsyncFormComponent = ({direction,
+
+const AsyncFormComponent_Coauthor = ({direction,
     nodes, 
     searchParams,
-    initial_query
+    initial_query,
+    extras,
+    example
 }: {
 		direction: string,
         initial_query: {[key: string]: string},
@@ -26,6 +64,8 @@ const AsyncFormComponent = ({direction,
             legend_size?: string,
             layout?: string,
         },
+	example?: {},
+	extras?:string[],
 	}) => {
 	const router = useRouter()
 	const {filter: f, ...rest} = searchParams
@@ -39,8 +79,9 @@ const AsyncFormComponent = ({direction,
         end,
         end_field='label',
         end_term,
+	search_type
     }: {[key:string]: string} = filter
-
+    let {relation} = filter
     const start_filter = {
         start,
         start_field,
@@ -51,8 +92,7 @@ const AsyncFormComponent = ({direction,
         end_field,
         end_term
     }
-
-    
+    const extras_lis = extras 
     const field = direction === 'Start' ? start_field: end_field
     const term = (direction === 'Start' ? start_term: end_term) || ''
     const [inputTerm, setInputTerm] = useState<string>(term)
@@ -60,7 +100,11 @@ const AsyncFormComponent = ({direction,
     const [controller, setController] = useState<{signal: AbortSignal, abort: Function} | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [options, setOptions] = useState<{[key:string]: {[key:string]: string|number}} | null>(null)
+    const [exampleOption, setExampleOption] =  useState<{[key:string]: any}>(example)
     const [selected, setSelected] = React.useState(null)
+    const [searchType, setSearchType] = useState(filter.search_type || "explore");
+    const [clicked, setClicked] = useState<boolean>(false)
+
 
     useEffect(()=>{
         if (Object.keys(filter).length===0) {
@@ -87,6 +131,7 @@ const AsyncFormComponent = ({direction,
             if (type !== ''){
                 const controller = get_controller()
                 const query = {
+		    search_type,
                     type,
                     field,
                     term: ""
@@ -94,22 +139,14 @@ const AsyncFormComponent = ({direction,
                 // if (filter) query.filter=JSON.stringify(filter)
                 if (inputTerm) query.term = inputTerm
                 const query_str = Object.entries(query).map(([k,v])=>(`${k}=${v}`)).join("&")
-                const res = await fetch(`${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX: ''}/api/knowledge_graph/node_search${query_str ? "?" + query_str : ""}`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX: ''}/api/coauthorsearch/node_search${query_str ? "?" + query_str : ""}`, {
                     method: 'GET',
                     signal: controller.signal
                 })
                 let options:{[key:string]: {[key:string]: string|number}} = {}
+
                 if (res.ok) options = await (res).json()
                 if (inputTerm) setSelected(options[inputTerm])
-                // else if (direction === 'Start') {
-                //     router_push(router, pathname, {
-                //         ...rest,
-                //         filter: JSON.stringify({
-                //             ...filter,
-                //             start_term: Object.keys(options)[0],
-                //         })
-                //     })
-                // } 
                 else {
                     setSelected(null)
                 }
@@ -121,15 +158,40 @@ const AsyncFormComponent = ({direction,
             setLoading(false)
         }
     }
-
+    const resolve_example = async () => {
+    	try {	
+		const controller = get_controller()
+		const query = {
+		    search_type: searchType,
+		    type: "Authors",
+		    field: "label"
+		}
+		const query_str = Object.entries(query).map(([k,v])=>(`${k}=${v}`)).join("&")
+		const res = await fetch(`${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX: ''}/api/coauthorsearch/node_search/example/${query_str ? "?" + query_str : ""}`, {
+		    method: 'GET',
+		    signal: controller.signal
+		})
+		let choices = {}
+		if (res.ok) choices = await (res).json()
+		setExampleOption(choices)
+	} catch(error) {
+		console.error(error)
+	}
+    }
     useEffect(()=>{
         if (term !== inputTerm) setInputTerm(term)
     }, [term])
+
 
     useEffect(()=>{
         if (inputTerm !== (selected || {})[field]) resolve_options()
     }, [inputTerm, type])
 
+    useEffect(()=>{
+	if (clicked) resolve_example()
+	console.log(exampleOption)
+	setClicked(false)
+    }, [clicked, type])
     useEffect(()=>{
         if (options && Object.keys(options).length) {
             const new_options = {}
@@ -141,10 +203,52 @@ const AsyncFormComponent = ({direction,
             setOptions(new_options)
         }
     }, [field])
+    
+    useEffect(() => {
+	console.log(filter.search_type)
+        if (filter.search_type !== searchType) {
+	    console.log("switching search types")
+	    relation = filter.relation
+	    if (searchType == "direct_connect") {
+		    filter.end = "Authors"
+		    filter.limit = 5
+		    filter.limit_extra = 2
+	    }
+	    if (searchType == "min_connect") {
+		    filter.limit = 1
+		    filter.limit_extra = 10
+	    }
+            router_push(router, pathname, {
+                ...rest,
+                filter: JSON.stringify({ ...filter, search_type: searchType, start: "Authors", start_field: "label", start_extras:extras_lis, relation: relation}),
+            });
+        }
+    }, [searchType]);
     return (
         <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
+	    <Grid item xs={12} justifyContent="center">
+               <FormControl sx = {{display:"block"}}>
+                        <FormLabel sx = {{textAlign: "center", mb: "1", color:"#336699", fontSize: "1.125rem", fontWeight:"bold", display:"block" }}>Pick Search Type</FormLabel>
+                        <StyledRadioGroup 
+				value={searchType}
+                                onChange={(event) => setSearchType(event.target.value)}
+				defaultValue="explore" name="radio-buttons-group">
+                            <FormControlLabel value="explore" control={<Radio sx={{display:"None"}} />} label="Single Author Search" sx = {{
+			    	border: searchType === "explore" ? "2px solid #336699 " : "2px solid #3366994d", display:"block", textAlign:"center" 
+			    }}/>
+                            <FormControlLabel value="direct_connect" control={<Radio sx={{display:"None"}} />} label="Two Author Search" sx = {{
+			    	border: searchType === "direct_connect" ? "2px solid #336699" : "2px solid #3366994d ", display:"block", textAlign:"center"
+			    }}/>
+                            <FormControlLabel value="min_connect" control={<Radio sx={{display:"None"}} />} label="Just Author Search" sx = {{
+			    	border: searchType === "min_connect" ? "2px solid #336699" : "2px solid #3366994d", display:"block", textAlign:"center"
+			    }}/>
+
+                        </StyledRadioGroup>
+                </FormControl>
+
+	    </Grid>
             <Grid item xs={12}>
-                <Typography variant="body1" color="secondary"><b>{direction} with</b></Typography>
+                <Typography variant="body1" color="secondary"><b>Explore </b></Typography>
             </Grid>
             <Grid item xs={12}>
                 <Selector 
@@ -152,21 +256,23 @@ const AsyncFormComponent = ({direction,
                     value={type} 
                     prefix={direction} 
                     onChange={(type:string)=>{
-						console.log(pathname)
+			relation = filter.relation
                         if (direction === 'Start') {
-                            setInputTerm('')
+                            setInputTerm("")
                             router_push(router, pathname,
                                 {
                                     // ...rest,
                                     filter: JSON.stringify({
                                         start: type,
                                         start_field: field,
-                                        start_term: nodes[type].example[0]
+                                        start_term: "",
+					search_type: searchType,
+					relation: relation
                                     })
                                 }
                             )
                         } else {
-                            setInputTerm('')
+                            setInputTerm("")
                             router_push(router, pathname,
                                 {
                                     // ...rest,
@@ -174,6 +280,7 @@ const AsyncFormComponent = ({direction,
                                         ...start_filter,
                                         end: type,
                                         end_field: field,
+					search_type: searchType
                                         // end_term: nodes[type].example[0]
                                     })
                                 }
@@ -185,15 +292,19 @@ const AsyncFormComponent = ({direction,
                 <Selector entries={(nodes[type] || {}).search || []} value={field} prefix={`${type}field`} onChange={(field)=>{
                     const new_term = (selected || {})[field]
                     if (direction === 'Start') {
+			relation = filter.relation
                         const f = {
-                            start: type,
+                            search_type: searchType,
+			    start: type,
                             start_field: field,
-							start_term: '',
+			    start_term: '',
+			    relation: relation,
                             ...end_filter
                         }
                         if (new_term) f.start_term = new_term
 						router_push(router, pathname,
 							{
+
                                 ...rest,
                                 filter: JSON.stringify(f)
                             }
@@ -223,7 +334,8 @@ const AsyncFormComponent = ({direction,
                     value={term}
                     loading={loading}
                     onChange={(evt, term) => {
-                        if (term === null) term = ''
+                        if (term === null) term = ""
+			relation = filter.relation
                         setInputTerm(term)
                         if (direction === 'Start') {
 							if (typeof term === 'number' && !isNaN(term)) {
@@ -231,9 +343,11 @@ const AsyncFormComponent = ({direction,
 									{
                             	        ...rest,
                             	        filter: JSON.stringify({
+					    search_type: searchType,
                             	            start: type,
                             	            start_field: field,
                             	            start_term: parseInt(term),
+					    relation: relation,
                             	            ...end_filter
                             	        })
                             	    }
@@ -243,9 +357,11 @@ const AsyncFormComponent = ({direction,
 									{
                         	            ...rest,
                         	            filter: JSON.stringify({
+						search_type: searchType,
                         	                start: type,
                         	                start_field: field,
                         	                start_term: term,
+						relation: relation,
                         	                ...end_filter
                         	            })
                         	        }
@@ -300,55 +416,29 @@ const AsyncFormComponent = ({direction,
                 />
             </Grid>
             <Grid item xs={12}>
-                <Stack>
-                    <Typography variant="caption">Example</Typography>
-                    {((nodes[type] || {}).example || []).map((e,i)=>{
-                        let query = {}
-                        if (direction === 'Start') {
-                            query = {
-                                start: type,
-                                start_field: "label",
-                                start_term: e,
-								limit: parseInt("5"),
-                            }
-                            if (end_filter.end) {
-                                query = {
-                                    ...query,
-                                    ...end_filter
-                                }
-                            }
-                        } else {
-                            query = {
-                                ...start_filter,
-                                end: type,
-                                end_field: "label",
-                                end_term: e,
-								limit: parseInt("5"),
-                            }
-                        }
-                        return (
-                            <Link
-                                key={e}
-                                href={{
-                                    pathname,
-                                    query: {
-                                        filter: JSON.stringify(query)
-                                    },
-                                    // relation
-                                }}
-                                // shallow
-                            >
-                            <Button sx={{padding: 0}}><Typography variant="body2" color="secondary">{e}</Typography></Button>
-                        </Link> 
-                    )
-                    })}
-                </Stack>
-            </Grid>
-            
-            {direction === "Start" && 
+	    	<Stack>
+			<Button variant="contained" color="secondary" endIcon={<LightbulbOutlinedIcon />}
+				onClick={()=> {
+					let ex = {label: ""} 
+					ex = Object.values(exampleOption)[1].label;
+					relation = filter.relation
+                        	        let query = JSON.stringify({
+					     search_type: searchType,
+                        	             start: "Authors",
+                        	             start_field: "label",
+                        	             start_term: ex,
+					     relation: relation
+                        	        })
+					router_push(router, pathname, {filter:query})
+					setClicked(true)
+				}}> Try an Example! </Button>
+		</Stack>
+	    </Grid>
+        	 
+            {direction === "Start" && searchType == "Find Direct Connections" && 
                 <Grid item xs={12}>
                     <Stack direction={'row'} alignItems={"center"} justifyContent={'space-between'}>
-                        <Typography variant="caption">End Node</Typography>
+                        <Typography variant="caption">Find Connections between Authors</Typography>
                         <Switch 
                             color="secondary" 
                             checked={filter.end !== undefined}
@@ -397,4 +487,4 @@ const AsyncFormComponent = ({direction,
     )
 }
 
-export default AsyncFormComponent
+export default AsyncFormComponent_Coauthor;

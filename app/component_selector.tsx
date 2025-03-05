@@ -8,12 +8,17 @@ import Download from '@/components/Download'
 import APIDoc from '@/components/APIDoc'
 import WholeNetwork from '@/components/WholeNetwork'
 import SimpleTermAndGeneSearch from '@/components/SimpleTermAndGeneSearch'
+import CoauthorSearch from '@/components/CoauthorSearch'
 import Tutorial from '@/components/Tutorial.mdx'
+import DownloadFiles from '@/components/DownloadFiles'
+import NetworkStatistics from '@/components/NetworkStatistics'
+
 import { Suspense } from 'react'
 import { CircularProgress } from '@mui/material'
 const AsyncComponent = async ({component, searchParams, props, endpoint,}: 
-	{component: string, endpoint: string, searchParams: {[key:string]: any}, 
+	{component: string, endpoint: string, searchParams: {[key:string]: any},
 	props: {[key:string]: any}}) => {
+	console.log(props)
 	if (component === "KnowledgeGraph") return await TermAndGeneSearch({props, searchParams})
 	else if (component === "SimpleKnowledgeGraph") return await SimpleTermAndGeneSearch({props, searchParams})
 	else if (component === "DistilleryLanding") return await DistilleryLanding({...props})
@@ -26,7 +31,10 @@ const AsyncComponent = async ({component, searchParams, props, endpoint,}:
 	else if (component === "Download") return await Download({...props})
 	else if (component === "APIDoc") return await APIDoc({...props})
 	else if (component === "Tutorial") return <Tutorial/>
+	else if (component === "DownloadFiles") return await DownloadFiles({...props})
+	else if (component === "CoauthorSearch") return await CoauthorSearch({props, searchParams})
 	else if (component === "WholeNetwork") return await WholeNetwork({props})
+	else if (component === "NetworkStatistics") return await NetworkStatistics({props})
 	else return null
 }
 

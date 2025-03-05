@@ -75,7 +75,6 @@ export const fetch_kg_schema = async () => {
 		}
 		schema = await r.json()
 	}
-	
 	return schema
   }
 
@@ -154,3 +153,4 @@ export const init_function = {
 	initialize_kg,
 	initialize_enrichment
 }
+
