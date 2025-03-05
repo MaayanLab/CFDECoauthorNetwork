@@ -222,6 +222,21 @@
 		],
 		"selected": false,
 		"display": [
+		    {
+			"label": "source",
+			"text": "${source}",
+			"type":"text"
+		    },
+		    {
+			"label": "relation",
+			"text": "${relation}",
+			"type":"text"
+		    },
+		    {
+			"label": "target",
+			"text": "${target}",
+			"type":"text"
+		    }
 		],
 		"hidden": true
 	}
