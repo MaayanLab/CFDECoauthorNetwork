@@ -31,10 +31,10 @@ const BarChartForm = ({props, chartData}) => {
 	};
 	return (
                 <BarChart
-			sx = {{height:"100"}}
-			      series={chartdata.series}
-			      xAxis={chartdata.xAxis}
-			height={350}/>
+			sx = {{mt: 0, mb: 0}}
+			series={chartdata.series}
+			xAxis={chartdata.xAxis}
+			height={500}/>
 	)
 
 }

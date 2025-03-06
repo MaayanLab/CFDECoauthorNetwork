@@ -22,6 +22,7 @@ const TableForm = ({props, rows, columns}) => {
                     disableSelectionOnClick
 		    rowsPerPageOptions={[]}
                     sx={{ backgroundColor: "white", color: "336699", borderRadius: 2 }}
+		    hideFooter={true}
                 />
 	)
 

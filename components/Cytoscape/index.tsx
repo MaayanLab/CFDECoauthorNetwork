@@ -77,7 +77,6 @@ export default function Cytoscape ({
 	const [selected, setSelected] = useQueryState('selected',  parseAsJson<{id: string, type: 'nodes' | 'edges'}>().withDefault(null))
 	const [hovered, setHovered] = useQueryState('hovered',  parseAsJson<{id: string, type: 'nodes' | 'edges'}>().withDefault(null))
 	const edgeStyle = edge_labels ? {label: 'data(label)'} : {}
-
 	const { mutate } = useSWRConfig()
 	useEffect(()=>{
 		const cytoscape = require('cytoscape')
@@ -257,7 +256,7 @@ export default function Cytoscape ({
 								sel.removeClass('focused').outgoers().removeClass('focusedColored')
 								sel.incomers().removeClass('focusedColored')
 								setSelected(null)
-							}, 5000)
+							}, 200000)
 						}
 						})
 

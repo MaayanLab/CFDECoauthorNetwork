@@ -45,14 +45,12 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 			const node_tabs = []
 			const edge_tabs = []
 			for (const d of [...data.nodes, ...data.edges]) {
-				console.log(d)
 				const properties = d.data
 				const {kind, relation, source, target, label, "Unnamed: 0": _, ...rest} = d.data
 				if (properties.id === undefined) properties.id = `${source}_${target}`
 				let key = ''
 				if (kind == "Relation") key = relation + "_edge"
 				else key = kind + "_node"
-				console.log(key)
 				if (key && typeof key === 'string') { 
 					if ( processed[key] === undefined) {
 						if (relation) edge_tabs.push(key)
@@ -161,9 +159,6 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 	else {
 		const {data={}, header=[], columnVisibilityModel} = processedData[tab] || {}
 		const columns: GridColDef[] = header.filter(i=>i.count === undefined || i.count > 0)
-		console.log("DATAGRID")
-		console.log(columns)
-		console.log(Object.values(data))
 		return (
 			<Card sx={{marginBottom: 10}} ref={tableRef}>
 				<CardContent>

@@ -453,7 +453,6 @@ const resolve_one_term = async ({
         augment_limit?: number,
 		arrow_shape?: {[key: string]: ArrowShape}
     }) => {
-	console.log(relation)
 	const lextra = limit_extra
 	const rels = []
 	const valid_relations = []
@@ -496,7 +495,7 @@ const resolve_one_term = async ({
 								WITH p, st, en
 								RETURN p as q, nodes(p) as n, relationships(p) as r, st as sta\n
 							}
-							RETURN q, n, r, sta
+							RETURN n, r, sta
 							`
 
 
@@ -534,7 +533,7 @@ const resolve_one_term = async ({
 						`
 						q = q + to_remove
 					}
-					q = q + `RETURN p as p, nodes(p) as n, relationships(p) as r, st`
+					q = q + `RETURN nodes(p) as n, relationships(p) as r, st as sta`
 					rels.push(q)
 				}
 			}
@@ -553,10 +552,11 @@ const resolve_one_term = async ({
 	if (rels.length == 0) {
 		limit = 0
 	}
-	query = query + ` RETURN p, nodes(p) as n, relationships(p) as r LIMIT TOINTEGER($limit)`
+	query = query + ` RETURN nodes(p) as n, relationships(p) as r LIMIT TOINTEGER($limit)`
 	
 	if (rels.length > 0) {
 		query = rels.join("\nUNION\n")
+		query += `\n UNION \n MATCH ((n:\`${start}\` { ${field}: $term})) RETURN [n] as n, [] as r, [n] as sta`
 	}
 
 	const gl = []

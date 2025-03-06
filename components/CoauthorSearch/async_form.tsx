@@ -157,7 +157,6 @@ const AsyncFormComponent = ({direction,
                     value={type} 
                     prefix={direction} 
                     onChange={(type:string)=>{
-						console.log(pathname)
                         if (direction === 'Start') {
                             setInputTerm('')
                             router_push(router, pathname,
@@ -367,7 +366,6 @@ const AsyncFormComponent = ({direction,
                                         ...rest,
                                         filter: filt
                                     })
-				    console.log(filter)
                                     router_push(router, pathname, query)
                                 } else {
                                     // const {filter, ...rest} = searchParams

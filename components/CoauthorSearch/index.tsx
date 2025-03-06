@@ -177,15 +177,6 @@ const TermAndGeneSearch = async ({searchParams, props}: {
                 </Grid>}
 
                 <Grid item xs={12} md={4} lg={3}>
-		    <Box sx= {{minHeight: 120, width:"100%",justifyContent:"center"}}>
-                    <TooltipComponentGroup
-			elements={elements}
-			tooltip_templates_edges={tooltip_templates_edges}
-			tooltip_templates_nodes={tooltip_templates_nodes}
-			schema={schema}
-			rel={filter.relation}
-			filter={JSON.stringify(filter)}
-			/> </Box>
                     <Card elevation={4} sx={{borderRadius: "8px", backgroundColor: "tertiary.light"}}>
                         <CardContent>
                             <Stack>
@@ -232,6 +223,16 @@ const TermAndGeneSearch = async ({searchParams, props}: {
                             </Stack>
                         </CardContent>
                     </Card>
+		    		    <Box sx= {{minHeight: 120, width:"100%",justifyContent:"center"}}>
+                    <TooltipComponentGroup
+			elements={elements}
+			tooltip_templates_edges={tooltip_templates_edges}
+			tooltip_templates_nodes={tooltip_templates_nodes}
+			schema={schema}
+			rel={filter.relation}
+			filter={JSON.stringify(filter)}
+			/> </Box>
+
                 </Grid>
                 <Grid item xs={12} md={8} lg={9}>
                     <Stack>

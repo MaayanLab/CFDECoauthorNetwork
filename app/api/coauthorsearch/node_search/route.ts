@@ -57,7 +57,6 @@ export async function GET(req: NextRequest) {
 	const node_properties = await (await fetch(`${process.env.NODE_ENV==="development" ? process.env.NEXT_PUBLIC_HOST_DEV : process.env.NEXT_PUBLIC_HOST}${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX: ''}/api/knowledge_graph/search_properties`)).json()
 
         const {type, field="label", term, limit=100, filter={}} = query_schema.parse(convert_query(req))
-	console.log(type)
 	const session = neo4jDriver.session({
             defaultAccessMode: neo4j.session.READ
         })

@@ -145,8 +145,6 @@ const CustomTextField = styled(TextField)({
 	const [legend, setLegend] = useQueryState('legend')
 	const [legend_size, setLegendSize] = useQueryState('legend_size')
     const relation = process_relation(r || [])
-    console.log("RELATION")
-    console.log(filter.relation)
     const [download_image, setDownloadImage] = useQueryState('download_image')
     const [error, setError] = useState<{error: string} | null>(null)
     const [anchorEl, setAnchorEl] = useState<HTMLElement>(null)
@@ -181,10 +179,7 @@ const CustomTextField = styled(TextField)({
 	const handleCloseMenu = (setter:Function) => {
 		setter(null);
 	};
-    console.log("EDGES")
-    console.log(edges)
     const filteredEdges = edges.filter(edge => edge !== "Coauthors")
-    console.log(filteredEdges)
     return(
 
         <Grid container justifyContent="space-around" spacing={1}>

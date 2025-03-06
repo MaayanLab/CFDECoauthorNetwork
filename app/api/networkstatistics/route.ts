@@ -73,13 +73,38 @@ async function process_stats_query({type}: {type: string}) {
 		         LIMIT 1
 		         RETURN n AS most_connected_node, n.label AS most_connected_label, degree AS max_connections
 		     }
+
+		     CALL {
+			 MATCH (n)--(m)
+			 WITH n, m, COUNT { (n)--() } AS deg_n, COUNT { (m)--() } AS deg_m
+			 WITH avg(deg_n * deg_m) AS num, avg(deg_n) AS avg_n, avg(deg_m) AS avg_m,
+			      stdev(deg_n) AS std_n, stdev(deg_m) AS std_m
+			 RETURN (num - avg_n * avg_m) / (std_n * std_m) AS assortativity
+		     }
+
+		     CALL {
+			 MATCH (n)
+			 WITH n, COUNT { (n)--() } AS degree
+			 RETURN stdev(degree) AS degree_std_dev
+		     }
+		     
+		     CALL {
+			     MATCH (n)
+			     WITH count(n) AS num_nodes
+			     MATCH ()-->()
+			     WITH num_nodes, count(*) AS num_edges
+			     RETURN num_edges, num_edges * 1.0 / (num_nodes * (num_nodes - 1)) AS density
+		     }
+
 		     
 		     RETURN {
-		         avg_degree: avg_degree, 
+		         avg_degree: avg_degree,
+			 std_dev_degree: degree_std_dev,
 		         min_degree: min_degree, 
-		         max_degree: max_degree, 
-		         most_connected_node: most_connected_label, 
-		         max_connections: max_connections
+		         max_degree: max_degree,
+			 assortativity: assortativity,
+			 network_density: density,
+		         most_connected_node: most_connected_label 
 		     } AS result;`
 
 
@@ -89,10 +114,12 @@ async function process_stats_query({type}: {type: string}) {
 	
 	    return {
 	        avg_degree: typeof result.avg_degree === "number" ? result.avg_degree : result.avg_degree.toNumber(),
+		std_dev_degree: typeof result.std_dev_degree === "number" ? result.std_dev_degree : result.std_dev_Degree.toNumber(),
 	        min_degree: typeof result.min_degree === "number" ? result.min_degree : result.min_degree.toNumber(),
 	        max_degree: typeof result.max_degree === "number" ? result.max_degree : result.max_degree.toNumber(),
-	        most_connected_node: result.most_connected_node || result.most_connected_node?.identity?.low,
-	        max_connections: typeof result.max_connections === "number" ? result.max_connections : result.max_connections.toNumber()
+	        assortativity: typeof result.assortativity === "number" ? result.assortativity : result.assortativity.toNumber(),
+	        network_density: typeof result.network_density === "number" ? result.network_density : result.network_density.toNumber(),
+	        most_connected_node: result.most_connected_node || result.most_connected_node?.identity?.low
 	    };
 	});
 
@@ -178,7 +205,6 @@ export async function GET(req: NextRequest) {
        		]);
 
        		// Combine results into a single object
-		console.log(networkStats_results)
        		const results = {
        		    node_results,
        		    edge_results,

@@ -60,7 +60,6 @@ export async function GET(req: NextRequest) {
             defaultAccessMode: neo4j.session.READ
         })
         if (node_properties[type] === undefined) {
-	    console.log(node_properties)
             return NextResponse.json({ error: `Invalid node: ${type}` }, { status: 400 })
         }
         if (node_properties[type].indexOf(field) === -1) {

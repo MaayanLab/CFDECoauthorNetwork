@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect, useState } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Selector } from "../misc"
 import Link from 'next/link'
-import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, FormControlLabel, Radio, RadioGroup, FormControl, FormLabel } from "@mui/material";
+import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, FormControlLabel, Radio, RadioGroup, FormControl, FormLabel, InputLabel, MenuItem, Select } from "@mui/material";
 import { router_push } from "@/utils/client_side"
 import { process_filter } from "@/utils/helper"
 import { FilterSchema } from "@/utils/helper"
@@ -81,8 +81,6 @@ const AsyncFormComponent_Minimum = ({
         start_field,
         start_term
     }
-    console.log(searchParams)
-    console.log(start_extras)
     filter.start_extras = start_extras
     filter.limit = 1
     const field = start_field || ''
@@ -173,7 +171,6 @@ const AsyncFormComponent_Minimum = ({
     }, [inputTerm, type])
     useEffect(()=>{
 	if (clicked) resolve_example()
-	console.log(exampleOption)
 	setClicked(false)
     }, [clicked, type])
     useEffect(()=>{
@@ -219,26 +216,20 @@ const AsyncFormComponent_Minimum = ({
     return (
         <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
 	    <Grid item xs={12}>
-               <FormControl sx = {{display:"block"}}>
-                        <FormLabel sx = {{textAlign: "center", mb: "1", color:"#336699", fontSize: "1.125rem", fontWeight:"bold", display:"block"}}>Pick Search Type</FormLabel>
-
-                        <StyledRadioGroup
-				value={searchType}
-                                onChange={(event) => setSearchType(event.target.value)}
-				defaultValue="explore" name="radio-buttons-group">
-                            <FormControlLabel value="explore" control={<Radio sx={{display:"None"}} />} label="Single Author Search" sx = {{
-			    	border: searchType === "explore" ? "2px solid #336699 " : "2px solid #3366994d", display:"block", textAlign: "center" 
-			    }}/>
-                            <FormControlLabel value="direct_connect" control={<Radio sx={{display:"None"}} />} label="Two Author Search" sx = {{
-			    	border: searchType === "direct_connect" ? "2px solid #336699" : "2px solid #3366994d ", display:"block", textAlign: "center"
-			    }}/>
-                            <FormControlLabel value="min_connect" control={<Radio sx={{display:"None"}} />} label="Just Author Search" sx = {{
-			    	border: searchType === "min_connect" ? "2px solid #336699" : "2px solid #3366994d", display:"block", textAlign: "center"
-			    }}/>
-
-                        </StyledRadioGroup>
-                </FormControl>
-
+	    	<Typography variant="body1" color="secondary" sx = {{display: "block", width: "100%", fontWeight: "bold", fontSize:18, textAlign: "center"}}>
+			Select Search Type
+		</Typography>
+        	<FormControl sx={{ display: "block", width: "100%" }}>
+        	    <Select
+        	        value={searchType}
+        	        onChange={(event) => setSearchType(event.target.value)}
+        	        sx={{ width: "100%", textAlign: "left", mt: 2, height: 45}}
+        	    >
+        	        <MenuItem value="explore">Single Author Search</MenuItem>
+        	        <MenuItem value="direct_connect">Two Author Search</MenuItem>
+        	        <MenuItem value="min_connect">Just Author Search</MenuItem>
+        	    </Select>
+        	</FormControl>
 	    </Grid>
             <Grid item xs={12}>
                 <Typography variant="body1" color="secondary"><b>Choose an Author</b></Typography>

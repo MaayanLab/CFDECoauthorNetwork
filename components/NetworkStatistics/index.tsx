@@ -35,7 +35,6 @@ const NetworkStatistics = async ({ props }) => {
     const node_data: any = netdata.node_results ?? {};
     const edge_data: any = netdata.edge_results ?? {};
     const stats_data: any = netdata.networkStats_results ?? {}; // Network stats
-    console.log(stats_data)
     // Convert stats_data object into DataGrid row format
 	const statsRows = Object.entries(stats_data[0] || stats_data).map(([key, value], index) => ({
 	    id: index, // Unique ID for MUI DataGrid
@@ -43,10 +42,11 @@ const NetworkStatistics = async ({ props }) => {
  		 .split("_")
  		 .map(part => part.charAt(0).toUpperCase() + part.slice(1))
  		 .join(" "),
-	    value: typeof value === "object" ? JSON.stringify(value) : value // Ensure numbers remain numbers
+	    value: typeof value === "number" 
+	         ? Number(value.toFixed(4)) 
+		 : (typeof value === "object" ? JSON.stringify(value) : value)
 	}));
 
-    console.log(statsRows)
 
     // Define columns for the DataGrid
     const columns = [
@@ -59,21 +59,16 @@ const NetworkStatistics = async ({ props }) => {
             {/* Left side: Node & Edge Bar Charts */}
             <Grid item xs={6}>
                 <Stack>
-                    <Typography variant="body1" sx={{ textAlign: "center", fontSize: "24px", color: "#336699" }}>
+                    <Typography variant="body1" sx={{ textAlign: "center", fontSize: "24px", color: "#336699", mb: 0 }}>
                         Node Counts
                     </Typography>
                     <BarChartForm props={props} chartData={node_data} />
-
-                    <Typography variant="body1" sx={{ textAlign: "center", fontSize: "24px", color: "#336699" }}>
-                        Edge Counts
-                    </Typography>
-                    <BarChartForm props={props} chartData={edge_data} />
                 </Stack>
             </Grid>
 
             {/* Right side: Network Statistics DataGrid */}
             <Grid item xs={6}>
-                <Typography variant="body1" sx={{ textAlign: "center", fontSize: "24px", color: "#336699", mb: 2 }}>
+                <Typography variant="body1" sx={{ textAlign: "center", fontSize: "24px", color: "#336699", mb: 4.5}}>
                     Network Statistics
                 </Typography>
                 <TableForm
@@ -98,7 +93,7 @@ export default NetworkStatistics;
 //        <Grid container spacing={2}>
 //            <Grid item xs={6}>
 //	    		<Stack>
-//	    		<Typography variant="body1" sx={{textAlign: "center", fontSize:"24", color:"336699"}}> Node Counts </Typography>
+//	    		<Typography variant="body1" sx={{textAlign: "center", fontSize:"24", color:"336699", mb: 4}}> Node Counts </Typography>
 //                <BarChartForm
 //                        props={props}
 //                        chartData={node_data}

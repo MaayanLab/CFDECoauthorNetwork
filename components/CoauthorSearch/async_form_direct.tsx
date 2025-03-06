@@ -3,7 +3,7 @@ import React, { ReactNode, useEffect, useState } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Selector } from "../misc"
 import Link from 'next/link'
-import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, FormControlLabel, Radio, RadioGroup, FormControl, FormLabel } from "@mui/material";
+import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, FormControlLabel, Radio, RadioGroup, FormControl, FormLabel, InputLabel, Select, MenuItem } from "@mui/material";
 import { router_push } from "@/utils/client_side"
 import { process_filter } from "@/utils/helper"
 import { FilterSchema } from "@/utils/helper"
@@ -241,25 +241,21 @@ const AsyncFormComponent_Direct = ({direction,
     return (
         <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
 	    <Grid item xs={12}>
+	    { direction == "Start" && <Typography variant="body1" color="secondary" sx = {{display: "block", width: "100%", fontWeight: "bold", fontSize:18, textAlign: "center"}}>
+			Select Search Type
+		</Typography>}
 
-	    {( direction  == "Start" && <FormControl sx={{display:"block"}}>
-			<FormLabel sx = {{textAlign: "center", mb: "1", color:"#336699", fontSize: "1.125rem", fontWeight:"bold", display:"block" }}>Pick Search Type</FormLabel>
-                        <StyledRadioGroup
-				value={searchType}
-                                onChange={(event) => setSearchType(event.target.value)}
-				defaultValue="explore" name="radio-buttons-group">
-                            <FormControlLabel value="explore" control={<Radio sx={{display:"None"}} />} label="Single Author Search" sx = {{
-			    	border: searchType === "explore" ? "2px solid #336699 " : "2px solid #3366994d", display:"block", textAlign: "center" 
-			    }}/>
-                            <FormControlLabel value="direct_connect" control={<Radio sx={{display:"None"}} />} label="Two Author Search" sx = {{
-			    	border: searchType === "direct_connect" ? "2px solid #336699" : "2px solid #3366994d ", display:"block", textAlign: "center"
-			    }}/>
-                            <FormControlLabel value="min_connect" control={<Radio sx={{display:"None"}} />} label="Just Author Search" sx = {{
-			    	border: searchType === "min_connect" ? "2px solid #336699" : "2px solid #3366994d", display:"block", textAlign: "center"
-			    }}/>
-
-                        </StyledRadioGroup>
-                </FormControl>)}
+        	{ direction == "Start" && <FormControl sx={{ display: "block", width: "100%" }}>
+        	    <Select
+        	        value={searchType}
+        	        onChange={(event) => setSearchType(event.target.value)}
+        	        sx={{ width: "100%", textAlign: "left", mt: 2, height: 45}}
+        	    >
+        	        <MenuItem value="explore">Single Author Search</MenuItem>
+        	        <MenuItem value="direct_connect">Two Author Search</MenuItem>
+        	        <MenuItem value="min_connect">Just Author Search</MenuItem>
+        	    </Select>
+        	</FormControl>}
 
 
 
@@ -274,7 +270,6 @@ const AsyncFormComponent_Direct = ({direction,
                     prefix={direction} 
                     onChange={(type:string)=>{
 			let relation = filter.relation
-						console.log(pathname)
                         if (direction === 'Start') {
                             setInputTerm('')
                             router_push(router, pathname,

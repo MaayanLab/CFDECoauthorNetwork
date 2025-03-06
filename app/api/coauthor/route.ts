@@ -287,8 +287,6 @@ export async function GET(req: NextRequest) {
     if (f.limit && !isNaN(f.limit) && typeof f.limit === 'string') f.limit = parseInt(f.limit)
     if (f.limit_extra && !isNaN(f.limit_extra) && typeof f.limit_extra === 'string') f.limit_extra = parseInt(f.limit_extra) 
     const { start_term, limit=10, start_field="label", start_extras, limit_extra=0} = InputSchema.parse(f)
-    console.log("START EXTRAS")
-    console.log(start_extras)
     const {aggr_scores, colors} = await initialize()
     // const nodes = schema.nodes.map(i=>i.node)
     if (start_term === undefined) return NextResponse.json({error: "No term inputted"}, {status: 400})

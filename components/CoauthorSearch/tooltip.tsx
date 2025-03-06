@@ -57,8 +57,6 @@ export const TooltipComponent = ({data, float, tooltip_templates, schema, rel, f
 			end:"Authors"
 		})
 	}
-	console.log("EXPAND FILTER")
-	console.log(expand_filter)
 	const searchParams = useSearchParams()
 	const pathname = usePathname()
 	const queryParams = {}
@@ -110,7 +108,6 @@ export const TooltipComponent = ({data, float, tooltip_templates, schema, rel, f
 	//	search_type: "explore",
 	//	relation: rela
 	//	})
-	console.log(filter)
 	
 	return (
 		<Card sx={{marginTop: 2, marginBottom: 2, ...extrasx}}>
