@@ -16,7 +16,12 @@
                     "label": "Affiliation",
                     "text": "${affiliation}",
                     "type": "text"
-                }
+                },
+		{
+		    "label": "CFDE Center",
+		    "text": "${CFDE_Center}",
+		    "type": "text"
+		}
             ],
             "relation": [
 		"Publications",
