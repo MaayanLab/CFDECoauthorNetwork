@@ -28,19 +28,45 @@ async function process_node_chart_query({ type }: { type: string }) {
     }
 }
 
+async function process_node_degrees_query({ type }: { type: string }) {
+    try {
+        const session = neo4jDriver.session({
+            defaultAccessMode: neo4j.session.READ
+        });
+
+        let query = `
+            MATCH (n)-[r]-()
+            UNWIND labels(n) AS label
+            RETURN label, 
+                   COUNT(r) * 1.0 / COUNT(DISTINCT n) AS avgDegree
+            ORDER BY avgDegree DESC
+        `;
+
+        const results = await session.readTransaction(txc => txc.run(query, {}));
+        let nodes = results.records.map(result => ({
+            label: result.get("label"), // Get node label (type)
+            avgDegree: result.get("avgDegree") // Get average degree
+        }));
+
+        return nodes;
+    } catch (error) {
+        console.error("Error fetching average node degree:", error);
+        throw error;
+    }
+}
+
 async function process_edge_chart_query({ type }: { type: string }) {
     try {
         const session = neo4jDriver.session({
             defaultAccessMode: neo4j.session.READ
         });
-	let query = `MATCH ()-[r]->()
-		     RETURN type(r) AS edgeType, COUNT(*) AS count
-		     ORDER BY count DESC`
-
+	let query = `MATCH (start)-[r]->(end)
+                     RETURN type(r) AS edgeType, labels(start)[0] AS startType, labels(end)[0] AS endType, COUNT(*) AS count
+                     ORDER BY count DESC`
 
         const results = await session.readTransaction(txc => txc.run(query, {}));
 	let edges = results.records.map(result => ({
-            label: result.get("edgeType"), // Get label name
+            label: result.get("edgeType") + " : " + result.get("startType") + "→" + result.get("endType"), // Get label name
             value: result.get("count").low // Extract Neo4j integer count
         }));
 
@@ -51,6 +77,29 @@ async function process_edge_chart_query({ type }: { type: string }) {
     }
 }
 
+async function process_top_nodes({ type }: {type: string}) {
+    try {
+    	const session = neo4jDriver.session({
+		defaultAccessMode: neo4j.session.READ
+	});
+	let query = `MATCH (n)
+		     WITH labels(n) AS nodeType, n, 
+		          COUNT { (n)-->() } + COUNT { (n)<--() } AS degree
+		     ORDER BY nodeType, degree DESC
+		     WITH nodeType, collect({node: n, degree: degree}) AS nodes
+		     RETURN nodeType, nodes[0].node AS topNode, nodes[0].degree AS relationshipCount`
+	const results = await session.readTransaction(txc => txc.run(query, {}));
+	let nodes = results.records.map(result => ({
+	    label: result.get("nodeType"), // Node label (type)
+	    topNode: result.get("topNode").properties.label, // Node properties (optional)
+	    relationshipCount: result.get("relationshipCount")// Relationship count
+	}));
+	return nodes;
+    } catch (error) {
+	console.log(error)
+    	throw error;
+    }
+}
 
 
 async function process_stats_query({type}: {type: string}) {	
@@ -114,7 +163,7 @@ async function process_stats_query({type}: {type: string}) {
 	
 	    return {
 	        avg_degree: typeof result.avg_degree === "number" ? result.avg_degree : result.avg_degree.toNumber(),
-		std_dev_degree: typeof result.std_dev_degree === "number" ? result.std_dev_degree : result.std_dev_Degree.toNumber(),
+			std_dev_degree: typeof result.std_dev_degree === "number" ? result.std_dev_degree : result.std_dev_Degree.toNumber(),
 	        min_degree: typeof result.min_degree === "number" ? result.min_degree : result.min_degree.toNumber(),
 	        max_degree: typeof result.max_degree === "number" ? result.max_degree : result.max_degree.toNumber(),
 	        assortativity: typeof result.assortativity === "number" ? result.assortativity : result.assortativity.toNumber(),
@@ -198,17 +247,21 @@ export async function GET(req: NextRequest) {
         
         try {
                         // Run both queries in parallel
-       		const [node_results, edge_results, networkStats_results] = await Promise.all([
-       		    process_node_chart_query({ type }),
-       		    process_edge_chart_query({ type }),
-		    process_stats_query({ type })
+       		const [node_results, edge_results, networkDegree_results, networkStats_results, topNodes_results] = await Promise.all([
+       		    		process_node_chart_query({ type }),
+       		   		process_edge_chart_query({ type }),
+				process_node_degrees_query({ type }),
+				process_stats_query({ type }),
+				process_top_nodes({ type })
        		]);
 
        		// Combine results into a single object
        		const results = {
        		    node_results,
        		    edge_results,
-		    networkStats_results
+		    networkDegree_results,
+		    networkStats_results,
+		    topNodes_results
        		};
                 return NextResponse.json(results, {status: 200})
 	} catch (e) {

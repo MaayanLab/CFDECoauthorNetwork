@@ -2,10 +2,11 @@ import { Typography, Link } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { Grid } from '@mui/material'
 import BarChartForm from './BarChart'
-import TableForm from './statstable'
+import DashboardForm from './statstable'
 import { NextDataPathnameNormalizer } from 'next/dist/server/future/normalizers/request/next-data';
-import {Stack} from '@mui/material'
+import {Stack, Tabs, Tab} from '@mui/material'
 import { DataGrid } from "@mui/x-data-grid"
+import React, { useState } from "react"
 export const initialize_net_data = async () => {
     const controller = new AbortController();
     
@@ -30,53 +31,31 @@ export const initialize_net_data = async () => {
 }
 
 
+
 const NetworkStatistics = async ({ props }) => {
     let netdata:any = await initialize_net_data(); // Fetch data
     const node_data: any = netdata.node_results ?? {};
-    const edge_data: any = netdata.edge_results ?? {};
-    const stats_data: any = netdata.networkStats_results ?? {}; // Network stats
-    // Convert stats_data object into DataGrid row format
-	const statsRows = Object.entries(stats_data[0] || stats_data).map(([key, value], index) => ({
-	    id: index, // Unique ID for MUI DataGrid
-	    metric: key
- 		 .split("_")
- 		 .map(part => part.charAt(0).toUpperCase() + part.slice(1))
- 		 .join(" "),
-	    value: typeof value === "number" 
-	         ? Number(value.toFixed(4)) 
-		 : (typeof value === "object" ? JSON.stringify(value) : value)
-	}));
-
-
-    // Define columns for the DataGrid
-    const columns = [
-        { field: "metric", headerName: "Metric", flex: 1 },
-        { field: "value", headerName: "Value", flex: 1 }
-    ];
 
     return (
-        <Grid container spacing={2}>
+        <Grid>
             {/* Left side: Node & Edge Bar Charts */}
-            <Grid item xs={6}>
+	    {/* <Grid item xs={6}>
                 <Stack>
                     <Typography variant="body1" sx={{ textAlign: "center", fontSize: "24px", color: "#336699", mb: 0 }}>
                         Node Counts
                     </Typography>
                     <BarChartForm props={props} chartData={node_data} />
                 </Stack>
-            </Grid>
+            </Grid> */}
 
-            {/* Right side: Network Statistics DataGrid */}
-            <Grid item xs={6}>
+            {/* Right side: Network Statistics DataGrid 
                 <Typography variant="body1" sx={{ textAlign: "center", fontSize: "24px", color: "#336699", mb: 4.5}}>
                     Network Statistics
-                </Typography>
-                <TableForm
+                </Typography>*/}
+            <DashboardForm
                     props={props}
-                    rows={statsRows}
-                    columns={columns}
-                />
-            </Grid>
+		    netdata={netdata}
+	    />
         </Grid>
     );
 };
@@ -91,7 +70,7 @@ export default NetworkStatistics;
 //    //const formattedSeries = [{ data: netdata.map(item => item.value) }]
 //    return (
 //        <Grid container spacing={2}>
-//            <Grid item xs={6}>
+//            <Grid item xs={12}>
 //	    		<Stack>
 //	    		<Typography variant="body1" sx={{textAlign: "center", fontSize:"24", color:"336699", mb: 4}}> Node Counts </Typography>
 //                <BarChartForm

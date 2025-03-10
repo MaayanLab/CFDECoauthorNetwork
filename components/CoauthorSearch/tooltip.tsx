@@ -61,11 +61,12 @@ export const TooltipComponent = ({data, float, tooltip_templates, schema, rel, f
 	const pathname = usePathname()
 	const queryParams = {}
 	let filter_field = 'filter'
-
+	console.log(data.kind)
 
 	const router = useRouter()
 	const elements = []
 	const field = data.kind === "Relation" ? data.label : data.kind.replace("Co-expressed Gene", "lncRNA")
+
 	for (const i of tooltip_templates[field] || []) {
 		if (i.type === "link") {
 			const text = makeTemplate(i.text, data)
@@ -85,10 +86,14 @@ export const TooltipComponent = ({data, float, tooltip_templates, schema, rel, f
 			}
 		  } else {
 			let e = makeTemplate(i.text, data)
+			let key_lab = i.label
+			if (i.label === "label") {
+				key_lab = data.kind
+			}
 			if (e !== 'undefined') {
 			  elements.push(
 				<Typography key={i.label} sx={{wordWrap: "break-word"}} variant="subtitle2">
-				  <b>{i.label}:</b> {i.type === "text" ? e: precise(e)}
+				  <b>{key_lab}:</b> {i.type === "text" ? e: precise(e)}
 				</Typography>  
 			  )
 			}

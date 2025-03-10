@@ -1,0 +1,187 @@
+'use client'
+
+import BarChartForm from "./BarChart"
+import { DataGrid } from "@mui/x-data-grid"
+import React, { ReactNode, useEffect, useState } from "react"
+import { useRouter, usePathname, useSearchParams } from "next/navigation"
+import { Selector } from "../misc"
+import Link from 'next/link'
+import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, FormControlLabel, Tab, Tabs, Box } from "@mui/material";
+import { any, string } from "zod"
+
+const TableForm = ({ props, netdata }) => {
+    // Extract data from netdata
+    const node_data: any = netdata.node_results ?? {};
+    const edge_data: any = netdata.edge_results ?? {};
+    const stats_data: any = netdata.networkStats_results ?? {}; // Whole network stats
+    const degree_data: any = netdata.degreeStats_results ?? {}; // Node degree distribution
+
+    // Convert node and edge counts for BarChart
+    const nodeCounts = Object.entries(node_data).map(([key, value]) => ({
+        type: key,
+        count: value.value
+    }));
+
+    const edgeCounts = Object.entries(edge_data).map(([key, value]) => ({
+        type: key,
+        count: value.value
+    }));
+
+    const nodeDegrees = Object.entries(degree_data).map(([key, value]) => ({
+        type: key,
+        count: value.value
+    }));
+
+    // **State for Main Tabs**
+    const [activeTab, setActiveTab] = useState(0);
+
+    // Define tabs
+    const tabs = ["Node Counts", "Edge Counts", "Node Degree", "Whole Network Stats"];
+
+    // Determine correct data for the left-side BarChart
+    const chartData = activeTab === 0 ? nodeCounts :
+                      activeTab === 1 ? edgeCounts :
+                      activeTab === 2 ? nodeDegrees : [];
+
+    // Determine correct data for the right-side TableForm
+    const tableData = activeTab === 0 ? node_data :
+                      activeTab === 1 ? edge_data :
+                      activeTab === 2 ? degree_data :
+                      stats_data;
+
+    return (
+        <Box sx={{ width: "100%", mt: 2 }}>
+            {/* Main Tabs */}
+            <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} centered variant="scrollable">
+                {tabs.map((label, index) => (
+                    <Tab key={index} label={label} sx={{ fontSize: 20, color: "#336699" }} />
+                ))}
+            </Tabs>
+
+            <Grid container spacing={2} sx={{ mt: 2 }}>
+                {/* Left Side: Bar Chart */}
+                <Grid item xs={6}>
+                    <Typography variant="h6" sx={{ textAlign: "center", color: "#336699" }}>
+                        {tabs[activeTab]}
+                    </Typography>
+                    <BarChartForm props={props} chartData={chartData} />
+                </Grid>
+
+                {/* Right Side: Table */}
+                <Grid item xs={6}>
+                    <Typography variant="h6" sx={{ textAlign: "center", color: "#336699" }}>
+                        {tabs[activeTab]}
+                    </Typography>
+                    <TableForm props={props} netdata={tableData} />
+                </Grid>
+            </Grid>
+        </Box>
+    );
+};
+
+
+//const TableForm = ({ props, netdata }) => {
+//    // Extract network statistics, node data, and edge data
+//    const node_data: any = netdata.node_results ?? {};
+//    const edge_data: any = netdata.edge_results ?? {};
+//    const stats_data: any = netdata.networkStats_results ?? {}; // Network stats
+//
+//    // Convert stats_data into DataGrid row format
+//    let statsRows = Object.entries(stats_data[0] || stats_data).map(([key, value], index) => ({
+//        id: index,
+//        metric: key
+//            .split("_")
+//            .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+//            .join(" "),
+//        value: typeof value === "number" ? Number(value.toFixed(4)) : JSON.stringify(value)
+//    }));
+//
+//    // Function to transform node_data and edge_data properly
+//    const transformData = (data: Record<string, { label: string; value: number | string }>, prefix: string, startId: number) =>
+//        Object.values(data).map((entry: { label: string; value: number | string }, index) => ({
+//            id: startId + index,
+//            type: entry.label, // Store node/edge type separately for filtering
+//            metric: `${prefix} - ${entry.label}`,
+//            value: typeof entry.value === "number" ? Number(entry.value.toFixed(4)) : entry.value
+//        }));
+//
+//    // Convert node_data and edge_data
+//    const nodeRows = transformData(node_data, "Node", statsRows.length);
+//    const edgeRows = transformData(edge_data, "Edge", statsRows.length + nodeRows.length);
+//
+//    // **State to manage main tabs**
+//    const [activeTab, setActiveTab] = useState(0);
+//
+//    // **State for Node & Edge subtabs**
+//    const [nodeTab, setNodeTab] = useState(0);
+//    const [edgeTab, setEdgeTab] = useState(0);
+//
+//    // Extract unique node and edge types for subtabs
+//    const nodeTypes = Array.from(new Set(nodeRows.map(row => row.type)));
+//    const edgeTypes = Array.from(new Set(edgeRows.map(row => row.type)));
+//
+//    // Filter node and edge data based on selected subtab
+//    const filteredNodeRows = nodeTab === 0 ? nodeRows : nodeRows.filter(row => row.type === nodeTypes[nodeTab - 1]);
+//    const filteredEdgeRows = edgeTab === 0 ? edgeRows : edgeRows.filter(row => row.type === edgeTypes[edgeTab - 1]);
+//
+//    // Define columns for DataGrid
+//    const columns = [
+//        { field: "metric", headerName: "Metric", flex: 1 },
+//        { field: "value", headerName: "Value", flex: 1 }
+//    ];
+//
+//    // Tab labels
+//    const tabs = ["Network Stats", "Node Stats", "Edge Stats"];
+//
+//    return (
+//        <Box sx={{ width: "100%", mt: 2 }}>
+//            {/* Main Tabs: Network, Nodes, Edges */}
+//            <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)} centered variant="scrollable">
+//                {tabs.map((label, index) => (
+//                    <Tab key={index} label={label} sx={{ fontSize: 20, color: "#336699" }} />
+//                ))}
+//            </Tabs>
+//
+//            {/* Show Node Subtabs */}
+//            {activeTab === 1 && (
+//                <Tabs value={nodeTab} onChange={(_, newValue) => setNodeTab(newValue)} centered variant="scrollable" sx={{ mt: 2 }}>
+//                    <Tab label="All Nodes" />
+//                    {nodeTypes.map((type, index) => (
+//                        <Tab key={index + 1} label={type} />
+//                    ))}
+//                </Tabs>
+//            )}
+//
+//            {/* Show Edge Subtabs */}
+//            {activeTab === 2 && (
+//                <Tabs value={edgeTab} onChange={(_, newValue) => setEdgeTab(newValue)} centered variant="scrollable" sx={{ mt: 2 }}>
+//                    <Tab label="All Edges" />
+//                    {edgeTypes.map((type, index) => (
+//                        <Tab key={index + 1} label={type} />
+//                    ))}
+//                </Tabs>
+//            )}
+//
+//            <Typography variant="body1" sx={{ textAlign: "center", fontSize: "18px", color: "#336699", mt: 2 }}>
+//                {activeTab === 1 ? `Node Type: ${nodeTab === 0 ? "All" : nodeTypes[nodeTab - 1]}` : 
+//                 activeTab === 2 ? `Edge Type: ${edgeTab === 0 ? "All" : edgeTypes[edgeTab - 1]}` : 
+//                 "Network Statistics"}
+//            </Typography>
+//
+//            {/* DataGrid with Pagination */}
+//            <DataGrid
+//                rows={activeTab === 0 ? statsRows : activeTab === 1 ? filteredNodeRows : filteredEdgeRows}
+//                columns={columns}
+//                autoHeight
+//                disableColumnMenu
+//                disableSelectionOnClick
+//                pageSizeOptions={[5]}
+//                paginationModel={{ pageSize: 5, page: 0 }}
+//                sx={{ backgroundColor: "white", color: "#336699", borderRadius: 2, mt: 2 }}
+//            />
+//        </Box>
+//    );
+//};
+
+
+export default TableForm

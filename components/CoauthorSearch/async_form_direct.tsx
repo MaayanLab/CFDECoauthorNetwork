@@ -442,6 +442,7 @@ const AsyncFormComponent_Direct = ({direction,
 					     relation: relation,
 					     end: "Authors",
 					     end_field: "label",
+					     end_term: ex_second,
 					     limit_extra: parseInt("2")
                         	        })
 					router_push(router, pathname, {filter:query})
