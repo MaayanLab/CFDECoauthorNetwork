@@ -78,7 +78,7 @@
                 },
                 {
                     "label": "URL",
-                    "text": "${PMID}",
+                    "text": "${url}",
                     "href": "${url}",
                     "type": "link"
                 },
@@ -87,6 +87,11 @@
                     "text": "${Title}",
                     "type": "text"
                 },
+		{
+		    "label": "Authors",
+		    "text": "${Authors}",
+		    "type": "text"
+		},
                 {
                     "label": "Journal",
                     "text": "${Journal}",
