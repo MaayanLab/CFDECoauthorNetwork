@@ -83,7 +83,7 @@
                 },
                 {
                     "label": "URL",
-                    "text": "${url}",
+                    "text": "${label}",
                     "href": "${url}",
                     "type": "link"
                 },
