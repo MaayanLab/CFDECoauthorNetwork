@@ -101,27 +101,7 @@
                     "label": "Journal",
                     "text": "${Journal}",
                     "type": "text"
-                },
-                {
-                    "label": "Volume",
-                    "text": "${Volume}",
-                    "type": "text"
-                },
-                {
-                    "label": "Issue",
-                    "text": "${Issue}",
-                    "type": "text"
-                },
-                {
-                    "label": "Pages",
-                    "text": "${Pages}",
-                    "type": "text"
-                },
-                {
-                    "label": "Year",
-                    "text": "${Year}",
-                    "type": "text"
-                }
+		}
             ],
             "relation": [
 		"Publications",

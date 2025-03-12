@@ -26,7 +26,7 @@ const AllFiles = ({download}: {download: {
 			<Grid item xs={12}>
 				<Typography variant={"h3"}>Networks</Typography>
 				<Typography variant={"body1"}>
-				The entry below contains the zipped file of all nodes and edges in the KG-UI standardized format.	
+				The entry below contains the zipped file of all nodes and edges in the KG-UI standardized format as well as the individual nodes and edges in their respective .csv files.	
 				</Typography>
 			</Grid>
 			<Grid item xs={12}>
