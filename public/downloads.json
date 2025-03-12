@@ -1,12 +1,117 @@
 {
     "network":[
         {
-            "name":"CFDE Co-authorship Network",
+            "name":"CFDE Co-authorship Network ZIP",
             "nodes": 2703,
             "edges": 9040,
             "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/CFDE.zip",
             "size":"239.1 KB"
-        }
+        },
+	{
+            "name":"Authors.nodes.csv",
+            "nodes": 1969,
+            "edges": 0,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Authors.nodes.csv",
+            "size":"344 KB"
+	},
+	{
+            "name":"Publications.nodes.csv",
+            "nodes": 190,
+            "edges": 0,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Publications.nodes.csv",
+            "size":"44 KB"
+	},
+	{
+            "name":"MeSH.nodes.csv",
+            "nodes": 468,
+            "edges": 0,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/MeSH.nodes.csv",
+            "size":"12 KB"
+	},
+	{
+            "name":"Awards.nodes.csv",
+            "nodes": 74,
+            "edges": 0,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Awards.nodes.csv",
+            "size":"16 KB"
+	},
+	{
+            "name":"Authors.Awards.Awards.edges.csv",
+            "nodes": 0,
+            "edges": 34,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Authors.Awards.Awards.edges.csv",
+            "size":"4 KB"
+	},
+	{
+            "name":"Authors.Coauthor.Authors.edges.csv",
+            "nodes": 0,
+            "edges": 106430,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Authors.Coauthor.Authors.edges.csv",
+            "size":"1.9 MB"
+	},
+	{
+            "name":"Authors.MeSH.MeSH.edges.csv",
+            "nodes": 0,
+            "edges": 14433,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Authors.MeSH.MeSH.edges.csv",
+            "size":"680 KB"
+	},
+	{
+            "name":"Authors.Publications.Publications.edges.csv",
+            "nodes": 0,
+            "edges": 2766,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Authors.Publications.Publications.edges.csv",
+            "size":"120 KB"
+	},
+	{
+            "name":"Awards.Awards.Authors.edges.csv",
+            "nodes": 0,
+            "edges": 34,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Awards.Awards.Authors.edges.csv",
+            "size":"4 KB"
+	},
+	{
+            "name":"Awards.Awards.Publications.edges.csv",
+            "nodes": 0,
+            "edges": 205,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Awards.Awards.Publications.edges.csv",
+            "size":"12 KB"
+	},
+	{
+            "name":"MeSH.MeSH.Authors.csv",
+            "nodes": 0,
+            "edges": 14433,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/MeSH.MeSH.Authors.csv",
+            "size":"680 KB"
+	},
+	{
+            "name":"MeSH.MeSH.Publications.edges.csv",
+            "nodes": 0,
+            "edges": 771,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/MeSH.MeSH.Publications.edges.csv",
+            "size":"36 KB"
+	},
+	{
+            "name":"Publications.Awards.Awards.edges.csv",
+            "nodes": 0,
+            "edges": 205,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Publications.Awards.Awards.edges.csv",
+            "size":"12 KB"
+	},
+	{
+            "name":"Publications.MeSH.MeSH.edges.csv",
+            "nodes": 0,
+            "edges": 2766,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Publications.MeSH.MeSH.edges.csv",
+            "size":"36 KB"
+	},
+	{
+            "name":"Publications.Publications.Authors.edges.csv",
+            "nodes": 0,
+            "edges": 2766,
+            "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/Publications.Publications.Authors.edges.csv",
+            "size":"120 KB"
+	}
     ],
     "notebook":[
         {
