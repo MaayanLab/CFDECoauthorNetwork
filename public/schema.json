@@ -84,7 +84,7 @@
                 {
                     "label": "URL",
                     "text": "${label}",
-                    "href": "${url}",
+                    "href": "https://pubmed.ncbi.nlm.nih.gov/${label}/",
                     "type": "link"
                 },
                 {
@@ -144,8 +144,8 @@
             "selected": true,
             "display": [
                 {
-                    "label": "source label",
-                    "text": "${source_label}",
+                    "label": "source",
+                    "text": "${source}",
                     "type": "text"
                 },
                 {
@@ -154,8 +154,8 @@
                     "type": "text"
                 },
                 {
-                    "label": "target label",
-                    "text": "${target_label}",
+                    "label": "target",
+                    "text": "${target}",
                     "type": "text"
                 }
             ]
@@ -168,7 +168,7 @@
             "display": [
                 {
                     "label": "source label",
-                    "text": "${source_label}",
+                    "text": "${source}",
                     "type": "text"
                 },
                 {
@@ -178,7 +178,7 @@
                 },
                 {
                     "label": "target label",
-                    "text": "${target_label}",
+                    "text": "${target}",
                     "type": "text"
                 }
             ]
@@ -191,7 +191,7 @@
             "display": [
                 {
                     "label": "source label",
-                    "text": "${source_label}",
+                    "text": "${source}",
                     "type": "text"
                 },
                 {
@@ -201,7 +201,7 @@
                 },
                 {
                     "label": "target label",
-                    "text": "${target_label}",
+                    "text": "${target}",
                     "type": "text"
                 }
             ]
