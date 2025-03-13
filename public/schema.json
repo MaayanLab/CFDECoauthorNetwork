@@ -145,7 +145,7 @@
             "display": [
                 {
                     "label": "source",
-                    "text": "${source}",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -155,7 +155,7 @@
                 },
                 {
                     "label": "target",
-                    "text": "${target}",
+                    "text": "${target_label}",
                     "type": "text"
                 }
             ]
@@ -167,8 +167,8 @@
             "selected": true,
             "display": [
                 {
-                    "label": "source label",
-                    "text": "${source}",
+                    "label": "source",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -177,8 +177,8 @@
                     "type": "text"
                 },
                 {
-                    "label": "target label",
-                    "text": "${target}",
+                    "label": "target",
+                    "text": "${target_label}",
                     "type": "text"
                 }
             ]
@@ -190,8 +190,8 @@
             "selected": true,
             "display": [
                 {
-                    "label": "source label",
-                    "text": "${source}",
+                    "label": "source",
+                    "text": "${source_label}",
                     "type": "text"
                 },
                 {
@@ -200,8 +200,8 @@
                     "type": "text"
                 },
                 {
-                    "label": "target label",
-                    "text": "${target}",
+                    "label": "target",
+                    "text": "${target_label}",
                     "type": "text"
                 }
             ]
@@ -214,7 +214,7 @@
 		"display": [
 		    {
 			"label": "source",
-			"text": "${source}",
+			"text": "${source_label}",
 			"type":"text"
 		    },
 		    {
@@ -224,7 +224,7 @@
 		    },
 		    {
 			"label": "target",
-			"text": "${target}",
+			"text": "${target_label}",
 			"type":"text"
 		    }
 		],
