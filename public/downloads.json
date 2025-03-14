@@ -5,7 +5,7 @@
             "nodes": 2668,
             "edges": 142848,
             "zip": "https://minio.dev.maayanlab.cloud/cfde-coauthor-network/CFDE.zip",
-            "size":"239.1 KB"
+            "size":"1.5 MB"
         },
         {
             "name": "Authors.Publications.Publications.edges.csv",
