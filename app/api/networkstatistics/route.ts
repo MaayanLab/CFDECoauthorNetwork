@@ -35,16 +35,15 @@ async function process_node_degrees_query({ type }: { type: string }) {
         });
 
         let query = `
-            MATCH (n)-[r]-()
-            UNWIND labels(n) AS label
-            RETURN label, 
-                   COUNT(r) * 1.0 / COUNT(DISTINCT n) AS avgDegree
-            ORDER BY avgDegree DESC
+		MATCH (n:Authors)-[r]-()
+		WITH type(r) AS relationType, COUNT(r) * 1.0 / COUNT(DISTINCT n) AS avgDegree
+		RETURN relationType, avgDegree
+		ORDER BY avgDegree DESC;
         `;
 
         const results = await session.readTransaction(txc => txc.run(query, {}));
         let nodes = results.records.map(result => ({
-            label: result.get("label"), // Get node label (type)
+            label: result.get("relationType"), // Get node label (type)
             avgDegree: result.get("avgDegree") // Get average degree
         }));
 
@@ -65,12 +64,36 @@ async function process_edge_chart_query({ type }: { type: string }) {
                      ORDER BY count DESC`
 
         const results = await session.readTransaction(txc => txc.run(query, {}));
-	let edges = results.records.map(result => ({
-            label: result.get("edgeType") + " : " + result.get("startType") + "→" + result.get("endType"), // Get label name
-            value: result.get("count").low // Extract Neo4j integer count
-        }));
+	let edges = results.records.map(result => {
+	    let startType = result.get("startType");
+	    let endType = result.get("endType");
+	    let edgeType = result.get("edgeType");
+	    
+	    return {
+	        label: edgeType + " : " + startType + "↔" + endType, // Correct label format
+	        value: (startType !== endType) ? result.get("count").low : result.get("count").low / 2 // Fix halving condition
 
-        return edges;
+	    };
+	});
+
+	edges = edges.filter(edge => {
+		let edgeType = edge.label.split(" : ")[0]
+		let parts = edge.label.split(" : ")[1].split("↔");
+		let startType = parts[0]
+		let endType = parts[1]
+
+		if (startType === endType) {
+			return true;
+		} else {
+			if (startType === edgeType) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+	})
+	return edges;
     } catch (error) {
         console.log(error);
         throw error;
@@ -82,18 +105,49 @@ async function process_top_nodes({ type }: {type: string}) {
     	const session = neo4jDriver.session({
 		defaultAccessMode: neo4j.session.READ
 	});
-	let query = `MATCH (n)
-		     WITH labels(n) AS nodeType, n, 
-		          COUNT { (n)-->() } + COUNT { (n)<--() } AS degree
-		     ORDER BY nodeType, degree DESC
-		     WITH nodeType, collect({node: n, degree: degree}) AS nodes
-		     RETURN nodeType, nodes[0].node AS topNode, nodes[0].degree AS relationshipCount`
-	const results = await session.readTransaction(txc => txc.run(query, {}));
-	let nodes = results.records.map(result => ({
-	    label: result.get("nodeType"), // Node label (type)
-	    topNode: result.get("topNode").properties.label, // Node properties (optional)
-	    relationshipCount: result.get("relationshipCount")// Relationship count
-	}));
+	let query = `
+		MATCH (n)-[]->(m)
+		WITH n, labels(n) AS nodeType, labels(m) AS connectedNodeType, COUNT(*) AS count
+		ORDER BY nodeType, count DESC
+		WITH nodeType, ID(n) AS topNodeId, n AS topNode, collect({nodeType: connectedNodeType, count: count}) AS relationshipCounts
+		RETURN nodeType, topNodeId, topNode, relationshipCounts
+	`;
+	//let query = `
+	//	MATCH (n)-[]->(m)
+	//	WITH labels(n) AS nodeType, n, labels(m) AS connectedNodeType, COUNT(*) AS count
+	//	ORDER BY nodeType, count DESC
+	//	WITH nodeType, n, collect({nodeType: connectedNodeType, count: count}) AS connections
+	//	WITH nodeType, collect({node: n, connections: connections}) AS topNodes
+	//	UNWIND topNodes AS node
+	//	RETURN nodeType, node.node AS topNode, node.connections AS relationshipCounts
+	//`;
+	//let query = `
+        //   MATCH (n)-[r]->()
+        //    WITH labels(n) AS nodeType, n, type(r) AS relType, COUNT(*) AS relCount
+        //    ORDER BY nodeType, relCount DESC
+        //    WITH nodeType, n, collect({relation: relType, count: relCount}) AS relations
+        //    WITH nodeType, collect({node: n, relations: relations})[0..100] AS topNodes
+        //    UNWIND topNodes AS node
+        //    RETURN nodeType, node.node AS topNode, node.relations AS relationshipCounts`
+        //let query = `
+        //    MATCH (n)
+        //    WITH labels(n) AS nodeType, n, 
+        //         COUNT { (n)-->() } + COUNT { (n)<--() } AS degree
+        //    ORDER BY nodeType, degree DESC
+        //    WITH nodeType, collect({node: n, degree: degree})[0..100] AS topNodes
+        //    UNWIND topNodes AS node
+        //    RETURN nodeType, node.node AS topNode, node.degree AS relationshipCount
+        //`;
+
+        const results = await session.readTransaction(txc => txc.run(query, {}));
+        
+        let nodes = results.records.map(result => ({
+            label: result.get("nodeType"), // Node label (type)
+            topNode: result.get("topNode").properties.label, // Node properties
+            relationshipCount: result.get("relationshipCounts") || [], // Relationship count
+	    topNodeId: result.get("topNodeId")
+        }));
+
 	return nodes;
     } catch (error) {
 	console.log(error)

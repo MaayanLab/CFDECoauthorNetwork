@@ -42,25 +42,11 @@ const StackedBarChartForm = ({ props, chartData }) => {
     // Create a blue color palette with distinct shades
     const blueColorPalette = [
         '#336699', // Deep Blue
-        '#1565C0', // Primary Blue
-        '#1976D2', // Medium Blue
-        '#1E88E5', // Bright Blue
-        '#2196F3', // Standard Blue
-        '#42A5F5', // Light Blue
+        '#336699', // Deep Blue
+        '#336699', // Deep Blue
         '#64B5F6', // Lighter Blue
-        '#90CAF9', // Very Light Blue
-        '#BBDEFB', // Pale Blue
-        '#2962FF', // Accent Blue
-        '#2979FF', // Vibrant Blue
-        '#29B6F6', // Sky Blue
-        '#03A9F4', // Light Sky Blue
-        '#00B0FF', // Strong Light Blue
-        '#0288D1', // Dark Sky Blue
-        '#0277BD', // Deep Ocean Blue
-        '#01579B', // Dark Ocean Blue
-        '#4FC3F7', // Bright Sky Blue
-        '#80D8FF', // Very Light Sky Blue
-        '#0091EA'  // Vivid Blue
+        '#336699', // Deep Blue
+        '#64B5F6' // Lighter Blue
     ];
 
     let chartdata = {
@@ -76,9 +62,10 @@ const StackedBarChartForm = ({ props, chartData }) => {
 	    label: item.type,
             data: pos_data_array(item, item.supertype, categoryIndexMap),
             valueFormatter: (v) => {
+		console.log(index)
             	return item.count
             },
-            color: blueColorPalette[index % blueColorPalette.length],
+            color: blueColorPalette[index],
             highlightScope: {
                 highlighted:"item" as const,
                 faded: "global" as const

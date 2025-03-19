@@ -75,7 +75,7 @@ const AsyncFormComponent_Coauthor = ({direction,
     const {
         start,
         start_field='label',
-        start_term,
+        start_term='Deanne M Taylor',
         end,
         end_field='label',
         end_term,
@@ -188,6 +188,7 @@ const AsyncFormComponent_Coauthor = ({direction,
     }, [inputTerm, type])
 
     useEffect(()=>{
+	console.log(clicked)
 	if (clicked) resolve_example()
 	setClicked(false)
     }, [clicked, type])
@@ -420,8 +421,9 @@ const AsyncFormComponent_Coauthor = ({direction,
 	    	<Stack>
 			<Button variant="contained" color="secondary" endIcon={<LightbulbOutlinedIcon />}
 				onClick={()=> {
-					let ex = {label: ""} 
-					ex = Object.values(exampleOption)[1].label;
+					let ex = {label: ""}
+					console.log(Object.values(exampleOption))
+					ex = Object.values(exampleOption)[0].label;
 					relation = filter.relation
                         	        let query = JSON.stringify({
 					     search_type: searchType,

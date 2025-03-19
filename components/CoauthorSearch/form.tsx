@@ -144,7 +144,7 @@ const CustomTextField = styled(TextField)({
 	const [layout, setLayout] = useQueryState('layout')
 	const [legend, setLegend] = useQueryState('legend')
 	const [legend_size, setLegendSize] = useQueryState('legend_size')
-    const relation = process_relation(r || [])
+    const relation = process_relation(r || [{"name":"MeSH"},{"name":"Publications"}, {"name":"Awards"}])
     const [download_image, setDownloadImage] = useQueryState('download_image')
     const [error, setError] = useState<{error: string} | null>(null)
     const [anchorEl, setAnchorEl] = useState<HTMLElement>(null)
@@ -173,6 +173,8 @@ const CustomTextField = styled(TextField)({
     	    return () => clearTimeout(timer);
     	}
     }, [error])
+
+    
     const handleClickMenu = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>, setter:Function) => {
 		setter(e.currentTarget);
 	  };
@@ -409,7 +411,7 @@ const CustomTextField = styled(TextField)({
                                         router_push(router, pathname, query)
                                     }}
                                     min={0}
-                                    max={5}
+                                    max={30}
                                     sx={{width: 150}}
                                     aria-labelledby="continuous-slider"
                                 />

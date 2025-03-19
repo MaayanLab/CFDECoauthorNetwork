@@ -62,15 +62,24 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 							for (const prop of display[key]) {
 								const field = prop.label
 								columnVisibilityModel[field] = !(prop.hide)
+								if (key == "Publications_node") {
+									if (prop.label == "URL") {
+										//continue
+									} else if (prop.label == "label") {
+										continue
+									}
+								}
+
 								if (prop.type === "link") {
+									console.log(prop.href)
 									header.push({
 										field,
-										headerName: field,
+										headerName: (key === "Publications_node") ? "label" : field,
 										flex: 1,
 										style: {flexDirection: "row"},
 										align: "left",
 										text: prop.text,
-										href: prop.href,
+										href: prop.href.replace("PMID :", ""),
 										renderCell: ({row, field})=>{
 											return <Button href={row[field].href} color='secondary' target="_blank">{row[field].text}</Button>
 										},
@@ -130,7 +139,8 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 					for (const i of processed[key].header) {
 						if (i.href) {
 							const val = makeTemplate(i.text, properties)
-							const href = makeTemplate(i.href, properties)
+							let href = makeTemplate(i.href, properties)
+							href = href.replace("PMID: ", "")
 							processed[key].data[properties.id][i.field] = {
 								text: val === "undefined" ? "": val,
 								href: href === "undefined" ? "": href

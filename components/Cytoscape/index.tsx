@@ -84,6 +84,7 @@ export default function Cytoscape ({
 		cytoscape.use(svg)
 	},[])
 
+
 	useEffect(()=>{
 		if (download_image === 'svg') {
 			fileDownload(cyref.current.svg({output: "blob"}), "network.svg")
@@ -142,6 +143,74 @@ export default function Cytoscape ({
 								'background-color': 'data(color)',
 								'border-color': 'data(borderColor)',
 								'border-width': 'data(borderWidth)',
+								'label': 'data(label)',
+								"text-valign": "center",
+								"text-halign": "center",
+								'width': `mapData(node_type, 0, 1, 70, 150)`,
+								'height': `mapData(node_type, 0, 1, 70, 150)`,
+							}
+						},
+						{
+							selector: 'node[kind="Authors"]',
+							style: {
+								'background-color': 'data(color)',
+								'border-color': 'data(borderColor)',
+								'border-width': 'data(borderWidth)',
+								'background-image': 'https://minio.dev.maayanlab.cloud/cfde-coauthor-network/user.svg',
+								'background-image-opacity': 0.05,
+								'background-width': '80%',
+								'background-height': '80%',
+								'label': 'data(label)',
+								"text-valign": "center",
+								"text-halign": "center",
+								'width': `mapData(node_type, 0, 1, 70, 150)`,
+								'height': `mapData(node_type, 0, 1, 70, 150)`,
+							}
+						},
+						{
+							selector: 'node[kind="Publications"]',
+							style: {
+								'background-color': 'data(color)',
+								'border-color': 'data(borderColor)',
+								'border-width': 'data(borderWidth)',
+								'background-image': 'https://minio.dev.maayanlab.cloud/cfde-coauthor-network/pub.svg',
+								'background-image-opacity': 0.05,
+								'background-width' : '80%',
+								'background-height' : '80%',
+								'label': 'data(label)',
+								"text-valign": "center",
+								"text-halign": "center",
+								'width': `mapData(node_type, 0, 1, 70, 150)`,
+								'height': `mapData(node_type, 0, 1, 70, 150)`,
+							}
+						},
+						{
+							selector: 'node[kind="MeSH"]',
+							style: {
+								'background-color': 'data(color)',
+								'border-color': 'data(borderColor)',
+								'border-width': 'data(borderWidth)',
+								'background-image': 'https://minio.dev.maayanlab.cloud/cfde-coauthor-network/pub.svg',
+								'background-image-opacity': 0.05,
+								'background-width' : '80%',
+								'background-height' : '80%',
+								'label': 'data(label)',
+								"text-valign": "center",
+								"text-halign": "center",
+								'width': `mapData(node_type, 0, 1, 70, 150)`,
+								'height': `mapData(node_type, 0, 1, 70, 150)`,
+							}
+						},
+						{
+							selector: 'node[kind="Awards"]',
+							style: {
+								'background-color': 'data(color)',
+								'border-color': 'data(borderColor)',
+								'border-width': 'data(borderWidth)',
+								'background-image': 'https://minio.dev.maayanlab.cloud/cfde-coauthor-network/pub.svg',
+								'background-image-opacity': 0.05,
+								'background-width' : '80%',
+								'background-height' : '80%',
 								'label': 'data(label)',
 								"text-valign": "center",
 								"text-halign": "center",

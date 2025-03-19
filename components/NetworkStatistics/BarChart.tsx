@@ -39,7 +39,6 @@ const BarChartForm = ({ props, chartData }) => {
 	    }
 	]
     };
-    console.log(chartdata)
     return (
         <BarChart
 	    dataset={processedChartData}

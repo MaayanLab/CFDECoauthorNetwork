@@ -38,7 +38,13 @@ export const initialize_example = async () => {
 		})
 	let choices = {}
 	if (res.ok) choices = await (res).json()
-	return choices
+	return 	{
+		  'Deanne M Taylor': {
+		    label: 'Deanne M Taylor',
+		  },
+		}
+	
+	
 }
 export const initialize_kg = async () => {
     const schema = await fetch_kg_schema()
@@ -118,27 +124,41 @@ const TermAndGeneSearch = async ({searchParams, props}: {
     const filter: FilterSchema = query_parser.parseServerSide(searchParams.filter)
     const controller = new AbortController()
     try {
+	    if (!filter.search_type) {
+		    filter.search_type = "explore"
+	    }
+    } catch(error) {
+        console.error(error)
+    }
+    try {
         if (filter.relation) {
+	    console.log(filter.relation)
             filter.relation = process_relation(filter.relation)
-            // if (!filter.end) {
-            //     if (typeof filter.relation[0] === 'string') {
-            //         filter.relation = process_relation(filter.relation).map((name)=>({name, limit: filter.limit || 5}))
-            //     } else {
-            //         filter.relation = process_relation(filter.relation).map(({name, limit})=>({name, limit: limit || filter.limit || 5}))
-            //     }
-            //     delete filter.limit
-            // } else {
-            //     if (typeof filter.relation[0] === 'string') {
-            //         filter.relation = process_relation(filter.relation).map((name)=>({name}))
-            //     } else {
-            //         filter.relation = process_relation(filter.relation).map(({name, limit})=>({name, limit}))
-            //     }
-            //     // filter.relation = process_relation(filter.relation).map(({name})=>({name}))
-            //     delete filter.augment
-            //     delete filter.augment_limit
-            // }
-        }
+	    console.log("FILTER RELATION IS NOT EMPTY")
+	    if (filter.relation == null) {
+		    console.log("FILTER RELATION ISEMPTY")
+		    filter.relation = [
+		    	{"name":"Publications"},
+			{"name":"MeSH"},
+			{"name":"Awards"}
+		    ]
+	    }
+        } else {
+		console.log(filter.relation)
+		console.log("SANITY CHECK")
+		if (filter.relation == null) {
+		    console.log("FILTER RELATION ISEMPTY")
+		    filter.relation = [
+		    	{"name":"Publications"},
+			{"name":"MeSH"},
+			{"name":"Awards"}
+		    ]
+	
+		}
+	}
+	console.log(filter.relation)
         let elements = null
+        let relabled_elements = null
         const selected_edges = []
         const genes = []
         if (Object.keys(filter).length > 0) {
@@ -149,8 +169,21 @@ const TermAndGeneSearch = async ({searchParams, props}: {
                 signal: controller.signal,
             }) 
             if (!res.ok) console.log(await res.text())
-            else elements = await res.json()        
-        
+            else elements = await res.json()
+            relabled_elements = elements        
+            relabled_elements.nodes = relabled_elements.nodes.map(node => {
+		    if (node.data.kind === "Publications") {
+                    return {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            label: "PMID: " + node.data.label
+                        }
+                    };
+                }
+                return node;
+            });
+
             for (const i of (elements || {}).edges || []) {
                 if (i.data.relation && selected_edges.indexOf(i.data.label) === -1) {
                     selected_edges.push({name: i.data.label})
@@ -175,7 +208,22 @@ const TermAndGeneSearch = async ({searchParams, props}: {
                 {props.description && <Grid item xs={12}>
                     <Typography variant={"subtitle1"}>{props.description}</Typography>
                 </Grid>}
+		{(filter.search_type == "explore") && (
+		    <Grid item xs={12}>
+		    <Typography variant={"subtitle1"}><b>Single Author Search: </b> This search finds related nodes based on the search term. If you search for a publication, it returns all connected authors. If you search for an author, it finds all directly connected nodes, and co-authors by adjusting the sliders.</Typography>
+		    </Grid>
+		)}
 
+		{(filter.search_type == "min_connect") && (
+		    <Grid item xs={12}>
+		    <Typography variant={"subtitle1"}><b>Just Author Search: </b> This search finds other coauthors that share a minimum amount of publications. For example, if the limit slider is set to 10, then all appearing co-authors share at least 10 publications with the search authors.  </Typography>
+		    </Grid>
+		)}
+		{(filter.search_type == "direct_connect") && (
+		    <Grid item xs={12}>
+		    <Typography variant={"subtitle1"}><b>Two Author Search: </b> This search finds paths to other nodes in the Co-Authorship network. </Typography>
+		    </Grid>
+		)}
                 <Grid item xs={12} md={4} lg={3}>
                     <Card elevation={4} sx={{borderRadius: "8px", backgroundColor: "tertiary.light"}}>
                         <CardContent>
@@ -252,7 +300,7 @@ const TermAndGeneSearch = async ({searchParams, props}: {
                             {(searchParams.view === "table") ? 
                                 <div style={{minHeight: 700}}><NetworkTable data={elements} schema={schema}/></div>:
                                 <Cytoscape 
-                                    elements={elements}
+                                    elements={relabled_elements}
                                     schema={schema}
                                     tooltip_templates_edges={tooltip_templates_edges}
                                     tooltip_templates_nodes={tooltip_templates_nodes}

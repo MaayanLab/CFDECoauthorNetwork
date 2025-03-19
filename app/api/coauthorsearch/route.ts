@@ -457,9 +457,14 @@ const resolve_one_term = async ({
 	const rels = []
 	const valid_relations = []
 	const vars = {}
+	let default_relation = relation
+	if (!default_relation) {
+		default_relation = [{ name: 'Publications' }, { name: 'MeSH' }, { name: 'Awards' }]
+	}
+	console.log(relation)
 	if (start == "Authors") {
-		if (relation) {
-			for (const r of relation) {
+		if (default_relation) {
+			for (const r of default_relation) {
 				if (edges.indexOf(r.name) === -1) throw {message: `Invalid relationship ${r.name}`}
 				else {
 					valid_relations.push(`\`${r.name}\``)
@@ -505,8 +510,8 @@ const resolve_one_term = async ({
 			}
 		}
 	} else {
-		if (relation) {
-			for (const r of relation) {
+		if (default_relation) {
+			for (const r of default_relation) {
 				if (edges.indexOf(r.name) === -1) throw {message: `Invalid relationship ${r.name}`}
 				else {
 					valid_relations.push(`\`${r.name}\``)
@@ -590,7 +595,7 @@ const input_query_schema = z.object({
 	additional_link_tags: z.optional(z.array(z.string())),
     start_extras: z.array(z.string().optional()).optional(),
     limit_extra: z.number().optional(), 
-    search_type: z.string()
+    search_type: z.string().optional()
 })
 
 /**
@@ -686,7 +691,27 @@ export async function GET(req: NextRequest) {
     const schema = await fetch_kg_schema()
     try {
 		const f = JSON.parse(req.nextUrl.searchParams.get("filter"))
-		
+	const url = new URL(req.nextUrl)
+	console.log(url)
+	// Parse the existing `filter` parameter
+	let filterParam = JSON.parse(url.searchParams.get("filter") || "{}");
+	
+	// Only add `relation` if it does not already exist
+	if (!filterParam.hasOwnProperty("relation")) {
+	  filterParam["relation"] = [
+	    { name: "Publications" },
+	    { name: "MeSH" },
+	    { name: "Awards" }
+	  ];
+	
+	  // Convert back to a string and update `searchParams`
+	  url.searchParams.set("filter", JSON.stringify(filterParam));
+	
+	  // Update the browser history without reloading (optional)
+	  console.log(url)
+	  return NextResponse.redirect(url.toString()); // Redirect with updated URL
+	}
+	
         if (f.limit && !isNaN(f.limit) && typeof f.limit === 'string') f.limit = parseInt(f.limit)
         const { start,
                 start_field="label",
@@ -702,7 +727,7 @@ export async function GET(req: NextRequest) {
                 gene_links = [],
                 augment,
                 augment_limit,
-				search_type, 
+				search_type = "explore", 
 				limit_extra = 0,
 				start_extras = [],
 				additional_link_tags = []

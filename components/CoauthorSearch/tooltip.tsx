@@ -37,8 +37,9 @@ export const TooltipComponent = ({data, float, tooltip_templates, schema, rel, f
 }) => {
 	const rela = rel
 
-    	const filta = filter&& filter!== '{}' ? JSON.parse(filter|| '{}'): {} 
-	let expand_filter = JSON.stringify({
+    	const filta = filter&& filter!== '{}' ? JSON.parse(filter|| '{}'): {}
+	
+	let expand_filta = {
 		start: data.kind,
 		start_field: filta.start_field, 
 		start_term: data.label,
@@ -46,7 +47,19 @@ export const TooltipComponent = ({data, float, tooltip_templates, schema, rel, f
 		relation: rela,
 		limit: filta.limit ?? 5,
 		limit_extra: filta.limit_extra ?? 5
-		})
+		}
+	
+	let expand_filter = ""
+	if (data.kind == "Publications") {
+		console.log("EXPAND FILTER")
+		if (expand_filta) {
+			console.log("EXPAND FILTER 2")
+			expand_filta.start_term = expand_filta.start_term.split(": ")[1] || ""
+		}
+	} 
+	expand_filter = JSON.stringify(expand_filta)
+	console.log(expand_filter)
+
 	if (filta.search_type == "direct_connect") {
 		expand_filter = JSON.stringify({
 			start: data.kind,
@@ -61,43 +74,85 @@ export const TooltipComponent = ({data, float, tooltip_templates, schema, rel, f
 	const pathname = usePathname()
 	const queryParams = {}
 	let filter_field = 'filter'
-	console.log(data.kind)
 
 	const router = useRouter()
 	const elements = []
 	const field = data.kind === "Relation" ? data.label : data.kind.replace("Co-expressed Gene", "lncRNA")
-
-	for (const i of tooltip_templates[field] || []) {
-		if (i.type === "link") {
-			const text = makeTemplate(i.text, data)
-			const href = makeTemplate(i.href, data)
-			if (text !== 'undefined') {
-			  elements.push(
-				<Typography key={i.label} variant="subtitle2" sx={{wordWrap: "break-word"}}>
-				  <b>{i.label}:</b> <Button size='small' 
-					color="secondary"
-					  sx={{padding: 0, textDecoration: "underline"}} 
-					  href={href}
-									  target="_blank"
-									  rel="noopener noreferrer"
-				  >{text}</Button>
-				</Typography>  
-			  )
-			}
-		  } else {
-			let e = makeTemplate(i.text, data)
-			let key_lab = i.label
+	if (field !== "Publications") {
+		for (const i of tooltip_templates[field] || []) {
+			if (i.type === "link") {
+					
+				const text = makeTemplate(i.text, data)
+				let href = makeTemplate(i.href, data)
+				if (text !== 'undefined') {
+				  elements.push(
+					<Typography key={i.label} variant="subtitle2" sx={{wordWrap: "break-word"}}>
+					  <b>{i.label}:</b> <Button size='small' 
+						color="secondary"
+						  sx={{padding: 0, textDecoration: "underline"}} 
+						  href={href}
+										  target="_blank"
+										  rel="noopener noreferrer"
+					  >{text}</Button>
+					</Typography>  
+				  )
+				}
+			  } else {
+				let e = makeTemplate(i.text, data)
+				let key_lab = i.label
+				if (i.label === "label") {
+					key_lab = data.kind
+				}
+				if (e !== 'undefined') {
+				  elements.push(
+					<Typography key={i.label} sx={{wordWrap: "break-word"}} variant="subtitle2">
+					  <b>{key_lab}:</b> {i.type === "text" ? e: precise(e)}
+					</Typography>  
+				  )
+				}
+			  }
+		} 
+	} else { 
+		let pmid = tooltip_templates["label"]
+		for (const i of tooltip_templates[field] || []) {
 			if (i.label === "label") {
-				key_lab = data.kind
+				continue
 			}
-			if (e !== 'undefined') {
-			  elements.push(
-				<Typography key={i.label} sx={{wordWrap: "break-word"}} variant="subtitle2">
-				  <b>{key_lab}:</b> {i.type === "text" ? e: precise(e)}
-				</Typography>  
-			  )
-			}
-		  }
+			if (i.type === "link") {
+				let text = makeTemplate(i.text, data)
+				text = text.split(":")[1]
+				let href = makeTemplate(i.href, data)
+				href = href.replace("PMID: ", "")	
+				if (text !== 'undefined') {
+				  elements.push(
+					<Typography key={"URL"} variant="subtitle2" sx={{wordWrap: "break-word"}}>
+					  <b>{"PMID"}:</b> <Button size='small' 
+						color="secondary"
+						  sx={{padding: 0, textDecoration: "underline"}} 
+						  href={href}
+										  target="_blank"
+										  rel="noopener noreferrer"
+					  >{text}</Button>
+					</Typography>  
+				  )
+				}
+			  } else {
+				let e = makeTemplate(i.text, data)
+				let key_lab = i.label
+				if (i.label === "label") {
+					key_lab = data.kind
+				}
+				if (e !== 'undefined') {
+				  console.log(e)
+				  elements.push(
+					<Typography key={i.label} sx={{wordWrap: "break-word"}} variant="subtitle2">
+					  <b>{key_lab}:</b> {i.type === "text" ? e: precise(e)}
+					</Typography>  
+				  )
+				}
+			  }
+		} 
+
 	}
 	const extrasx = {}
 	if (float) {
